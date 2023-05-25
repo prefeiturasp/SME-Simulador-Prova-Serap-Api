@@ -1,0 +1,62 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{279BF50A-45CA-4C0F-ABF7-23132861EA5A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SME.Simulador.Prova.Serap.Api", "src\SME.Simulador.Prova.Serap.Api\SME.Simulador.Prova.Serap.Api.csproj", "{3DCFDD76-BE0D-4673-BE31-88272DB83382}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SME.Simulador.Prova.Serap.Aplicacao", "src\SME.Simulador.Prova.Serap.Aplicacao\SME.Simulador.Prova.Serap.Aplicacao.csproj", "{910EC781-A06C-4FF7-8C26-11BCAAD0313F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SME.Simulador.Prova.Serap.Dados", "src\SME.Simulador.Prova.Serap.Dados\SME.Simulador.Prova.Serap.Dados.csproj", "{C2CFC64B-5193-407F-AB6F-FF071DF320C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SME.Simulador.Prova.Serap.Dominio", "src\SME.Simulador.Prova.Serap.Dominio\SME.Simulador.Prova.Serap.Dominio.csproj", "{02E148B4-89CE-4C10-8430-2773BCD0D74B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SME.Simulador.Prova.Serap.Infra", "src\SME.Simulador.Prova.Serap.Infra\SME.Simulador.Prova.Serap.Infra.csproj", "{E6118275-C414-4835-9C3F-16A559956B8C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SME.Simulador.Prova.Serap.IoC", "src\SME.Simulador.Prova.Serap.IoC\SME.Simulador.Prova.Serap.IoC.csproj", "{08A0C3CD-DD41-418F-8F93-229729CBEF81}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3DCFDD76-BE0D-4673-BE31-88272DB83382}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DCFDD76-BE0D-4673-BE31-88272DB83382}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3DCFDD76-BE0D-4673-BE31-88272DB83382}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3DCFDD76-BE0D-4673-BE31-88272DB83382}.Release|Any CPU.Build.0 = Release|Any CPU
+		{910EC781-A06C-4FF7-8C26-11BCAAD0313F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{910EC781-A06C-4FF7-8C26-11BCAAD0313F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{910EC781-A06C-4FF7-8C26-11BCAAD0313F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{910EC781-A06C-4FF7-8C26-11BCAAD0313F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2CFC64B-5193-407F-AB6F-FF071DF320C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2CFC64B-5193-407F-AB6F-FF071DF320C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2CFC64B-5193-407F-AB6F-FF071DF320C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2CFC64B-5193-407F-AB6F-FF071DF320C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02E148B4-89CE-4C10-8430-2773BCD0D74B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02E148B4-89CE-4C10-8430-2773BCD0D74B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02E148B4-89CE-4C10-8430-2773BCD0D74B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02E148B4-89CE-4C10-8430-2773BCD0D74B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6118275-C414-4835-9C3F-16A559956B8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6118275-C414-4835-9C3F-16A559956B8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6118275-C414-4835-9C3F-16A559956B8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6118275-C414-4835-9C3F-16A559956B8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08A0C3CD-DD41-418F-8F93-229729CBEF81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08A0C3CD-DD41-418F-8F93-229729CBEF81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08A0C3CD-DD41-418F-8F93-229729CBEF81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08A0C3CD-DD41-418F-8F93-229729CBEF81}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3DCFDD76-BE0D-4673-BE31-88272DB83382} = {279BF50A-45CA-4C0F-ABF7-23132861EA5A}
+		{910EC781-A06C-4FF7-8C26-11BCAAD0313F} = {279BF50A-45CA-4C0F-ABF7-23132861EA5A}
+		{C2CFC64B-5193-407F-AB6F-FF071DF320C8} = {279BF50A-45CA-4C0F-ABF7-23132861EA5A}
+		{02E148B4-89CE-4C10-8430-2773BCD0D74B} = {279BF50A-45CA-4C0F-ABF7-23132861EA5A}
+		{E6118275-C414-4835-9C3F-16A559956B8C} = {279BF50A-45CA-4C0F-ABF7-23132861EA5A}
+		{08A0C3CD-DD41-418F-8F93-229729CBEF81} = {279BF50A-45CA-4C0F-ABF7-23132861EA5A}
+	EndGlobalSection
+EndGlobal
