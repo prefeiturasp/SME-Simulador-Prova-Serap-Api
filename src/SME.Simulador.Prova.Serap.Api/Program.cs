@@ -11,6 +11,7 @@ builder.Configuration.AddEnvironmentVariables();
 
 builder.Services.AddHttpContextAccessor();
 RegistrarDependencias.Registrar(builder);
+ConfigurarDependencias.Configurar();
 
 builder.Services.AddResponseCompression(options =>
 {
