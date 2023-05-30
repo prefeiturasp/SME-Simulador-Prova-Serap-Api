@@ -19,21 +19,32 @@ builder.Services.AddResponseCompression(options =>
     options.EnableForHttps = true;
 });
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.Converters.Add(new DateTimeConverter());    
+});
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(config => config.ConfigurarDocumentacao());
 
 var app = builder.Build();
 
+app.UseResponseCompression();
+app.UseSwagger();
+app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "SME.Simulador.Prova.SERAp.Api v1"));
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseDeveloperExceptionPage();
 }
 
 app.UseHttpsRedirection();
+
+UtilizarDependencias.Utilizar(app);
+
+app.UseRouting();
 
 app.UseAuthorization();
 
