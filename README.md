@@ -14,4 +14,4 @@ Visualizar como a questão será exibida no SERAp Estudantes.
 
 ## :man_technologist: Configuração do ambiente
 1. Clonar o projeto 
-2. Na IDE utilizada, selecionar o ambiente e executar
+2. [Configurar Secrets](https://dev.azure.com/amcomgov/SME%20-%20Serap/_wiki/wikis/SME---Serap.wiki/960/Simulador-SERAp-Estaudantes-Vari%C3%A1veis-de-Ambientes-Api)
