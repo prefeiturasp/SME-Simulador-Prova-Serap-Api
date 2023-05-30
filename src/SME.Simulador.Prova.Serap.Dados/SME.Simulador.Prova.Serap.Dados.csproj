@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SME.Simulador.Prova.Serap.Dominio\SME.Simulador.Prova.Serap.Dominio.csproj" />
+    <ProjectReference Include="..\SME.Simulador.Prova.Serap.Infra\SME.Simulador.Prova.Serap.Infra.csproj" />
   </ItemGroup>
   
   <ItemGroup>

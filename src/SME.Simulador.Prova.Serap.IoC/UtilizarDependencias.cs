@@ -8,6 +8,7 @@ public static class UtilizarDependencias
     {
         app.UtilizarCors();
         app.UtilizarElasticApm();
+        app.UtilizarTelemetria();
         app.UtilizarMetricas();
     }
 }
