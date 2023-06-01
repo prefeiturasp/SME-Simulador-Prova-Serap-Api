@@ -32,8 +32,17 @@ builder.Services.AddSwaggerGen(config => config.ConfigurarDocumentacao());
 var app = builder.Build();
 
 app.UseResponseCompression();
-app.UseSwagger();
-app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "SME.Simulador.Prova.SERAp.Api v1"));
+
+app.UseSwagger(c =>
+{
+    c.RouteTemplate = "simulador/swagger/{documentName}/swagger.json";
+});
+
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/simulador/swagger/v1/swagger.json", "SME.Simulador.Prova.SERAp.Api v1");
+    c.RoutePrefix = "simulador/swagger";    
+});
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
