@@ -1,0 +1,13 @@
+﻿services:
+  sme.simulador.prova.serap.api:
+    image: ${DOCKER_REGISTRY-}smesimuladorprovaserapapi
+    build:
+      context: .
+      dockerfile: src/SME.Simulador.Prova.Serap.Api/Dockerfile
+    networks:
+      - sme-network
+networks:
+  sme-network:
+    external:
+      name: sme-network
+    driver: bridge        
