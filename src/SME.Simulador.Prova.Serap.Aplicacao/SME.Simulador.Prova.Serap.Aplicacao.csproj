@@ -8,6 +8,16 @@
 
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
+    <PackageReference Include="MediatR" Version="12.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SME.Simulador.Prova.Serap.Dados\SME.Simulador.Prova.Serap.Dados.csproj" />
+    <ProjectReference Include="..\SME.Simulador.Prova.Serap.Infra\SME.Simulador.Prova.Serap.Infra.csproj" />
   </ItemGroup>  
 
 </Project>

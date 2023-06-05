@@ -10,8 +10,10 @@ internal static class RegistrarContextosExtension
 {
     internal static void RegistrarContextos(this IServiceCollection services)
     {
-        services.TryAddScoped<GestaoAvaliacaoContext>();
-        services.TryAddTransient<IUnitOfWork, UnitOfWork>();
+        services.TryAddScoped<GestaoAvaliacaoContexto>();
+        services.TryAddScoped<SerapEstudantesContexto>();
+        services.TryAddTransient<IUnitOfWorkBaseGestaoAvaliacao, UnitOfWorkBaseGestaoAvaliacao>();
+        services.TryAddTransient<IUnitOfWorkBaseSerapEstudantes, UnitOfWorkBaseSerapEstudantes>();
         services.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();        
     }
 }

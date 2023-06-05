@@ -1,6 +1,6 @@
 ﻿namespace SME.Simulador.Prova.Serap.Dominio;
 
-public interface IUnitOfWork : IDisposable
+public interface IUnitOfWorkBase : IDisposable
 {
     void BeginTransaction();
     void Commit();

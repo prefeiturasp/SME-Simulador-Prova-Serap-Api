@@ -9,6 +9,7 @@ public static class RegistrarMapeamentos
     {
         FluentMapper.Initialize(config =>
         {
+            config.AddMap(new UsuarioSerapCoreSsoMap());
             config.ForDommel();
         });
     }    

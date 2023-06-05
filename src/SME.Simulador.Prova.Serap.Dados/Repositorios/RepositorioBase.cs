@@ -4,54 +4,56 @@ using SME.Simulador.Prova.Serap.Dominio;
 
 namespace SME.Simulador.Prova.Serap.Dados;
 
-public class RepositorioBase<TEntidadeBase> : IRepositorioBase<TEntidadeBase> where TEntidadeBase : EntidadeBase
+public class RepositorioBase<TEntidadeBase, TContexto> : IRepositorioBase<TEntidadeBase> 
+    where TEntidadeBase : EntidadeBase
+    where TContexto : ContextoBase
 {
-    private readonly GestaoAvaliacaoContext gestaoAvaliacaoContext;
+    private readonly TContexto contexto;
 
-    public RepositorioBase(GestaoAvaliacaoContext gestaoAvaliacaoContext)
+    public RepositorioBase(TContexto contexto)
     {
-        this.gestaoAvaliacaoContext = gestaoAvaliacaoContext ?? throw new ArgumentNullException(nameof(gestaoAvaliacaoContext));
+        this.contexto = contexto ?? throw new ArgumentNullException(nameof(contexto));
     }
 
     protected IDbConnection ObterConexao()
     {
-        return gestaoAvaliacaoContext.Conexao;
+        return contexto.Conexao;
     }
 
     public virtual async Task<TEntidadeBase> ObterPorIdAsync(long id)
     {
-        return await gestaoAvaliacaoContext.Conexao.GetAsync<TEntidadeBase>(id);
+        return await contexto.Conexao.GetAsync<TEntidadeBase>(id);
     }
 
     public virtual async Task<IEnumerable<TEntidadeBase>> ObterTudoAsync()
     {
-        return await gestaoAvaliacaoContext.Conexao.GetAllAsync<TEntidadeBase>();
+        return await contexto.Conexao.GetAllAsync<TEntidadeBase>();
     }
 
     public virtual async Task<long> SalvarAsync(TEntidadeBase entidade)
     {
         if (entidade.Id > 0)
-            await gestaoAvaliacaoContext.Conexao.UpdateAsync(entidade);
+            await contexto.Conexao.UpdateAsync(entidade);
         else
-            entidade.Id = (long)await gestaoAvaliacaoContext.Conexao.InsertAsync(entidade);
+            entidade.Id = (long)await contexto.Conexao.InsertAsync(entidade);
 
         return entidade.Id;
     }
 
     public virtual async Task<long> UpdateAsync(TEntidadeBase entidade)
     {
-        await gestaoAvaliacaoContext.Conexao.UpdateAsync(entidade);
+        await contexto.Conexao.UpdateAsync(entidade);
         return entidade.Id;
     }
 
     public virtual async Task<long> IncluirAsync(TEntidadeBase entidade)
     {
-        entidade.Id = (long)await gestaoAvaliacaoContext.Conexao.InsertAsync(entidade);
+        entidade.Id = (long)await contexto.Conexao.InsertAsync(entidade);
         return entidade.Id;
     }
 
     public virtual async Task<bool> RemoverFisicamenteAsync(TEntidadeBase entidade)
     {
-        return await gestaoAvaliacaoContext.Conexao.DeleteAsync(entidade);
+        return await contexto.Conexao.DeleteAsync(entidade);
     }
 }
