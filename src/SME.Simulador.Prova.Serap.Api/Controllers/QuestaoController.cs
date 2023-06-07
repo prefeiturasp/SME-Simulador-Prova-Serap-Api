@@ -12,7 +12,7 @@ namespace SME.Simulador.Prova.Serap.Api.Controllers;
 public class QuestaoController : ControllerBase
 {
 
-    //[Authorize("Bearer")]
+    [Authorize("Bearer")]
     [HttpGet("completa")]
     [ProducesResponseType(typeof(QuestaoCompletaDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(QuestaoCompletaDto), StatusCodes.Status422UnprocessableEntity)]
