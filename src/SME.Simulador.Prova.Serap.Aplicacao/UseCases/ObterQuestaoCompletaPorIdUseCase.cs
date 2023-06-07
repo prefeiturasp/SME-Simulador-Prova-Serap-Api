@@ -10,38 +10,30 @@ namespace SME.Simulador.Prova.Serap.Aplicacao
 
         public async Task<QuestaoCompletaDto> ExecutarAsync(ParametrosQuestaoCompletaDto parametros)
         {
-            try
+            var questaoSerap = await mediator.Send(new ObterQuestaoCadernoProvaQuery(parametros.QuestaoId, parametros.ProvaId, parametros.Caderno));
+            if (questaoSerap == null) throw new Exception("questão não encontrada.");
+
+            var questao = new QuestaoCompletaDto
             {
-                var questaoSerap = await mediator.Send(new ObterQuestaoCadernoProvaQuery(parametros.QuestaoId, parametros.ProvaId, parametros.Caderno));
-                if (questaoSerap == null) throw new Exception("questão não encontrada.");
+                Id = questaoSerap.Id,
+                Ordem = questaoSerap.Ordem,
+                TextoBase = questaoSerap.TextoBase,
+                Enunciado = questaoSerap.Enunciado,
+                Caderno = questaoSerap.Caderno,
+                TipoItem = questaoSerap.TipoItem,
+                QuantidadeAlternativas = questaoSerap.QuantidadeAlternativas,
+                QuestaoAnteriorId = questaoSerap.QuestaoAnteriorId,
+                ProximaQuestaoId = questaoSerap.ProximaQuestaoId
+            };
 
-                var questao = new QuestaoCompletaDto
-                {
-                    Id = questaoSerap.Id,
-                    Ordem = questaoSerap.Ordem,                    
-                    TextoBase = questaoSerap.TextoBase,
-                    Enunciado = questaoSerap.Enunciado,
-                    Caderno = questaoSerap.Caderno,
-                    TipoItem = questaoSerap.TipoItem,
-                    QuantidadeAlternativas = questaoSerap.QuantidadeAlternativas,
-                    QuestaoAnteriorId = questaoSerap.QuestaoAnteriorId,
-                    ProximaQuestaoId = questaoSerap.ProximaQuestaoId
-                };
+            var alternativas = await mediator.Send(new ObterAlternativasPorQuestaoIdQuery(parametros.QuestaoId));
+            if (alternativas != null)
+                questao.Alternativas = alternativas;
 
-                var alternativas = await mediator.Send(new ObterAlternativasPorQuestaoIdQuery(parametros.QuestaoId));
-                if (alternativas != null)
-                    questao.Alternativas = alternativas;
+            await TratarAudiosQuestao(questao);
+            await TratarVideosQuestao(questao);
 
-                await TratarAudiosQuestao(questao);
-                await TratarVideosQuestao(questao);
-
-                return questao;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-
+            return questao;
         }
 
         private async Task TratarAudiosQuestao(QuestaoCompletaDto questaoSerap)
