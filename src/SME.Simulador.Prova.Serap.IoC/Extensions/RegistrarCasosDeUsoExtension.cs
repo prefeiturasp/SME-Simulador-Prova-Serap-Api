@@ -9,6 +9,8 @@ internal static class RegistrarCasosDeUsoExtension
     internal static void RegistrarCasosDeUso(this IServiceCollection services)
     {
         services.TryAddScoped<IAutenticarUsuarioUseCase, AutenticarUsuarioUseCase>();
+        services.TryAddScoped<IValidarAutenticacaoUsuarioUseCase, ValidarAutenticacaoUsuarioUseCase>();
+        services.TryAddScoped<IRevalidarTokenUseCase, RevalidarTokenUseCase>();
         services.TryAddScoped<IObterQuestaoCompletaPorIdUseCase, ObterQuestaoCompletaPorIdUseCase>();
     }
 }

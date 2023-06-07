@@ -16,27 +16,37 @@ internal static class RegistrarEnvironmentVariablesExtension
     
     private static void AddConnectionString(WebApplicationBuilder builder)
     {
-        AddOptions<ConnectionStringsOptions>(builder, ConnectionStringsOptions.Secao);
+        AddOptions<ConnectionStringsOptions>(builder, SecoesOptions.ConnectionStrings);
     }
 
     private static void AddTelemetria(WebApplicationBuilder builder)
     {
-        AddOptions<TelemetriaOptions>(builder, TelemetriaOptions.Secao);
+        AddOptions<TelemetriaOptions>(builder, SecoesOptions.Telemetria);
     }
 
     private static void AddJwtOptions(WebApplicationBuilder builder)
     {
-        AddOptions<JwtOptions>(builder, JwtOptions.Secao);
+        AddOptions<JwtOptions>(builder, SecoesOptions.JwtOptions);
     }
 
     private static void AddElasticApmOptions(WebApplicationBuilder builder)
     {
-        AddOptions<ElasticApmOptions>(builder, ElasticApmOptions.Secao);
+        AddOptions<ElasticApmOptions>(builder, SecoesOptions.ElasticApm);
     }
 
     private static void AddRedisOptions(WebApplicationBuilder builder)
     {
-        AddOptions<RedisOptions>(builder, RedisOptions.Secao);
+        AddOptions<RedisOptions>(builder, SecoesOptions.RedisOptions);
+    }
+
+    private static void AddRabbitLogOptions(WebApplicationBuilder builder)
+    {
+        AddOptions<RabbitLogOptions>(builder, SecoesOptions.RabbitLog);
+    }
+
+    private static void AddAutenticacao(WebApplicationBuilder builder)
+    {
+        AddOptions<AutenticacaoOptions>(builder, SecoesOptions.Autenticacao);
     }
     
     internal static void RegistrarEnvironmentVariables(this WebApplicationBuilder builder)
@@ -46,5 +56,7 @@ internal static class RegistrarEnvironmentVariablesExtension
         AddJwtOptions(builder);
         AddElasticApmOptions(builder);
         AddRedisOptions(builder);
+        AddRabbitLogOptions(builder);
+        AddAutenticacao(builder);
     }
 }

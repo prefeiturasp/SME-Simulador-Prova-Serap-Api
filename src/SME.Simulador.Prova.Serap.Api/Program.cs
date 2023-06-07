@@ -1,5 +1,8 @@
 using System.Reflection;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.ResponseCompression;
+using Newtonsoft.Json.Converters;
 using SME.Simulador.Prova.Serap.Api;
 using SME.Simulador.Prova.Serap.IoC;
 
@@ -11,7 +14,7 @@ builder.Configuration.AddEnvironmentVariables();
 
 builder.Services.AddHttpContextAccessor();
 RegistrarDependencias.Registrar(builder);
-ConfigurarDependencias.Configurar();
+ConfigurarDependencias.Configurar(builder.Services);
 
 builder.Services.AddResponseCompression(options =>
 {
@@ -20,14 +23,26 @@ builder.Services.AddResponseCompression(options =>
     options.EnableForHttps = true;
 });
 
-builder.Services.AddControllers().AddJsonOptions(options =>
-{
-    options.JsonSerializerOptions.Converters.Add(new DateTimeConverter());    
-});
+builder.Services.AddControllers()
+    .AddNewtonsoftJson(setup =>
+    {
+        setup.SerializerSettings.Converters.Add(new StringEnumConverter());
+        setup.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+    })    
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new DateTimeConverter());
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());    
+        options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+        options.JsonSerializerOptions.WriteIndented = true;
+        options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+        options.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
+    });
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(config => config.ConfigurarDocumentacao());
+builder.Services.AddSwaggerGenNewtonsoftSupport();
 
 var app = builder.Build();
 
