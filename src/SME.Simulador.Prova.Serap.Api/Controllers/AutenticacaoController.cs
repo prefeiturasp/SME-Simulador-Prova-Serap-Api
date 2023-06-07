@@ -13,7 +13,7 @@ public class AutenticacaoController : ControllerBase
     [ProducesResponseType(typeof(List<string>), StatusCodes.Status422UnprocessableEntity)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
-    [HttpPost("autenticar", Name = nameof(AutenticarAsync))]
+    [HttpPost(Name = nameof(AutenticarAsync))]
     public async Task<IActionResult> AutenticarAsync([FromBody] AutenticacaoDto request,
         [FromServices] IAutenticarUsuarioUseCase useCase)
     {
