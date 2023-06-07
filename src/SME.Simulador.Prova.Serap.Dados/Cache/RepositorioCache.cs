@@ -1,5 +1,4 @@
-﻿using System.Text;
-using MessagePack;
+﻿using MessagePack;
 using SME.Simulador.Prova.Serap.Infra;
 using StackExchange.Redis;
 
