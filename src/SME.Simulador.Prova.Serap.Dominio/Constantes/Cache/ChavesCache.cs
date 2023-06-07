@@ -1,6 +1,6 @@
 ﻿namespace SME.Simulador.Prova.Serap.Dominio;
 
-public static class CacheChave
+public static class ChavesCache
 {
     /// <summary>
     /// Código para autenticação do acesso administrador

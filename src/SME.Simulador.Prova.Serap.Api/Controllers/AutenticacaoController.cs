@@ -19,4 +19,15 @@ public class AutenticacaoController : ControllerBase
     {
         return Ok(await useCase.ExecutarAsync(request));
     }
+
+    [ValidarDto]
+    [ProducesResponseType(typeof(UsuarioAutenticadoDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(RetornoBaseDto), StatusCodes.Status500InternalServerError)]
+    [HttpPost("validar", Name = nameof(ValidarAsync))]
+    public async Task<IActionResult> ValidarAsync([FromBody] ValidarAutenticacaoUsuarioDto request, 
+        [FromServices] IValidarAutenticacaoUsuarioUseCase useCase)
+    {
+        return Ok(await useCase.ExecutarAsync(request));
+    }    
 }

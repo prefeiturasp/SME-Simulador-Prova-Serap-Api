@@ -14,7 +14,7 @@ public class LogMensagemDto
         Projeto = projeto;
         Rastreamento = rastreamento;
         ExcecaoInterna = excecaoInterna;
-        DataHora = DateTime.Now;
+        DataHora = UtilDataHora.ObterDataHoraAtualBrasiliaUtc();
     }
 
     public string Mensagem { get; set; }

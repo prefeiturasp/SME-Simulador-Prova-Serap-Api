@@ -1,5 +1,5 @@
-﻿using MessagePack;
-using MongoDB.Bson;
+﻿using System.Text;
+using MessagePack;
 using SME.Simulador.Prova.Serap.Infra;
 using StackExchange.Redis;
 
@@ -49,10 +49,10 @@ public class RepositorioCache : IRepositorioCache
     {
         try
         {
-            var byteCache = (await database.StringGetAsync(nomeChave)).ToBson();
+            byte[]? byteCache = await database.StringGetAsync(nomeChave);
 
             if (byteCache != null)
-                return MessagePackSerializer.Deserialize<T>(byteCache);
+                return MessagePackSerializer.Deserialize<T>(byteCache);                
 
             var dados = await buscarDados();
         
@@ -72,7 +72,7 @@ public class RepositorioCache : IRepositorioCache
     {
         try
         {
-            var byteCache = (await database.StringGetAsync(nomeChave)).ToBson();            
+            byte[]? byteCache = await database.StringGetAsync(nomeChave);
             return byteCache != null ? MessagePackSerializer.Deserialize<T>(byteCache) : default;
         }
         catch (Exception e)
@@ -102,7 +102,7 @@ public class RepositorioCache : IRepositorioCache
     {
         try
         {
-            var byteCache = (await database.StringGetAsync(nomeChave)).ToBson();
+            byte[]? byteCache = await database.StringGetAsync(nomeChave);
 
             if (byteCache != null)
                 return MessagePackSerializer.ConvertToJson(byteCache);
@@ -124,7 +124,7 @@ public class RepositorioCache : IRepositorioCache
     {
         try
         {
-            var byteCache = (await database.StringGetAsync(nomeChave)).ToBson();
+            byte[]? byteCache = await database.StringGetAsync(nomeChave);
             return byteCache != null ? MessagePackSerializer.ConvertToJson(byteCache) : string.Empty;
         }
         catch (Exception e)

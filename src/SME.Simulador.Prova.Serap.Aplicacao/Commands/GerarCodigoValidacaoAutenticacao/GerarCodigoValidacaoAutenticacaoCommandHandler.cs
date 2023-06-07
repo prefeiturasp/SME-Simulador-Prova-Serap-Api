@@ -21,7 +21,7 @@ public class GerarCodigoValidacaoAutenticacaoCommandHandler : IRequestHandler<Ge
         var autenticacaoUsuario = new AutenticacaoUsuarioDto(request.AutenticacaoUsuario.Login,
             request.AutenticacaoUsuario.Nome, request.AutenticacaoUsuario.Perfil);
 
-        await repositorioCache.SalvarRedisAsync(string.Format(CacheChave.CodigoAutenticacaoSimulador, codigo),
+        await repositorioCache.SalvarRedisAsync(string.Format(ChavesCache.CodigoAutenticacaoSimulador, codigo),
             autenticacaoUsuario, 5);
         
         return new AutenticacaoValidarDto(codigo.ToString());
