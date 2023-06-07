@@ -11,12 +11,12 @@ public sealed class GestaoAvaliacaoContexto : ContextoBase
     {
     }
 
-    private GestaoAvaliacaoContexto(string connectionStringGestaoAvalizacao) : this(
-        new SqlConnection(connectionStringGestaoAvalizacao))
+    private GestaoAvaliacaoContexto(string connectionStringGestaoAvaliacao) : this(
+        new SqlConnection(connectionStringGestaoAvaliacao))
     {
-        if (string.IsNullOrEmpty(connectionStringGestaoAvalizacao))
+        if (string.IsNullOrEmpty(connectionStringGestaoAvaliacao))
         {
-            throw new ArgumentNullException(nameof(connectionStringGestaoAvalizacao),
+            throw new ArgumentNullException(nameof(connectionStringGestaoAvaliacao),
                 "A 'string' de conexão para o banco de 'GestaoAvaliacao' deve ser informada.");
         }
     }
