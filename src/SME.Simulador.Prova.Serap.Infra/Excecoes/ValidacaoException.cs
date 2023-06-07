@@ -1,11 +1,18 @@
+using Microsoft.AspNetCore.Http;
+
 namespace SME.Simulador.Prova.Serap.Infra;
 
-public class ValidacaoException : Exception
+public class ValidacaoException : AbstractException
 {
-    public ValidacaoException(IEnumerable<string>? erros)
+    private ValidacaoException(string? message) : base(message)
+    {
+    }    
+    
+    public ValidacaoException(IEnumerable<string>? erros) : this("Um ou mais erros de validações foram retornados.")
     {
         Mensagens = erros?.ToList();
     }
-    
+
+    public override int StatusCode => StatusCodes.Status422UnprocessableEntity;
     public List<string>? Mensagens { get; }
 }

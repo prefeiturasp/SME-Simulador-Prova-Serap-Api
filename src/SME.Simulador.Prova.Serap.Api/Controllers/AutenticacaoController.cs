@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using SME.Simulador.Prova.Serap.Aplicacao;
+using SME.Simulador.Prova.Serap.Infra;
 
 namespace SME.Simulador.Prova.Serap.Api.Controllers;
 
@@ -7,10 +8,13 @@ namespace SME.Simulador.Prova.Serap.Api.Controllers;
 [Route("/api/v1/simulador/[controller]")]
 public class AutenticacaoController : ControllerBase
 {
-    [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(IEnumerable<string>), StatusCodes.Status422UnprocessableEntity)]
+    [ValidarDto]
+    [ProducesResponseType(typeof(AutenticacaoValidarDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(List<string>), StatusCodes.Status422UnprocessableEntity)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
     [HttpPost(Name = nameof(AutenticarAsync))]
-    public async Task<IActionResult> AutenticarAsync([FromBody] string request,
+    public async Task<IActionResult> AutenticarAsync([FromBody] AutenticacaoDto request,
         [FromServices] IAutenticarUsuarioUseCase useCase)
     {
         return Ok(await useCase.ExecutarAsync(request));

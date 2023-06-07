@@ -9,5 +9,6 @@ internal static class RegistrarServicosExtension
     internal static void RegistrarServicos(this IServiceCollection services)
     {
         services.TryAddScoped<IServicoTelemetria, ServicoTelemetria>();
+        services.TryAddScoped<IServicoLog, ServicoLog>();
     }
 }
