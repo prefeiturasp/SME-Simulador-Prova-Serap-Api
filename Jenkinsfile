@@ -54,8 +54,10 @@ pipeline {
                 }
             }           
         }
-
     }
+  post {
+    always { sh('[ -f '+"$home"+'/.kube/config ] && rm -f '+"$home"+'/.kube/config')}
+  }
 }
 def getKubeconf(branchName) {
     if("main".equals(branchName)) { return "config_prd"; }
