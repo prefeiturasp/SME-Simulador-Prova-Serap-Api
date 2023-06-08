@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SME.Simulador.Prova.Serap.Aplicacao;
 using SME.Simulador.Prova.Serap.Infra;
@@ -14,6 +15,7 @@ public class AutenticacaoController : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
     [HttpPost(Name = nameof(AutenticarAsync))]
+    [AllowAnonymous]
     public async Task<IActionResult> AutenticarAsync([FromBody] AutenticacaoDto request,
         [FromServices] IAutenticarUsuarioUseCase useCase)
     {
@@ -25,6 +27,7 @@ public class AutenticacaoController : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(RetornoBaseDto), StatusCodes.Status500InternalServerError)]
     [HttpPost("validar", Name = nameof(ValidarAsync))]
+    [AllowAnonymous]
     public async Task<IActionResult> ValidarAsync([FromBody] ValidarAutenticacaoUsuarioDto request, 
         [FromServices] IValidarAutenticacaoUsuarioUseCase useCase)
     {
@@ -36,6 +39,7 @@ public class AutenticacaoController : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(RetornoBaseDto), StatusCodes.Status500InternalServerError)]
     [HttpPost("revalidar", Name = nameof(RevalidarAsync))]
+    [AllowAnonymous]
     public async Task<IActionResult> RevalidarAsync([FromBody] RevalidarTokenDto request, 
         [FromServices] IRevalidarTokenUseCase useCase)
     {

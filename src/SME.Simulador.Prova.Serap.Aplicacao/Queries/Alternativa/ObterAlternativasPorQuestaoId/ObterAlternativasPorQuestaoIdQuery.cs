@@ -1,15 +1,14 @@
 ﻿using MediatR;
 using SME.Simulador.Prova.Serap.Infra.Dtos;
 
-namespace SME.Simulador.Prova.Serap.Aplicacao
-{
-    public class ObterAlternativasPorQuestaoIdQuery : IRequest<IEnumerable<AlternativaDto>>
-    {
-        public ObterAlternativasPorQuestaoIdQuery(long questaoId)
-        {
-            QuestaoId = questaoId;
-        }
+namespace SME.Simulador.Prova.Serap.Aplicacao;
 
-        public long QuestaoId { get; set; }
+public class ObterAlternativasPorQuestaoIdQuery : IRequest<IEnumerable<AlternativaDto>>
+{
+    public ObterAlternativasPorQuestaoIdQuery(long questaoId)
+    {
+        QuestaoId = questaoId;
     }
+
+    public long QuestaoId { get; }
 }

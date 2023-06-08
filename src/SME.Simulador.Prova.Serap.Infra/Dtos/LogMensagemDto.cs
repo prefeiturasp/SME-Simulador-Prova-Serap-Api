@@ -2,7 +2,7 @@
 
 namespace SME.Simulador.Prova.Serap.Infra;
 
-public class LogMensagemDto
+public class LogMensagemDto : DtoBase
 {
     public LogMensagemDto(string mensagem, LogNivel nivel, string observacao,
         string projeto = "Simulador-Prova-Serap-Api", string? rastreamento = null,

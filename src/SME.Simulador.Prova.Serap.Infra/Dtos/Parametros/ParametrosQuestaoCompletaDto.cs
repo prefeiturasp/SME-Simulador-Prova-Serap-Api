@@ -1,9 +1,14 @@
-﻿namespace SME.Simulador.Prova.Serap.Infra
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace SME.Simulador.Prova.Serap.Infra;
+
+public class ParametrosQuestaoCompletaDto : DtoBase
 {
-    public struct ParametrosQuestaoCompletaDto
-    {
-        public long QuestaoId { get; set; }
-        public long ProvaId { get; set; }
-        public string? Caderno { get; set; }
-    }
+    [Required]
+    public long QuestaoId { get; set; }
+    
+    [Required]
+    public long ProvaId { get; set; }
+
+    public string? Caderno { get; set; }
 }

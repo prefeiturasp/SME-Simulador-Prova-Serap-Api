@@ -1,4 +1,5 @@
 ﻿using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Filters;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace SME.Simulador.Prova.Serap.Api;
@@ -20,22 +21,13 @@ internal static class RegistrarDocumentacaoSwagger
             Name = "Authorization",
             In = ParameterLocation.Header,
             Type = SecuritySchemeType.Http,
-            Scheme = "bearer",
-            BearerFormat = "JWT",
-            Reference = new OpenApiReference
-            {
-                Type = ReferenceType.SecurityScheme,
-                Id = "Bearer"
-            }
+            Scheme = "Bearer",
+            BearerFormat = "JWT"
         };
     
         config.AddSecurityDefinition("Bearer", securitySchema);
-        
-        var securityRequirement = new OpenApiSecurityRequirement
-        {
-            { securitySchema, new[] { "Bearer" } }
-        };
-        
-        config.AddSecurityRequirement(securityRequirement);
+
+        config.OperationFilter<SecurityRequirementsOperationFilter>();
+        config.OperationFilter<BasicAuthOperationsFilter>();
     }
 }
