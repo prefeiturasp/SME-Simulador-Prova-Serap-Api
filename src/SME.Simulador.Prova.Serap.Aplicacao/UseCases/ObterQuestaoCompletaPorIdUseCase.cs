@@ -11,7 +11,7 @@ namespace SME.Simulador.Prova.Serap.Aplicacao
         public async Task<QuestaoCompletaDto> ExecutarAsync(ParametrosQuestaoCompletaDto parametros)
         {
             var questaoSerap = await mediator.Send(new ObterQuestaoCadernoProvaQuery(parametros.QuestaoId, parametros.ProvaId, parametros.Caderno));
-            if (questaoSerap == null) throw new Exception("questão não encontrada.");
+            if (questaoSerap == null) throw new NegocioException("questão não encontrada.");
 
             var questao = new QuestaoCompletaDto
             {
