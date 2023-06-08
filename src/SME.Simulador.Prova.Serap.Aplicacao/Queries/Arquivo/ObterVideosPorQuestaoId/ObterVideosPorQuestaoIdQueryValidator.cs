@@ -1,15 +1,14 @@
 ﻿using FluentValidation;
 
-namespace SME.Simulador.Prova.Serap.Aplicacao
+namespace SME.Simulador.Prova.Serap.Aplicacao;
+
+public class ObterVideosPorQuestaoIdQueryValidator : AbstractValidator<ObterAlternativasPorQuestaoIdQuery>
 {
-    public class ObterVideosPorQuestaoIdQueryValidator : AbstractValidator<ObterAlternativasPorQuestaoIdQuery>
+    public ObterVideosPorQuestaoIdQueryValidator()
     {
-        public ObterVideosPorQuestaoIdQueryValidator()
-        {
-            RuleFor(c => c.QuestaoId)
+        RuleFor(c => c.QuestaoId)
             .NotNull()
             .NotEmpty()
             .WithMessage("QuestaoId deve ser informado.");
-        }
     }
 }

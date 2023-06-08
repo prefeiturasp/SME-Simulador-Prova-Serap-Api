@@ -12,5 +12,6 @@ internal static class RegistrarCasosDeUsoExtension
         services.TryAddScoped<IValidarAutenticacaoUsuarioUseCase, ValidarAutenticacaoUsuarioUseCase>();
         services.TryAddScoped<IRevalidarTokenUseCase, RevalidarTokenUseCase>();
         services.TryAddScoped<IObterQuestaoCompletaPorIdUseCase, ObterQuestaoCompletaPorIdUseCase>();
+        services.TryAddScoped<IObterQuestoesResumoPorCadernoIdUseCase, ObterQuestoesResumoPorCadernoIdUseCase>();
     }
 }
