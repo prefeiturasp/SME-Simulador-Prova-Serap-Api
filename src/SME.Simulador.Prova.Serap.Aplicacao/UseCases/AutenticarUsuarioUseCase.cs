@@ -33,12 +33,12 @@ public class AutenticarUsuarioUseCase : AbstractUseCase, IAutenticarUsuarioUseCa
 
     private void VerificarChaveApi(string chaveApi)
     {
-        var chaveAutenticacao = Environment.GetEnvironmentVariable("ChaveSimuladorProvaApi");
+        var chaveAutenticacao = Environment.GetEnvironmentVariable("Autenticacao:ChaveSimuladorProvaApi");
 
         if (string.IsNullOrEmpty(chaveAutenticacao))
             chaveAutenticacao = autenticacaoOptions.ChaveSimuladorProvaApi;
         
-        if (chaveApi != chaveAutenticacao)
+        if (chaveAutenticacao == null || chaveApi != chaveAutenticacao)
             throw new NaoAutorizadoException("Chave api inválida");        
     }
 
