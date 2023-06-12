@@ -7,7 +7,7 @@ using SME.Simulador.Prova.Serap.Infra.Dtos;
 namespace SME.Simulador.Prova.Serap.Api.Controllers;
 
 [ApiController]
-[Route("/api/v1/simulador/[controller]")]
+[Route("/simulador/api/v1/[controller]")]
 public class QuestaoController : ControllerBase
 {
     [ValidarDto]
