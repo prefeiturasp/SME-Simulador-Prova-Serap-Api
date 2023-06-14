@@ -15,7 +15,7 @@ public class ProvaController : ControllerBase
     [ProducesResponseType(typeof(List<string>), StatusCodes.Status422UnprocessableEntity)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
-    [HttpGet("caderno/{cadernoId:long}", Name = nameof(ObterQuestoesResumoPorCadernoIdAsync))]
+    [HttpGet("caderno/{cadernoId}", Name = nameof(ObterQuestoesResumoPorCadernoIdAsync))]
     [Authorize("Bearer")]
     public async Task<IActionResult> ObterQuestoesResumoPorCadernoIdAsync([Required] long cadernoId,
         [FromServices] IObterQuestoesResumoPorCadernoIdUseCase useCase)
