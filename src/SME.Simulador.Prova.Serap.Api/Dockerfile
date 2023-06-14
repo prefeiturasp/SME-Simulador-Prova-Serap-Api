@@ -25,5 +25,8 @@ RUN apt-get update \
     && apt-get install -yq tzdata locales -y \
     && dpkg-reconfigure --frontend noninteractive tzdata \
 	  && locale-gen en_US.UTF-8
+	  
+RUN sed -i 's/DEFAULT@SECLEVEL=2/DEFAULT@SECLEVEL=1/g' /etc/ssl/openssl.cnf
+
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "SME.Simulador.Prova.Serap.Api.dll"]
