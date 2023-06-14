@@ -9,6 +9,7 @@ internal static class RegistrarCorsExtension
     
     internal static void RegistrarCors(this IServiceCollection services)
     {
+        services.AddCors();
         /*
         services.AddCors(options =>
         {
@@ -25,6 +26,7 @@ internal static class RegistrarCorsExtension
         app.UseCors(builder => builder
             .AllowAnyOrigin()
             .AllowAnyMethod()
-            .AllowAnyHeader());        
+            .AllowAnyHeader()
+            .AllowCredentials());        
     }
 }
