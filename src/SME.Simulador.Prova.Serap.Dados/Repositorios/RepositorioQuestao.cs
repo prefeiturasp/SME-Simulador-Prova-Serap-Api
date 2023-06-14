@@ -11,7 +11,7 @@ public class RepositorioQuestao : IRepositorioQuestao
 		this.gestaoAvaliacaoContexto = gestaoAvaliacaoContexto ?? throw new ArgumentNullException(nameof(gestaoAvaliacaoContexto));
 	}
 
-	public async Task<QuestaoSerapDto> ObterQuestaoCadernoProva(long questaoid, long provaId, string? caderno)
+	public async Task<QuestaoSerapDto> ObterQuestaoCadernoProva(long questaoId, long cadernoId)
 	{
 		const string query = @" with questoes as (
 			                            SELECT distinct I.id, B.Description as Caderno,
@@ -29,9 +29,8 @@ public class RepositorioQuestao : IRepositorioQuestao
 			                                    INNER JOIN BaseText bt  on bt.Id = I.BaseText_Id       
 			                                     LEFT JOIN BlockKnowledgeArea Bka WITH (NOLOCK) ON Bka.KnowledgeArea_Id = I.KnowledgeArea_Id AND B.Id = Bka.Block_Id
 			                                WHERE T.ShowOnSerapEstudantes = 1
-			                                  and T.Id = @provaId                                  
-			                                  and BI.State = 1
-			                                  and (B.Description = @caderno or @caderno is null))
+			                                  and B.Id = @cadernoId                                  
+			                                  and BI.State = 1)
 
 			                            select q.Id, q.Caderno, q.Ordem, q.Enunciado, q.TextoBase, q.ProvaId, q.TipoItem, q.QuantidadeAlternativas,
 												anterior.Id as QuestaoAnteriorId,
@@ -39,11 +38,11 @@ public class RepositorioQuestao : IRepositorioQuestao
 												from questoes q
 												left join (select distinct Id, Ordem from questoes) anterior on anterior.Ordem = q.Ordem - 1
 												left join (select distinct Id, Ordem from questoes) proxima on proxima.Ordem = q.Ordem + 1
-												where q.Id = @questaoid
+												where q.Id = @questaoId
 												order by q.Ordem;";
 
 		return await gestaoAvaliacaoContexto.Conexao.QueryFirstOrDefaultAsync<QuestaoSerapDto>(query,
-			new { questaoid, provaId, caderno }, transaction: gestaoAvaliacaoContexto.Transacao);
+			new { questaoId, cadernoId }, transaction: gestaoAvaliacaoContexto.Transacao);
 	}
 
 	public async Task<IEnumerable<QuestaoResumoDto>> ObterQuestoesResumoPorCadernoId(long cadernoId)

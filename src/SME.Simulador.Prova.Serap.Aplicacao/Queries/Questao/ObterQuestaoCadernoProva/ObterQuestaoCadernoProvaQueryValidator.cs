@@ -9,11 +9,11 @@ public class ObterQuestaoCadernoProvaQueryValidator : AbstractValidator<ObterQue
         RuleFor(c => c.QuestaoId)
             .NotNull()
             .NotEmpty()
-            .WithMessage("QuestaoId deve ser informado.");
+            .WithMessage("O Id da questão deve ser informado.");
 
-        RuleFor(c => c.ProvaId)
+        RuleFor(c => c.CadernoId)
             .NotNull()
             .NotEmpty()
-            .WithMessage("ProvaId deve ser informado.");
+            .WithMessage("O Id do caderno deve ser informado.");
     }
 }

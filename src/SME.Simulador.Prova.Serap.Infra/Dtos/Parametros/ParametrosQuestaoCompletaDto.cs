@@ -8,7 +8,5 @@ public class ParametrosQuestaoCompletaDto : DtoBase
     public long QuestaoId { get; set; }
     
     [Required]
-    public long ProvaId { get; set; }
-
-    public string? Caderno { get; set; }
+    public long CadernoId { get; set; }
 }
