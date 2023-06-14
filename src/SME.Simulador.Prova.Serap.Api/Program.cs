@@ -12,12 +12,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddUserSecrets(Assembly.GetExecutingAssembly(), true);
 builder.Configuration.AddEnvironmentVariables();
 
-builder.Services.AddHsts(options =>
-{
-    options.Preload = true;
-    options.IncludeSubDomains = true;    
-});
-
 builder.Services.AddHttpContextAccessor();
 RegistrarDependencias.Registrar(builder);
 ConfigurarDependencias.Configurar(builder.Services);
