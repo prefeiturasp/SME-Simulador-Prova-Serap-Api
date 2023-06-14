@@ -72,7 +72,6 @@ UtilizarDependencias.Utilizar(app);
 app.UseRouting();
 
 app.UseAuthorization();
-app.UseAuthentication();
 
 app.MapControllers();
 
