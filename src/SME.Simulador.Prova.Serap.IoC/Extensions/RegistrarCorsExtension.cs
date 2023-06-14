@@ -20,9 +20,6 @@ internal static class RegistrarCorsExtension
 
     internal static void UtilizarCors(this WebApplication app)
     {
-        app.UseCors(cors => cors
-            .AllowAnyOrigin()
-            .AllowAnyMethod()
-            .AllowAnyHeader());
+        app.UseCors(CorsPolicy);
     }
 }
