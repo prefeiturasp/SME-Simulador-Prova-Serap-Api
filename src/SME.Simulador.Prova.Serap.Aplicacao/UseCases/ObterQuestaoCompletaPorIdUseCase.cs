@@ -10,8 +10,10 @@ public class ObterQuestaoCompletaPorIdUseCase : AbstractUseCase, IObterQuestaoCo
 
     public async Task<QuestaoCompletaDto> ExecutarAsync(ParametrosQuestaoCompletaDto parametros)
     {
-        var questaoSerap = await mediator.Send(new ObterQuestaoCadernoProvaQuery(parametros.QuestaoId, parametros.ProvaId, parametros.Caderno));
-        if (questaoSerap == null) throw new NegocioException("questão não encontrada.");
+        var questaoSerap = await mediator.Send(new ObterQuestaoCadernoProvaQuery(parametros.QuestaoId, parametros.CadernoId));
+        
+        if (questaoSerap == null) 
+            throw new NegocioException("Questão não encontrada.");
 
         var questao = new QuestaoCompletaDto
         {

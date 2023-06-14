@@ -5,14 +5,12 @@ namespace SME.Simulador.Prova.Serap.Aplicacao;
 
 public class ObterQuestaoCadernoProvaQuery : IRequest<QuestaoSerapDto>
 {
-    public ObterQuestaoCadernoProvaQuery(long questaoId, long provaId, string? caderno)
+    public ObterQuestaoCadernoProvaQuery(long questaoId, long cadernoId)
     {
         QuestaoId = questaoId;
-        ProvaId = provaId;
-        Caderno = caderno;
+        CadernoId = cadernoId;
     }
 
     public long QuestaoId { get; }
-    public long ProvaId { get; }
-    public string? Caderno { get; }
+    public long CadernoId { get; }
 }

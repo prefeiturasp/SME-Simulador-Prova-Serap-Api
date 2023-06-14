@@ -15,6 +15,6 @@ public class ObterQuestaoCadernoProvaQueryHandler : IRequestHandler<ObterQuestao
 
     public async Task<QuestaoSerapDto> Handle(ObterQuestaoCadernoProvaQuery request, CancellationToken cancellationToken)
     {
-        return await repositorioQuestao.ObterQuestaoCadernoProva(request.QuestaoId, request.ProvaId, request.Caderno);
+        return await repositorioQuestao.ObterQuestaoCadernoProva(request.QuestaoId, request.CadernoId);
     }
 }
