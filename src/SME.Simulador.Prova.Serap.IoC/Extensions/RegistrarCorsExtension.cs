@@ -26,7 +26,6 @@ internal static class RegistrarCorsExtension
         app.UseCors(builder => builder
             .AllowAnyOrigin()
             .AllowAnyMethod()
-            .AllowAnyHeader()
-            .AllowCredentials());        
+            .AllowAnyHeader());        
     }
 }
