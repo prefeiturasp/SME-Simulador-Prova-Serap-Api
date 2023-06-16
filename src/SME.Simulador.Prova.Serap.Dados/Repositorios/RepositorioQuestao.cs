@@ -52,7 +52,9 @@ public class RepositorioQuestao : IRepositorioQuestao
                             			bt.Description as TextoBase, 
                             			I.[Statement] as Enunciado, 
                             			B.Description as Caderno,
-			                            (DENSE_RANK() OVER(ORDER BY CASE WHEN (t.KnowledgeAreaBlock = 1) THEN ISNULL(Bka.[Order], 0) END, bi.[Order]) - 1) AS Ordem
+			                            (DENSE_RANK() OVER(ORDER BY CASE WHEN (t.KnowledgeAreaBlock = 1) THEN ISNULL(Bka.[Order], 0) END, bi.[Order]) - 1) AS Ordem,
+										T.Id as IdProva,
+										T.Description as DescricaoProva
 		                            FROM Item I WITH (NOLOCK)
 			                            INNER JOIN BlockItem BI WITH (NOLOCK) ON BI.Item_Id = I.Id
 		                                INNER JOIN ItemType IT  WITH (NOLOCK) ON I.ItemType_Id = IT.Id  
@@ -68,6 +70,8 @@ public class RepositorioQuestao : IRepositorioQuestao
                             			q.Enunciado, 
                             			q.Caderno, 
                             			q.Ordem, 
+										q.IdProva,
+										q.DescricaoProva,
 										anterior.Id as QuestaoAnteriorId,
 										proxima.Id as ProximaQuestaoId
 									from questoes q
