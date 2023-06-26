@@ -11,4 +11,5 @@ public class QuestaoSerapDto : DtoBase
     public int QuantidadeAlternativas { get; set; }
     public long? QuestaoAnteriorId { get; set; }
     public long? ProximaQuestaoId { get; set; }
+    public long ProvaId { get; set; }
 }

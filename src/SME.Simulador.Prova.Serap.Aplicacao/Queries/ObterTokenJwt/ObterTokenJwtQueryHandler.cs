@@ -30,13 +30,15 @@ public class ObterTokenJwtQueryHandler : IRequestHandler<ObterTokenJwtQuery, (st
         var key = Encoding.ASCII.GetBytes(jwtOptions.IssuerSigningKey);
         var dataAtual = UtilDataHora.ObterDataHoraAtualBrasiliaUtc();
         var dataHoraExpiracao = dataAtual.AddMinutes(double.Parse(jwtOptions.ExpiresInMinutes));
+        var permiteEditarItem = Perfis.PermiteEditarItem(request.AutenticacaoUsuario.Perfil);
         
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(new Claim[]
             {
                 new(CustomClaimTypes.Login, request.AutenticacaoUsuario.Login),
-                new(CustomClaimTypes.Perfil, request.AutenticacaoUsuario.Perfil.ToString())
+                new(CustomClaimTypes.Perfil, request.AutenticacaoUsuario.Perfil.ToString()),
+                new(CustomClaimTypes.PermiteEditarItem, permiteEditarItem.ToString())
             }),
             Issuer = jwtOptions.Issuer,
             Audience = jwtOptions.Audience,
