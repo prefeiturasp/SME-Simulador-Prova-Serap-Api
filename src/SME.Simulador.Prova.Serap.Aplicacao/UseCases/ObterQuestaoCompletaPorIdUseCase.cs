@@ -11,9 +11,11 @@ public class ObterQuestaoCompletaPorIdUseCase : AbstractUseCase, IObterQuestaoCo
     public async Task<QuestaoCompletaDto> ExecutarAsync(ParametrosQuestaoCompletaDto parametros)
     {
         var questaoSerap = await mediator.Send(new ObterQuestaoCadernoProvaQuery(parametros.QuestaoId, parametros.CadernoId));
-        
+
         if (questaoSerap == null) 
             throw new NegocioException("Questão não encontrada.");
+        
+        var ehProvaIniciada = await mediator.Send(new ObterEhProvaIniciadaQuery(questaoSerap.ProvaId));        
 
         var questao = new QuestaoCompletaDto
         {
@@ -25,7 +27,8 @@ public class ObterQuestaoCompletaPorIdUseCase : AbstractUseCase, IObterQuestaoCo
             TipoItem = questaoSerap.TipoItem,
             QuantidadeAlternativas = questaoSerap.QuantidadeAlternativas,
             QuestaoAnteriorId = questaoSerap.QuestaoAnteriorId,
-            ProximaQuestaoId = questaoSerap.ProximaQuestaoId
+            ProximaQuestaoId = questaoSerap.ProximaQuestaoId,
+            EhProvaIniciada = ehProvaIniciada
         };
 
         var alternativas = await mediator.Send(new ObterAlternativasPorQuestaoIdQuery(parametros.QuestaoId));
