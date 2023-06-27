@@ -14,6 +14,6 @@ public class ObterEhProvaIniciadaQueryHandler : IRequestHandler<ObterEhProvaInic
 
     public async Task<bool> Handle(ObterEhProvaIniciadaQuery request, CancellationToken cancellationToken)
     {
-        return await repositorioProva.EhProvaIniciada(request.ProvaLegadoId);
+        return await repositorioProva.EhProvaIniciadaAsync(request.ProvaLegadoId);
     }
 }

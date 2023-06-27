@@ -1,7 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using SME.Simulador.Prova.Serap.Dados;
-using SME.Simulador.Prova.Serap.Dados.Repositorios;
 
 namespace SME.Simulador.Prova.Serap.IoC;
 
@@ -15,5 +14,7 @@ internal static class RegistrarRepositoriosExtension
         services.TryAddScoped<IRepositorioQuestao, RepositorioQuestao>();
         services.TryAddScoped<IRepositorioArquivo, RepositorioArquivo>();
         services.TryAddScoped<IRepositorioProva, RepositorioProva>();
+        services.TryAddScoped<IRepositorioProvaLegado, RepositorioProvaLegado>();
+        services.TryAddScoped<IRepositorioExecucaoControle, RepositorioExecucaoControle>();
     }
 }

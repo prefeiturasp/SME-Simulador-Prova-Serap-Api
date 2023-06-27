@@ -3,7 +3,7 @@ using SME.Simulador.Prova.Serap.Infra;
 
 namespace SME.Simulador.Prova.Serap.Aplicacao;
 
-public interface IObterQuestaoCompletaPorIdUseCase : IUseCase<ParametrosQuestaoCompletaDto, QuestaoCompletaDto>
+public interface IObterProvasPorQuestaoIdUseCase : IUseCase<long, IEnumerable<ProvaLegadoDto>>
 {
-
+    
 }
