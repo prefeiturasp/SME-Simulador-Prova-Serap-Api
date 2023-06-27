@@ -5,4 +5,5 @@ public static class CustomClaimTypes
     public const string Login = "LOGIN";
     public const string Nome = "NOME";
     public const string Perfil = "PERFIL";
+    public const string PermiteEditarItem = "PERMITEEDITARITEM";
 }

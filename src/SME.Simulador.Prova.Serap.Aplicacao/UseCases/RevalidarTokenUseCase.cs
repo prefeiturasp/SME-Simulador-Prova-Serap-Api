@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using SME.Simulador.Prova.Serap.Dominio;
 using SME.Simulador.Prova.Serap.Infra;
 
 namespace SME.Simulador.Prova.Serap.Aplicacao;
@@ -16,7 +17,8 @@ public class RevalidarTokenUseCase : AbstractUseCase, IRevalidarTokenUseCase
 
         return new UsuarioAutenticadoDto(token.Item1, token.Item2)
         {
-            UltimoLogin = UtilDataHora.ObterDataHoraAtualBrasiliaUtc()
+            UltimoLogin = UtilDataHora.ObterDataHoraAtualBrasiliaUtc(),
+            PermiteEditarItem = Perfis.PermiteEditarItem(usuarioAutenticacao.Perfil)
         };
     }
 }
