@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using SME.Simulador.Prova.Serap.Aplicacao;
 using SME.Simulador.Prova.Serap.Infra;
-using SME.Simulador.Prova.Serap.Infra.Dtos;
 
 namespace SME.Simulador.Prova.Serap.Api.Controllers;
 

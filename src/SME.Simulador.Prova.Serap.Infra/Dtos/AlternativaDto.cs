@@ -1,4 +1,4 @@
-﻿namespace SME.Simulador.Prova.Serap.Infra.Dtos;
+﻿namespace SME.Simulador.Prova.Serap.Infra;
 
 public class AlternativaDto : DtoBase
 {

@@ -4,10 +4,10 @@ namespace SME.Simulador.Prova.Serap.Aplicacao;
 
 public class ObterEhProvaIniciadaQuery : IRequest<bool>
 {
-    public ObterEhProvaIniciadaQuery(long provaLegadoId)
+    public ObterEhProvaIniciadaQuery(long provaId)
     {
-        ProvaLegadoId = provaLegadoId;
+        ProvaId = provaId;
     }
 
-    public long ProvaLegadoId { get; }
+    public long ProvaId { get; }
 }
