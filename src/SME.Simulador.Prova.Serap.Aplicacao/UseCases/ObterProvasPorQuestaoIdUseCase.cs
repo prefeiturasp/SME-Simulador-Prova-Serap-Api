@@ -12,13 +12,17 @@ public class ObterProvasPorQuestaoIdUseCase : AbstractUseCase, IObterProvasPorQu
     
     public async Task<IEnumerable<ProvaLegadoDto>> ExecutarAsync(long request)
     {
-        var provasNaoIniciadas = await mediator.Send(new ObterProvasPorStatusQuery(ProvaStatus.NaoIniciado));
+        var provasNaoIniciadas = await mediator.Send(new ObterProvasNaoIniciadasPorQuestaoIdQuery(request));
         var provasParaSeremSincronizadas = await ObterProvasParaSeramSincronizadas(request);
 
-        var idsProvasParaAtualizar = new List<long>();
-        idsProvasParaAtualizar.AddRange(provasNaoIniciadas.Select(c => c.ProvaLegadoId));
-        idsProvasParaAtualizar.AddRange(provasParaSeremSincronizadas.Select(c => c.Id));
+        var idsProvasParaAtualizar = new HashSet<long>();
 
+        foreach (var id in provasNaoIniciadas.Select(c => c.Id))
+            idsProvasParaAtualizar.Add(id);
+
+        foreach (var id in provasParaSeremSincronizadas.Select(c => c.Id))
+            idsProvasParaAtualizar.Add(id);
+        
         var provasPorQuestao = await mediator.Send(new ObterProvasPorQuestaoIdQuery(request));
 
         return provasPorQuestao.Where(c => idsProvasParaAtualizar.Contains(c.Id));
