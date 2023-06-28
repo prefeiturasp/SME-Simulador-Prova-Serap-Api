@@ -1,4 +1,5 @@
-﻿using SME.Simulador.Prova.Serap.Dominio;
+using Dapper;
+using SME.Simulador.Prova.Serap.Dominio;
 using SME.Simulador.Prova.Serap.Infra;
 
 namespace SME.Simulador.Prova.Serap.Dados;
@@ -45,7 +46,8 @@ public class RepositorioProvaLegado : IRepositorioProvaLegado
             }, transaction: gestaoAvaliacaoContexto.Transacao);
     }
 
-    public async Task<IEnumerable<ProvaLegadoDto>> ObterProvasPorQuestaoParaSeremSincronizadasAsync(FiltroProvasParaSeremSincronizadasDto filtro)
+    public async Task<IEnumerable<ProvaLegadoDto>> ObterProvasPorQuestaoParaSeremSincronizadasAsync(
+        FiltroProvasParaSeremSincronizadasDto filtro)
     {
         const string query = @"select distinct t.id,
                                     t.Description as descricao,
@@ -70,13 +72,29 @@ public class RepositorioProvaLegado : IRepositorioProvaLegado
                                                 and bci.State = @state
                                                 and bc.State = @state))
                                 order by t.ApplicationStartDate, t.Id, t.Description desc";
-        
+
         return await gestaoAvaliacaoContexto.Conexao.QueryAsync<ProvaLegadoDto>(query,
             new
             {
                 questaoId = filtro.QuestaoId,
                 ultimaAtualizacao = filtro.UltimaAtualizacao,
                 state = (int)LegadoState.Ativo
-            }, transaction: gestaoAvaliacaoContexto.Transacao);        
+            }, transaction: gestaoAvaliacaoContexto.Transacao);
+    }
+
+    public async Task<bool> EhProvaIniciada(long provaId)
+    {
+        const string query = @"select top 1 t.Id
+                                from Test t
+                                where t.Id = @provaId
+                                and t.State = @state
+                                and GETDATE() > t.ApplicationStartDate and GETDATE() < t.ApplicationEndDate
+                                order by t.Id";
+
+        var id = await gestaoAvaliacaoContexto.Conexao.QuerySingleOrDefaultAsync<long>(query,
+            new { provaId, state = (int)LegadoState.Ativo },
+            transaction: gestaoAvaliacaoContexto.Transacao);
+
+        return id > 0;
     }
 }

@@ -5,15 +5,15 @@ namespace SME.Simulador.Prova.Serap.Aplicacao;
 
 public class ObterEhProvaIniciadaQueryHandler : IRequestHandler<ObterEhProvaIniciadaQuery, bool>
 {
-    private readonly IRepositorioProva repositorioProva;
+    private readonly IRepositorioProvaLegado repositorioProvaLegado;
 
-    public ObterEhProvaIniciadaQueryHandler(IRepositorioProva repositorioProva)
+    public ObterEhProvaIniciadaQueryHandler(IRepositorioProvaLegado repositorioProvaLegado)
     {
-        this.repositorioProva = repositorioProva ?? throw new ArgumentNullException(nameof(repositorioProva));
+        this.repositorioProvaLegado = repositorioProvaLegado ?? throw new ArgumentNullException(nameof(repositorioProvaLegado));
     }
 
     public async Task<bool> Handle(ObterEhProvaIniciadaQuery request, CancellationToken cancellationToken)
     {
-        return await repositorioProva.EhProvaIniciadaAsync(request.ProvaLegadoId);
+        return await repositorioProvaLegado.EhProvaIniciada(request.ProvaId);
     }
 }
