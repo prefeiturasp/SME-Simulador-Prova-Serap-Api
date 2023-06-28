@@ -2,5 +2,5 @@
 
 public interface IRepositorioProvaLegado
 {
-    Task<bool> EhProvaIniciada(long provaId);    
+    Task<bool> EhProvaIniciadaAsync(long provaId);    
 }

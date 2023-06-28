@@ -12,13 +12,13 @@ public class RepositorioProvaLegado : IRepositorioProvaLegado
         this.gestaoAvaliacaoContexto = gestaoAvaliacaoContexto ?? throw new ArgumentNullException(nameof(gestaoAvaliacaoContexto));
     }
 
-    public async Task<bool> EhProvaIniciada(long provaId)
+    public async Task<bool> EhProvaIniciadaAsync(long provaId)
     {
         const string query = @"select top 1 t.Id
                                 from Test t
                                 where t.Id = @provaId
                                 and t.State = @state
-                                and GETDATE() > t.ApplicationStartDate and GETDATE() < t.ApplicationEndDate
+                                and GETDATE() > t.ApplicationStartDate and GETDATE() <= t.ApplicationEndDate
                                 order by t.Id";
 
         var id = await gestaoAvaliacaoContexto.Conexao.QuerySingleOrDefaultAsync<long>(query,
