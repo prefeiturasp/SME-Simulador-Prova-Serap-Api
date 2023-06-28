@@ -3,9 +3,9 @@ using SME.Simulador.Prova.Serap.Infra;
 
 namespace SME.Simulador.Prova.Serap.Aplicacao;
 
-public class ObterAlternativasPorQuestaoIdQuery : IRequest<IEnumerable<AlternativaDto>>
+public class ObterProvasNaoIniciadasPorQuestaoIdQuery : IRequest<IEnumerable<ProvaLegadoDto>>
 {
-    public ObterAlternativasPorQuestaoIdQuery(long questaoId)
+    public ObterProvasNaoIniciadasPorQuestaoIdQuery(long questaoId)
     {
         QuestaoId = questaoId;
     }

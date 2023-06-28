@@ -1,9 +1,8 @@
-﻿using SME.Simulador.Prova.Serap.Infra.Dtos;
+﻿using SME.Simulador.Prova.Serap.Infra;
 
-namespace SME.Simulador.Prova.Serap.Dados
+namespace SME.Simulador.Prova.Serap.Dados;
+
+public interface IRepositorioAlternativa
 {
-    public interface IRepositorioAlternativa
-    {
-        Task<IEnumerable<AlternativaDto>> ObterAlternativasPorQuestaoId(long questaoId);
-    }
+    Task<IEnumerable<AlternativaDto>> ObterAlternativasPorQuestaoIdAsync(long questaoId);
 }

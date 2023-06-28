@@ -4,6 +4,6 @@ namespace SME.Simulador.Prova.Serap.Dados;
 
 public interface IRepositorioQuestao
 {
-    Task<QuestaoSerapDto> ObterQuestaoCadernoProva(long questaoId, long cadernoId);
-    Task<IEnumerable<QuestaoResumoDto>> ObterQuestoesResumoPorCadernoId(long cadernoId);
+    Task<QuestaoSerapDto> ObterQuestaoCadernoProvaAsync(long questaoId, long cadernoId);
+    Task<IEnumerable<QuestaoResumoDto>> ObterQuestoesResumoPorCadernoIdAsync(long cadernoId);
 }

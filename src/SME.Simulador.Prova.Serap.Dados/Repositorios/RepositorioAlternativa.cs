@@ -1,4 +1,4 @@
-﻿using SME.Simulador.Prova.Serap.Infra.Dtos;
+﻿using SME.Simulador.Prova.Serap.Infra;
 
 namespace SME.Simulador.Prova.Serap.Dados;
 
@@ -11,7 +11,7 @@ public class RepositorioAlternativa : IRepositorioAlternativa
         this.gestaoAvaliacaoContexto = gestaoAvaliacaoContexto ?? throw new ArgumentNullException(nameof(gestaoAvaliacaoContexto));
     }
 
-    public async Task<IEnumerable<AlternativaDto>> ObterAlternativasPorQuestaoId(long questaoId)
+    public async Task<IEnumerable<AlternativaDto>> ObterAlternativasPorQuestaoIdAsync(long questaoId)
     {
         const string query = @"SELECT 
                                     A.Id,

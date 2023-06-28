@@ -15,6 +15,6 @@ public class ObterAudiosPorQuestaoIdQueryHandler : IRequestHandler<ObterAudiosPo
 
     public async Task<IEnumerable<ArquivoDto>> Handle(ObterAudiosPorQuestaoIdQuery request, CancellationToken cancellationToken)
     {
-        return await repositorioArquivo.ObterAudiosPorQuestaoId(request.QuestaoId);
+        return await repositorioArquivo.ObterAudiosPorQuestaoIdAsync(request.QuestaoId);
     }
 }

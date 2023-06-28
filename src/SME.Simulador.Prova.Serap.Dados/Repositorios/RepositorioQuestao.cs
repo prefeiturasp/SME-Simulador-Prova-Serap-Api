@@ -1,6 +1,6 @@
 ﻿using SME.Simulador.Prova.Serap.Infra;
 
-namespace SME.Simulador.Prova.Serap.Dados.Repositorios;
+namespace SME.Simulador.Prova.Serap.Dados;
 
 public class RepositorioQuestao : IRepositorioQuestao
 {
@@ -11,7 +11,7 @@ public class RepositorioQuestao : IRepositorioQuestao
 		this.gestaoAvaliacaoContexto = gestaoAvaliacaoContexto ?? throw new ArgumentNullException(nameof(gestaoAvaliacaoContexto));
 	}
 
-	public async Task<QuestaoSerapDto> ObterQuestaoCadernoProva(long questaoId, long cadernoId)
+	public async Task<QuestaoSerapDto> ObterQuestaoCadernoProvaAsync(long questaoId, long cadernoId)
 	{
 		const string query = @" with questoes as (
 			                            SELECT distinct I.id, B.Description as Caderno,
@@ -44,7 +44,7 @@ public class RepositorioQuestao : IRepositorioQuestao
 			new { questaoId, cadernoId }, transaction: gestaoAvaliacaoContexto.Transacao);
 	}
 
-	public async Task<IEnumerable<QuestaoResumoDto>> ObterQuestoesResumoPorCadernoId(long cadernoId)
+	public async Task<IEnumerable<QuestaoResumoDto>> ObterQuestoesResumoPorCadernoIdAsync(long cadernoId)
 	{
 		const string query = @"with questoes as (
 		                            SELECT distinct I.id, 
