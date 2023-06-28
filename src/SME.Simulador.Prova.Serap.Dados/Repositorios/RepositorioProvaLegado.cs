@@ -41,7 +41,7 @@ public class RepositorioProvaLegado : IRepositorioProvaLegado
             new
             {
                 questaoId,
-                state = (int)LegadoStatus.Ativo
+                state = (int)LegadoState.Ativo
             }, transaction: gestaoAvaliacaoContexto.Transacao);
     }
 
@@ -76,7 +76,7 @@ public class RepositorioProvaLegado : IRepositorioProvaLegado
             {
                 questaoId = filtro.QuestaoId,
                 ultimaAtualizacao = filtro.UltimaAtualizacao,
-                state = (int)LegadoStatus.Ativo
+                state = (int)LegadoState.Ativo
             }, transaction: gestaoAvaliacaoContexto.Transacao);        
     }
 }

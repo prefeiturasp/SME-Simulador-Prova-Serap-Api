@@ -2,7 +2,7 @@
 
 namespace SME.Simulador.Prova.Serap.Dominio;
 
-public enum LegadoStatus
+public enum LegadoState
 {
     [Description("Não definido")]
     NaoDefinido = 0,
