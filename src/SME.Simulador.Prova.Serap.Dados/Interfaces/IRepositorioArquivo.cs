@@ -4,6 +4,6 @@ namespace SME.Simulador.Prova.Serap.Dados;
 
 public interface IRepositorioArquivo
 {
-    Task<IEnumerable<ArquivoDto>> ObterAudiosPorQuestaoId(long questaoId);
-    Task<IEnumerable<VideoDto>> ObterVideosPorQuestaoId(long questaoId);
+    Task<IEnumerable<ArquivoDto>> ObterAudiosPorQuestaoIdAsync(long questaoId);
+    Task<IEnumerable<VideoDto>> ObterVideosPorQuestaoIdAsync(long questaoId);
 }

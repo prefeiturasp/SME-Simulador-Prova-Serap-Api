@@ -15,6 +15,6 @@ public class ObterVideosPorQuestaoIdQueryHandler : IRequestHandler<ObterVideosPo
 
     public async Task<IEnumerable<VideoDto>> Handle(ObterVideosPorQuestaoIdQuery request, CancellationToken cancellationToken)
     {
-        return await repositorioArquivo.ObterVideosPorQuestaoId(request.QuestaoId);
+        return await repositorioArquivo.ObterVideosPorQuestaoIdAsync(request.QuestaoId);
     }
 }

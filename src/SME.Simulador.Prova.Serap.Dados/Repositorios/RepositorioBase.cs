@@ -10,7 +10,7 @@ public class RepositorioBase<TEntidadeBase, TContexto> : IRepositorioBase<TEntid
 {
     private readonly TContexto contexto;
 
-    public RepositorioBase(TContexto contexto)
+    protected RepositorioBase(TContexto contexto)
     {
         this.contexto = contexto ?? throw new ArgumentNullException(nameof(contexto));
     }
@@ -18,6 +18,11 @@ public class RepositorioBase<TEntidadeBase, TContexto> : IRepositorioBase<TEntid
     protected IDbConnection ObterConexao()
     {
         return contexto.Conexao;
+    }
+
+    protected IDbTransaction? ObterTransacao()
+    {
+        return contexto.Transacao;
     }
 
     public virtual async Task<TEntidadeBase> ObterPorIdAsync(long id)

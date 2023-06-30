@@ -11,5 +11,5 @@ public enum LegadoState
     [Description("Inativo")]
     Inativo = 2,
     [Description("Excluído")]
-    Excluido = 3        
+    Excluido = 3    
 }
