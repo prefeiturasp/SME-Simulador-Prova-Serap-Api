@@ -6,8 +6,8 @@ public class ObterEhProvaIniciadaQueryValidator : AbstractValidator<ObterEhProva
 {
     public ObterEhProvaIniciadaQueryValidator()
     {
-        RuleFor(c => c.ProvaLegadoId)
+        RuleFor(c => c.ProvaId)
             .GreaterThan(0)
-            .WithMessage("O Id da prova legado deve ser informado.");
+            .WithMessage("O Id da prova deve ser informado.");
     }
 }

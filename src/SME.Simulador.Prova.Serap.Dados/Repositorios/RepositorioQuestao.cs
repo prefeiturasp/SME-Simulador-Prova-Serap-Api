@@ -1,6 +1,6 @@
 ﻿using SME.Simulador.Prova.Serap.Infra;
 
-namespace SME.Simulador.Prova.Serap.Dados.Repositorios;
+namespace SME.Simulador.Prova.Serap.Dados;
 
 public class RepositorioQuestao : IRepositorioQuestao
 {
