@@ -18,7 +18,8 @@ public class RepositorioProvaLegado : IRepositorioProvaLegado
                                 from Test t
                                 where t.Id = @provaId
                                 and t.State = @state
-                                and GETDATE() > t.ApplicationStartDate and GETDATE() <= t.ApplicationEndDate
+                                and CAST(GETDATE() AS DATE) > CAST(t.ApplicationStartDate AS DATE) 
+                                and CAST(GETDATE() AS DATE) <= CAST(t.ApplicationEndDate AS DATE)
                                 order by t.Id";
 
         var id = await gestaoAvaliacaoContexto.Conexao.QuerySingleOrDefaultAsync<long>(query,
