@@ -48,6 +48,11 @@ internal static class RegistrarEnvironmentVariablesExtension
     {
         AddOptions<AutenticacaoOptions>(builder, SecoesOptions.Autenticacao);
     }
+
+    private static void AddClientApi(WebApplicationBuilder builder)
+    {
+        AddOptions<ClientApiOptions>(builder, SecoesOptions.ClientApi);        
+    }
     
     internal static void RegistrarEnvironmentVariables(this WebApplicationBuilder builder)
     {
@@ -58,5 +63,6 @@ internal static class RegistrarEnvironmentVariablesExtension
         AddRedisOptions(builder);
         AddRabbitLogOptions(builder);
         AddAutenticacao(builder);
+        AddClientApi(builder);
     }
 }
