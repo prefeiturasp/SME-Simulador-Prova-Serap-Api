@@ -7,11 +7,11 @@ namespace SME.Simulador.Prova.Serap.IoC;
 
 internal static class RegistrarHttpClientExtension
 {
-    internal static void RegistrarHttpClient(this IServiceCollection services)
+    private static void RegistrarHttpClientSerapApi(IServiceCollection services)
     {
         services.AddHttpClient(SerapConstants.ApiSerap, client =>
         {
-            var clientApi = GetClientApi(services);
+            var clientApi = GetClientApiSerap(services);
             
             if (string.IsNullOrEmpty(clientApi.Item1))
                 throw new ErroException("Endereço base de comunicação com a API SERAp não localizado.");
@@ -28,15 +28,21 @@ internal static class RegistrarHttpClientExtension
         });        
     }
 
-    private static (string, string, string) GetClientApi(IServiceCollection services)
+    private static (string, string, string) GetClientApiSerap(IServiceCollection services)
     {
         var resultado = (UrlBase: string.Empty, NomeChave: string.Empty, ValorChave: string.Empty);
         var serviceProvider = services.BuildServiceProvider();
         var clientApiOptions = serviceProvider.GetRequiredService<IOptions<ClientApiOptions>>().Value;
+
         resultado.UrlBase = clientApiOptions.SerapApiUrlBase;
         resultado.NomeChave = clientApiOptions.SerapApiNomeChave;
         resultado.ValorChave = clientApiOptions.SerapApiValorChave;
 
         return resultado;
+    }
+
+    internal static void RegistrarHttpClient(this IServiceCollection services)
+    {
+        RegistrarHttpClientSerapApi(services);
     }
 }
