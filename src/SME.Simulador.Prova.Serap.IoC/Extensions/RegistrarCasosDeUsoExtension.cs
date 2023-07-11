@@ -13,6 +13,7 @@ internal static class RegistrarCasosDeUsoExtension
         services.TryAddScoped<IRevalidarTokenUseCase, RevalidarTokenUseCase>();
         services.TryAddScoped<IObterQuestaoCompletaPorIdUseCase, ObterQuestaoCompletaPorIdUseCase>();
         services.TryAddScoped<IObterQuestoesResumoPorCadernoIdUseCase, ObterQuestoesResumoPorCadernoIdUseCase>();
+        services.TryAddScoped<IObterProvasPorQuestaoIdUseCase, ObterProvasPorQuestaoIdUseCase>();
         services.TryAddScoped<IUploadFileUseCase, UploadFileUseCase>();
     }
 }

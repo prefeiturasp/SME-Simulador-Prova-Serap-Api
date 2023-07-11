@@ -15,6 +15,6 @@ public class ObterAlternativasPorQuestaoIdQueryHandler : IRequestHandler<ObterAl
 
     public async Task<IEnumerable<AlternativaDto>> Handle(ObterAlternativasPorQuestaoIdQuery request, CancellationToken cancellationToken)
     {
-        return await repositorioAlternativa.ObterAlternativasPorQuestaoId(request.QuestaoId);
+        return await repositorioAlternativa.ObterAlternativasPorQuestaoIdAsync(request.QuestaoId);
     }
 }

@@ -11,7 +11,7 @@ public class RepositorioArquivo : IRepositorioArquivo
         this.gestaoAvaliacaoContexto = gestaoAvaliacaoContexto ?? throw new ArgumentNullException(nameof(gestaoAvaliacaoContexto));
     }
 
-    public async Task<IEnumerable<ArquivoDto>> ObterAudiosPorQuestaoId(long questaoId)
+    public async Task<IEnumerable<ArquivoDto>> ObterAudiosPorQuestaoIdAsync(long questaoId)
     {
         const string query = @"select f.[Path] Caminho, f.Id
                                 from Item i WITH (NOLOCK)
@@ -24,7 +24,7 @@ public class RepositorioArquivo : IRepositorioArquivo
             transaction: gestaoAvaliacaoContexto.Transacao);
     }
 
-    public async Task<IEnumerable<VideoDto>> ObterVideosPorQuestaoId(long questaoId)
+    public async Task<IEnumerable<VideoDto>> ObterVideosPorQuestaoIdAsync(long questaoId)
     {
         const string query = @"SELECT  
                                     F.Id AS VideoId, 

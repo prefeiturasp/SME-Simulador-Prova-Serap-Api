@@ -15,6 +15,6 @@ public class ObterQuestoesResumoPorCadernoIdQueryHandler : IRequestHandler<Obter
 
     public async Task<IEnumerable<QuestaoResumoDto>> Handle(ObterQuestoesResumoPorCadernoIdQuery request, CancellationToken cancellationToken)
     {
-        return await repositorioQuestao.ObterQuestoesResumoPorCadernoId(request.CadernoId);
+        return await repositorioQuestao.ObterQuestoesResumoPorCadernoIdAsync(request.CadernoId);
     }
 }

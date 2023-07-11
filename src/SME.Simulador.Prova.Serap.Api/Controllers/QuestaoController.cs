@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SME.Simulador.Prova.Serap.Aplicacao;
 using SME.Simulador.Prova.Serap.Infra;
@@ -19,5 +20,17 @@ public class QuestaoController : ControllerBase
     {
         return Ok(await useCase.ExecutarAsync(parametros));
     }
+    
+    [ProducesResponseType(typeof(IEnumerable<ProvaLegadoDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(List<string>), StatusCodes.Status422UnprocessableEntity)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
+    [HttpGet("{questaoId:long}/provas", Name = nameof(ObterProvasPorQuestaoIdAsync))]
+    [Authorize("Bearer")]
+    public async Task<IActionResult> ObterProvasPorQuestaoIdAsync([Required] long questaoId,
+        [FromServices] IObterProvasPorQuestaoIdUseCase useCase)
+    {
+        return Ok(await useCase.ExecutarAsync(questaoId));
+    }    
 }
 

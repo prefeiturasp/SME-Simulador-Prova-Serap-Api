@@ -14,5 +14,6 @@ internal static class RegistrarRepositoriosExtension
         services.TryAddScoped<IRepositorioQuestao, RepositorioQuestao>();
         services.TryAddScoped<IRepositorioArquivo, RepositorioArquivo>();
         services.TryAddScoped<IRepositorioProvaLegado, RepositorioProvaLegado>();
+        services.TryAddScoped<IRepositorioExecucaoControle, RepositorioExecucaoControle>();
     }
 }
