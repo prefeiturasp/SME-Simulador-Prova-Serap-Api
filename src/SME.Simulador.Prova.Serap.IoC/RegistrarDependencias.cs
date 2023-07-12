@@ -19,5 +19,6 @@ public static class RegistrarDependencias
         RegistrarMediator.Registrar(builder.Services);
         builder.Services.RegistrarValidadores();
         builder.Services.RegistrarCasosDeUso();
+        builder.Services.RegistrarHttpClient();
     }
 }
