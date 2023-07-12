@@ -377,20 +377,31 @@ public static class DapperInterceptor
         return result;
     }
 
-    public static async Task<object> InsertAsync<TEntity>(this IDbConnection connection, TEntity entity,
-        IDbTransaction? transaction = null) where TEntity : class
+    //public static async Task<object> InsertAsync<TEntity>(this IDbConnection connection, TEntity entity,
+    //    IDbTransaction? transaction = null) where TEntity : class
+    //{
+    //    if (servicoTelemetria == null)
+    //        throw new ArgumentNullException(nameof(servicoTelemetria), ServicoTelemetriaNaoDeveSerNulo);
+
+    //    var entidade = entity.GetType().Name;
+
+    //    var result = await servicoTelemetria.RegistrarComRetornoAsync<TEntity>(
+    //        async () => await Dommel.DommelMapper.InsertAsync(connection, entity, transaction), "MSSql",
+    //        $"UpdateAsync Entidade {entidade}", "UpdateAsync");
+
+    //    return result;
+    //}
+
+    public static async Task<object> InsertAsync<TEntity>(this IDbConnection connection, TEntity entity, IDbTransaction transaction = null) where TEntity : class
     {
-        if (servicoTelemetria == null)
-            throw new ArgumentNullException(nameof(servicoTelemetria), ServicoTelemetriaNaoDeveSerNulo);
+        var entidade = entity?.GetType()?.Name;
 
-        var entidade = entity.GetType().Name;
-
-        var result = await servicoTelemetria.RegistrarComRetornoAsync<TEntity>(
-            async () => await Dommel.DommelMapper.InsertAsync(connection, entity, transaction), "MSSql",
-            $"UpdateAsync Entidade {entidade}", "UpdateAsync");
+        var result = await servicoTelemetria.RegistrarComRetornoAsync<TEntity>(async () => await Dommel.DommelMapper.InsertAsync<TEntity>(connection, entity, transaction), "Postgres", $"UpdateAsync Entidade {entidade}", "UpdateAsync");
 
         return result;
-    }
 
+    }
     #endregion
 }
+
+  
