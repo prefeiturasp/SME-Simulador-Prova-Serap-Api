@@ -9,4 +9,5 @@ public static class SecoesOptions
     public const string RedisOptions = nameof(RedisOptions);
     public const string RabbitLog = nameof(RabbitLog);
     public const string Autenticacao = nameof(Autenticacao);
+    public const string ClientApi = nameof(ClientApi);
 }
