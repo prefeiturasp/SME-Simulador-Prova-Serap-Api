@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using SME.Simulador.Prova.Serap.Infra.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace SME.Simulador.Prova.Serap.Aplicacao
 {
-    public class ObterIdCadeiaBlocosPorItemEProvaIdQuery : IRequest<long>
+    public class ObterCadeiaBlocoQuestaoPorItemEProvaIdQuery : IRequest<CadeiaBlocoQuestaoDto>
     {
-        public ObterIdCadeiaBlocosPorItemEProvaIdQuery(long provaId, long itemId)
+        public ObterCadeiaBlocoQuestaoPorItemEProvaIdQuery(long provaId, long itemId)
         {
             ProvaId = provaId;
             ItemId = itemId;

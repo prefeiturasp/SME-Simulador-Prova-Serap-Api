@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace SME.Simulador.Prova.Serap.Aplicacao
+{
     public class IncluirAlternativaCommandValidator
     {
     }

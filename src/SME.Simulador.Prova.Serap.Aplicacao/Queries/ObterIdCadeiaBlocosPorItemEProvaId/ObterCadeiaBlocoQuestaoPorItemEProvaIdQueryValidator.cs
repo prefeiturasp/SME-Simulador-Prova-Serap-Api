@@ -2,9 +2,9 @@
 
 namespace SME.Simulador.Prova.Serap.Aplicacao.Queries.ObterIdCadeiaBlocosPorItemEProvaId
 {
-    public class ObterIdCadeiaBlocosPorItemEProvaIdQueryValidator : AbstractValidator<ObterIdCadeiaBlocosPorItemEProvaIdQuery>
+    public class ObterCadeiaBlocoQuestaoPorItemEProvaIdQueryValidator : AbstractValidator<ObterCadeiaBlocoQuestaoPorItemEProvaIdQuery>
     {
-        public ObterIdCadeiaBlocosPorItemEProvaIdQueryValidator()
+        public ObterCadeiaBlocoQuestaoPorItemEProvaIdQueryValidator()
         {
             RuleFor(c => c.ProvaId)
                 .GreaterThan(0)

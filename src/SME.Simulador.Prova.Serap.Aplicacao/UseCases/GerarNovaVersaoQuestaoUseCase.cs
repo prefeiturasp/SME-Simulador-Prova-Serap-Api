@@ -59,7 +59,7 @@ namespace SME.Simulador.Prova.Serap.Aplicacao.UseCases
 
                 if (provaBib)
                 {
-                    var blocoId = mediator.Send(new ObterIdBlocoPorQuestaoEProvaIdQuery(provaId, request.Questao.Id));
+                    var blocoId = mediator.Send(new ObterCadeiaBlocoQuestaoPorItemEProvaIdQuery(provaId, request.Questao.Id));
                     // Recuperar o block completo 
                     // Criar um novo block 
                     // inativar o antigo 
@@ -69,7 +69,7 @@ namespace SME.Simulador.Prova.Serap.Aplicacao.UseCases
 
                 else
                 {
-                    var blocoQuestao = await mediator.Send(new ObterIdBlocoPorQuestaoEProvaIdQuery(provaId, request.Questao.Id));
+                    var blocoQuestao = await mediator.Send(new ObterQuestaoBlocoPorItemEProvaIdQuery(provaId, request.Questao.Id));
                     QuestaoBloco itemBloco = MapeaItemBlocoProvaIdParaNovaEntidade(blocoQuestao);
                     await InativaItemVersaoAntigaDoBloco(itemBloco);
                     await CriaBlocoQuestaoNovaVersao(NovaVersaoQuestaoId, itemBloco.BlocoId, itemBloco.Ordem);
