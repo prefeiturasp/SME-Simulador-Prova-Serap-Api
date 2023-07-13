@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SME.Simulador.Prova.Serap.Aplicacao.Commands.QuestaoAudio
 {
-    internal class IncluirQuestaoAudioCommandValidator
+    public  class IncluirQuestaoAudioCommandValidator
     {
     }
 }
