@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using SME.Simulador.Prova.Serap.Dados.Interfaces;
 using SME.Simulador.Prova.Serap.Dominio;
+using SME.Simulador.Prova.Serap.Infra;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,11 +21,7 @@ namespace SME.Simulador.Prova.Serap.Dados.Repositorios
 
         public async Task<long> InserirTextoBase(TextoBase entidade)
         {
-
-            using var conn = ObterConexao();
-            try
-            {
-                var query = @"INSERT INTO [dbo].[BaseText]
+            var query = @"INSERT INTO [dbo].[BaseText]
            ([Description]
            ,[CreateDate]
            ,[UpdateDate]
@@ -49,25 +46,22 @@ namespace SME.Simulador.Prova.Serap.Dados.Repositorios
            ,@TextoBaseAlunoNarracao
            ,@OrientacaTextoBase)";
 
-               var ret = await conn.ExecuteAsync(query, new { entidade.Descricao, 
-                                                              entidade.DataCriacao, 
-                                                              entidade.DataAtualizacao,
-                                                              entidade.Situacao,
-                                                              entidade.Fonte,
-                                                              entidade.OrientacaoInicial,
-                                                              entidade.DeclaracaoInicial,
-                                                              entidade.DeclaracaoInicialNarracao,
-                                                              entidade.TextoBaseAluno,
-                                                              entidade.TextoBaseAlunoNarracao,
-                                                              entidade.OrientacaTextoBase});
-
-                return ret;
-            }
-            finally
+            var ret = await gestaoAvaliacaoContexto.Conexao.ExecuteAsync(query, new
             {
-                conn.Close();
-                conn.Dispose();
-            }
+                entidade.Descricao,
+                entidade.DataCriacao,
+                entidade.DataAtualizacao,
+                entidade.Situacao,
+                entidade.Fonte,
+                entidade.OrientacaoInicial,
+                entidade.DeclaracaoInicial,
+                entidade.DeclaracaoInicialNarracao,
+                entidade.TextoBaseAluno,
+                entidade.TextoBaseAlunoNarracao,
+                entidade.OrientacaTextoBase
+            });
+
+            return ret;
         }
     }
 }

@@ -14,7 +14,7 @@ namespace SME.Simulador.Prova.Serap.Dados.Repositorios
             this.gestaoAvaliacaoContexto = gestaoAvaliacaoContexto ?? throw new ArgumentNullException(nameof(gestaoAvaliacaoContexto));
         }
 
-        public async Task<BlocoItemDto> ObterBlocoIdPorItemEhProvaId(long provaId, long itemId)
+        public async Task<BlocoItemDto> ObterBlocoIdPorItemEProvaId(long provaId, long itemId)
         {
             const string query = @"SELECT  [Block_Id] as BlocoId
                                                      ,BI.[Item_Id] as ItemId

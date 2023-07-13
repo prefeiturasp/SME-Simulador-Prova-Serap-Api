@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SME.Simulador.Prova.Serap.Aplicacao.Commands.CadeiaBlocoQuestao.Salvar
 {
-    internal class CadeiaBlocoQuestaoCommandValidator
+    public class CadeiaBlocoQuestaoCommandValidator
     {
     }
 }

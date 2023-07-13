@@ -13,7 +13,7 @@ namespace SME.Simulador.Prova.Serap.Aplicacao
         }
         public async Task<BlocoItemDto> Handle(ObterQuestaoBlocoPorItemEProvaIdQuery request, CancellationToken cancellationToken)
         {
-            return await repositorioBlocos.ObterBlocoIdPorItemEhProvaId(request.ProvaId, request.ItemId);
+            return await repositorioBlocos.ObterBlocoIdPorItemEProvaId(request.ProvaId, request.ItemId);
         }
     }
 }

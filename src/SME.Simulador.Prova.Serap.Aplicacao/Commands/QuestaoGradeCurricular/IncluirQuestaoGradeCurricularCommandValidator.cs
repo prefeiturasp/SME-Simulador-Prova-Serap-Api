@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SME.Simulador.Prova.Serap.Aplicacao.Commands.QuestaoGradeCurricular
 {
-    internal class IncluirQuestaoGradeCurricularCommandValidator
+    public class IncluirQuestaoGradeCurricularCommandValidator
     {
     }
 }

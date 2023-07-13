@@ -10,7 +10,7 @@ namespace SME.Simulador.Prova.Serap.Dados.Interfaces
 {
     public interface IRepositorioBlocoQuestao 
     {
-        Task<BlocoItemDto> ObterBlocoIdPorItemEhProvaId(long provaId, long itemId);
+        Task<BlocoItemDto> ObterBlocoIdPorItemEProvaId(long provaId, long itemId);
         Task<long> SalvarAsync(QuestaoBloco entidade);
     }
 }
