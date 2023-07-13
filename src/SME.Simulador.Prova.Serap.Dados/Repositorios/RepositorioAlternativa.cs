@@ -1,16 +1,17 @@
-﻿using SME.Simulador.Prova.Serap.Infra;
+﻿using SME.Simulador.Prova.Serap.Dados.Interfaces;
+using SME.Simulador.Prova.Serap.Dominio;
+using SME.Simulador.Prova.Serap.Infra;
 
 namespace SME.Simulador.Prova.Serap.Dados;
 
-public class RepositorioAlternativa : IRepositorioAlternativa
+public class RepositorioAlternativa : RepositorioGestaoAvaliacaoBase<Alternativa>, IRepositorioAlternativa
 {
     private readonly GestaoAvaliacaoContexto gestaoAvaliacaoContexto;
 
-    public RepositorioAlternativa(GestaoAvaliacaoContexto gestaoAvaliacaoContexto)
+    public RepositorioAlternativa(GestaoAvaliacaoContexto gestaoAvaliacaoContexto) : base(gestaoAvaliacaoContexto)
     {
         this.gestaoAvaliacaoContexto = gestaoAvaliacaoContexto ?? throw new ArgumentNullException(nameof(gestaoAvaliacaoContexto));
     }
-
     public async Task<IEnumerable<AlternativaDto>> ObterAlternativasPorQuestaoIdAsync(long questaoId)
     {
         const string query = @"SELECT 

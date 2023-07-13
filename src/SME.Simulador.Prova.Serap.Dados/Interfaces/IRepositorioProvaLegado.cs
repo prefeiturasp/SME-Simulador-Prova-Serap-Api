@@ -8,4 +8,5 @@ public interface IRepositorioProvaLegado
     Task<IEnumerable<ProvaLegadoDto>> ObterProvasPorQuestaoParaSeremSincronizadasAsync(FiltroProvasParaSeremSincronizadasDto filtro);
     Task<bool> EhProvaIniciadaAsync(long provaId);
     Task<IEnumerable<ProvaLegadoDto>> ObterProvasNaoIniciadasPorQuestaoIdAsync(long questaoId);
+    Task<bool> EhProvaBib(long provaId);
 }

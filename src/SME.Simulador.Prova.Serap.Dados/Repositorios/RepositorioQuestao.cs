@@ -1,13 +1,14 @@
-﻿using SME.Simulador.Prova.Serap.Infra;
+﻿using SME.Simulador.Prova.Serap.Dominio;
+using SME.Simulador.Prova.Serap.Infra;
 
 namespace SME.Simulador.Prova.Serap.Dados;
 
-public class RepositorioQuestao : IRepositorioQuestao
+public class RepositorioQuestao : RepositorioGestaoAvaliacaoBase<Questao>, IRepositorioQuestao
 {
 	private readonly GestaoAvaliacaoContexto gestaoAvaliacaoContexto;
 
-	public RepositorioQuestao(GestaoAvaliacaoContexto gestaoAvaliacaoContexto)
-	{
+	public RepositorioQuestao(GestaoAvaliacaoContexto gestaoAvaliacaoContexto) : base(gestaoAvaliacaoContexto)
+    {
 		this.gestaoAvaliacaoContexto = gestaoAvaliacaoContexto ?? throw new ArgumentNullException(nameof(gestaoAvaliacaoContexto));
 	}
 

@@ -394,3 +394,5 @@ public static class DapperInterceptor
 
     #endregion
 }
+
+  
