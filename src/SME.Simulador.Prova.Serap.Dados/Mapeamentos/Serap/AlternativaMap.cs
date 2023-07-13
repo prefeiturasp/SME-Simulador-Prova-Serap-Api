@@ -19,7 +19,7 @@ namespace SME.Simulador.Prova.Serap.Dados.Mapeamentos.Serap
             Map(c => c.DataCriacao).ToColumn("CreateDate");
             Map(c => c.DataAtualizacao).ToColumn("UpdateDate");
             Map(c => c.Situacao).ToColumn("State");
-            Map(c => c.ItemId).ToColumn("Item_Id");
+            Map(c => c.QuestaoId).ToColumn("Item_Id");
         }
     }
 }

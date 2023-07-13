@@ -5,11 +5,11 @@ using SME.Simulador.Prova.Serap.Infra.Dtos;
 
 namespace SME.Simulador.Prova.Serap.Dados.Repositorios
 {
-    public class RepositorioBlocoItems : RepositorioGestaoAvaliacaoBase<QuestaoBloco>, IRepositorioBlocoItems
+    public class RepositorioBlocoQuestao : RepositorioGestaoAvaliacaoBase<QuestaoBloco>, IRepositorioBlocoQuestao
     {
         private readonly GestaoAvaliacaoContexto gestaoAvaliacaoContexto;
 
-        public RepositorioBlocoItems(GestaoAvaliacaoContexto gestaoAvaliacaoContexto) : base(gestaoAvaliacaoContexto)
+        public RepositorioBlocoQuestao(GestaoAvaliacaoContexto gestaoAvaliacaoContexto) : base(gestaoAvaliacaoContexto)
         {
             this.gestaoAvaliacaoContexto = gestaoAvaliacaoContexto ?? throw new ArgumentNullException(nameof(gestaoAvaliacaoContexto));
         }

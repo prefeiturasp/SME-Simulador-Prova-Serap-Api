@@ -16,6 +16,13 @@ public static class RegistrarMapeamentos
             config.AddMap(new QuestaoBlocoMap());
             config.AddMap(new TextoBaseMap());
             config.AddMap(new AlternativaMap());
+            config.AddMap(new CadeiaBlocoQuestaoMap());
+
+            config.AddMap(new QuestaoArquivoMap());
+            config.AddMap(new QuestaoGradeCurricularMap());
+            config.AddMap(new QuestaoHabilidadeMap());
+            config.AddMap(new QuestaoAudioMap());
+
             config.ForDommel();
         });
     }    

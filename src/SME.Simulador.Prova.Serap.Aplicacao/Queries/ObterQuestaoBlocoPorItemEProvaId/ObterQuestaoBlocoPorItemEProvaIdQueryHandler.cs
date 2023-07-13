@@ -4,14 +4,14 @@ using SME.Simulador.Prova.Serap.Infra.Dtos;
 
 namespace SME.Simulador.Prova.Serap.Aplicacao
 {
-    public class ObterIdBlocoPorItemEProvaIdQueryHandler : IRequestHandler<ObterIdBlocoPorQuestaoEProvaIdQuery, BlocoItemDto>
+    public class ObterQuestaoBlocoPorItemEProvaIdQueryHandler : IRequestHandler<ObterQuestaoBlocoPorItemEProvaIdQuery, BlocoItemDto>
     {
-        private readonly IRepositorioBlocoItems repositorioBlocos;
-        public ObterIdBlocoPorItemEProvaIdQueryHandler(IRepositorioBlocoItems repositorioBlocos)
+        private readonly IRepositorioBlocoQuestao repositorioBlocos;
+        public ObterQuestaoBlocoPorItemEProvaIdQueryHandler(IRepositorioBlocoQuestao repositorioBlocos)
         {
             this.repositorioBlocos = repositorioBlocos ?? throw new ArgumentNullException(nameof(repositorioBlocos));
         }
-        public async Task<BlocoItemDto> Handle(ObterIdBlocoPorQuestaoEProvaIdQuery request, CancellationToken cancellationToken)
+        public async Task<BlocoItemDto> Handle(ObterQuestaoBlocoPorItemEProvaIdQuery request, CancellationToken cancellationToken)
         {
             return await repositorioBlocos.ObterBlocoIdPorItemEhProvaId(request.ProvaId, request.ItemId);
         }

@@ -18,8 +18,8 @@ namespace SME.Simulador.Prova.Serap.Dominio
         public decimal? TRICasualSetting { get; set; } //TRICasualSetting
         public DateTime DataCriacao { get; set; } //[CreateDate
         public DateTime DataAtualizacao { get; set; } //[UpdateDate]
-        public int Estado { get; set; } // state
-        public int TextoBaseId { get; set; } //BaseText_Id
+        public int Situacao { get; set; } // state
+        public long TextoBaseId { get; set; } //BaseText_Id
         public int MatrizId { get; set; } // [EvaluationMatrix_Id]
         public int LevelItemId { get; set; } // ,[ItemLevel_Id]
         public int SituacaoItemId { get; set; } // [ItemSituation_Id]

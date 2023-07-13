@@ -14,7 +14,7 @@ namespace SME.Simulador.Prova.Serap.Dados.Mapeamentos.Serap
             ToTable("Item");
 
             Map(c => c.Id).ToColumn("Id").IsKey();
-
+            Map(c => c.CodigoItem).ToColumn("ItemCode");
             Map(c => c.VersaoItem).ToColumn("ItemVersion");
             Map(c => c.Enunciado).ToColumn("Statement");
             Map(c => c.PalavrasChaves).ToColumn("Keywords");
@@ -24,7 +24,7 @@ namespace SME.Simulador.Prova.Serap.Dados.Mapeamentos.Serap
             Map(c => c.TRICasualSetting).ToColumn("TRICasualSetting");
             Map(c => c.DataCriacao).ToColumn("CreateDate");
             Map(c => c.DataAtualizacao).ToColumn("UpdateDate");
-            Map(c => c.Estado).ToColumn("State");
+            Map(c => c.Situacao).ToColumn("State");
             Map(c => c.TextoBaseId).ToColumn("BaseText_Id");
             Map(c => c.MatrizId).ToColumn("EvaluationMatrix_Id");
             Map(c => c.LevelItemId).ToColumn("ItemLevel_Id");
@@ -40,7 +40,8 @@ namespace SME.Simulador.Prova.Serap.Dados.Mapeamentos.Serap
             Map(c => c.NarracaoAlternativas).ToColumn("NarrationAlternatives");
             Map(c => c.Revogado).ToColumn("Revoked");
             Map(c => c.VersaoCodigoItem).ToColumn("ItemCodeVersion");
-            Map(c => c.SubAssunto).ToColumn("KnowledgeArea_Id");
+            Map(c => c.AreaConhecimentoId).ToColumn("KnowledgeArea_Id");
+            Map(c => c.SubAssunto).ToColumn("SubSubject_Id");
         }
     }
 }

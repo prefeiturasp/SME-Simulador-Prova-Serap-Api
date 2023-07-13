@@ -5,9 +5,9 @@ namespace SME.Simulador.Prova.Serap.Aplicacao
 { 
     public class QuestaoBlocoCommandHandler : IRequestHandler<QuestaoBlocoCommand, long>
     {
-        private readonly IRepositorioBlocoItems repositorioBlocoItems;
+        private readonly IRepositorioBlocoQuestao repositorioBlocoItems;
 
-        public QuestaoBlocoCommandHandler(IRepositorioBlocoItems repositorioBlocoItems)
+        public QuestaoBlocoCommandHandler(IRepositorioBlocoQuestao repositorioBlocoItems)
         {
             this.repositorioBlocoItems = repositorioBlocoItems;
         }

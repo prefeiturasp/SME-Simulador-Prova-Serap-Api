@@ -1,14 +1,10 @@
-﻿using SME.Simulador.Prova.Serap.Infra.Dtos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SME.Simulador.Prova.Serap.Dominio;
+using SME.Simulador.Prova.Serap.Infra.Dtos;
 
 namespace SME.Simulador.Prova.Serap.Dados.Interfaces
 {
-    public interface IRepositorioCadeiaBlocos
+    public interface IRepositorioCadeiaBlocos : IRepositorioBase<CadeiaBlocoQuestao>
     {
-        Task<CadeiaBlocoQuestaoDto> ObterBlocoIdPorItemEhProvaId(long provaId, long itemId)
+        Task<CadeiaBlocoQuestaoDto> ObterBlocoIdPorItemEhProvaId(long provaId, long itemId);
     }
 }

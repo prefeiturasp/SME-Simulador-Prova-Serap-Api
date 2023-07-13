@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SME.Simulador.Prova.Serap.Dados.Interfaces
 {
-    public interface IRepositorioBlocoItems 
+    public interface IRepositorioBlocoQuestao 
     {
         Task<BlocoItemDto> ObterBlocoIdPorItemEhProvaId(long provaId, long itemId);
         Task<long> SalvarAsync(QuestaoBloco entidade);
