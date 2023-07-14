@@ -128,4 +128,20 @@ public class RepositorioProvaLegado : IRepositorioProvaLegado
                 state = (int)LegadoState.Ativo
             }, transaction: gestaoAvaliacaoContexto.Transacao);
     }
+
+    public async Task<bool> EhProvaBib(long provaId)
+    {
+        const string query = @"select top 1 t.Bib
+                                from Test t
+                                where t.Id = @provaId
+                                and t.State = @state
+                              
+";
+
+        var bib = await gestaoAvaliacaoContexto.Conexao.QuerySingleOrDefaultAsync<long>(query,
+            new { provaId, state = (int)LegadoState.Ativo },
+            transaction: gestaoAvaliacaoContexto.Transacao);
+
+        return bib > 0;
+    }
 }

@@ -40,8 +40,10 @@ public class RepositorioBase<TEntidadeBase, TContexto> : IRepositorioBase<TEntid
         if (entidade.Id > 0)
             await contexto.Conexao.UpdateAsync(entidade);
         else
-            entidade.Id = (long)await contexto.Conexao.InsertAsync(entidade);
-
+        {
+            object retorno = await contexto.Conexao.InsertAsync(entidade);
+            entidade.Id = long.Parse(retorno.ToString());
+        }
         return entidade.Id;
     }
 
