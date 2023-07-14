@@ -13,7 +13,7 @@ namespace SME.Simulador.Prova.Serap.Dados.Repositorios
             this.gestaoAvaliacaoContexto = gestaoAvaliacaoContexto ?? throw new ArgumentNullException(nameof(gestaoAvaliacaoContexto));
         }
 
-        public async Task<CadeiaBlocoQuestaoDto> ObterBlocoIdPorItemEhProvaId(long provaId, long itemId)
+        public async Task<CadeiaBlocoQuestaoDto?> ObterBlocoIdPorItemEhProvaId(long provaId, long itemId)
         {
             const string query = @"SELECT BCI.Id,
                                           BCI.BlockChain_Id as CadeiaBlocoId,
@@ -26,9 +26,9 @@ namespace SME.Simulador.Prova.Serap.Dados.Repositorios
 					                WHERE BCI.Item_Id = @itemId
 					                 AND BC.Test_id =  @provaId
 						             AND BCI.State = @state
-						             AND BC.State = @state  ";
+						             AND BC.State = @state";
 
-            return await gestaoAvaliacaoContexto.Conexao.QueryFirstOrDefaultAsync<CadeiaBlocoQuestaoDto>(query,
+            return await gestaoAvaliacaoContexto.Conexao.QueryFirstOrDefaultAsync<CadeiaBlocoQuestaoDto?>(query,
                 new
                 {
                     provaId,

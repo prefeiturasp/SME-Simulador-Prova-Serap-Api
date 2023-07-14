@@ -167,6 +167,7 @@ namespace SME.Simulador.Prova.Serap.Aplicacao.UseCases
             if (provaBib)
             {
                 var cadeiaBlocoQuestaoProva = await mediator.Send(new ObterCadeiaBlocoQuestaoPorItemEProvaIdQuery(provaId, request.Questao.Id));
+
                 var cadeiaBlocoQuestao = MapeaCadeiaBlocoQuestaoProvaParaNovaEntidade(cadeiaBlocoQuestaoProva);
                 await InativaCadeiaBlocoQuestaoVersaoAntiga(cadeiaBlocoQuestao);
                 var cadeiaBlocoQuestaoNovaVersaoId = await CriaCadeiaBlocoQuestaoNovaVersao(novaVersaoQuestaoId, cadeiaBlocoQuestaoProva, cadeiaBlocoQuestao);
