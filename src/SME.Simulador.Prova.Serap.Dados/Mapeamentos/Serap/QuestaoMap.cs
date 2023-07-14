@@ -39,7 +39,7 @@ namespace SME.Simulador.Prova.Serap.Dados.Mapeamentos.Serap
             Map(c => c.NarracaoDeclaracaoAluno).ToColumn("NarrationStudentStatement");
             Map(c => c.NarracaoAlternativas).ToColumn("NarrationAlternatives");
             Map(c => c.Revogado).ToColumn("Revoked");
-            Map(c => c.VersaoCodigoItem).ToColumn("ItemCodeVersion");
+            Map(c => c.VersaoCodigoQuestao).ToColumn("ItemCodeVersion");
             Map(c => c.AreaConhecimentoId).ToColumn("KnowledgeArea_Id");
             Map(c => c.SubAssunto).ToColumn("SubSubject_Id");
         }

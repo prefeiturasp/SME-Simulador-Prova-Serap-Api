@@ -11,7 +11,7 @@ namespace SME.Simulador.Prova.Serap.Dados.Mapeamentos.Serap
     {
         public CadeiaBlocoQuestaoMap()
         {
-            ToTable("BlockItem");
+            ToTable("BlockChainItem");
 
             Map(c => c.Id).ToColumn("Id").IsKey();
 

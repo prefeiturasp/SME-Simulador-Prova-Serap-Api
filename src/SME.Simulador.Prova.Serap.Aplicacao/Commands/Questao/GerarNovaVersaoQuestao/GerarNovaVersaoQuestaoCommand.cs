@@ -9,8 +9,6 @@ namespace SME.Simulador.Prova.Serap.Aplicacao
         {
             Questao = questao;
         }
-
-
         public Dominio.Questao Questao { get; set; }
     }
 }

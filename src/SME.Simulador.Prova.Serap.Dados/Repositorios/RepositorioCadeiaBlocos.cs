@@ -15,14 +15,14 @@ namespace SME.Simulador.Prova.Serap.Dados.Repositorios
 
         public async Task<CadeiaBlocoQuestaoDto> ObterBlocoIdPorItemEhProvaId(long provaId, long itemId)
         {
-            const string query = @"SELECT BCI.Id
+            const string query = @"SELECT BCI.Id,
                                           BCI.BlockChain_Id as CadeiaBlocoId,
                                           BCI.Item_Id  as QuestaoId,
-                                          BCI.Order as Ordem,
+                                          BCI.[Order] as Ordem,
                                           BCI.CreateDate as DataCriacao,
                                           BCI.UpdateDate as DataAtualizacao
-					                FROM BlockChainItem BCI WITH (NOLOCK) 
-					                INNER JOIN BlockChain BC WITH (NOLOCK) ON BC.Id = BCI.BlockChain_Id
+					                FROM BlockChainItem BCI
+					                INNER JOIN BlockChain BC ON BC.Id = BCI.BlockChain_Id
 					                WHERE BCI.Item_Id = @itemId
 					                 AND BC.Test_id =  @provaId
 						             AND BCI.State = @state

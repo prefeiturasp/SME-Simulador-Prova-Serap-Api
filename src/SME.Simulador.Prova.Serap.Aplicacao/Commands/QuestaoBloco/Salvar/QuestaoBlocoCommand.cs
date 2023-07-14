@@ -11,8 +11,8 @@ namespace SME.Simulador.Prova.Serap.Aplicacao
     {
         public QuestaoBlocoCommand(Dominio.QuestaoBloco itemBloco)
         {
-            ItemBloco = itemBloco;
+            QuestaoBloco = itemBloco;
         }
-        public Dominio.QuestaoBloco ItemBloco { get; set; }
+        public Dominio.QuestaoBloco QuestaoBloco { get; set; }
     }
 }

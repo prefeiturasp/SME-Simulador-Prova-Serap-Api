@@ -1,12 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FluentValidation;
 
-namespace SME.Simulador.Prova.Serap.Aplicacao.Commands.QuestaoGradeCurricular
+
+namespace SME.Simulador.Prova.Serap.Aplicacao
 {
-    public class IncluirQuestaoGradeCurricularCommandValidator
+    public class IncluirQuestaoGradeCurricularCommandValidator : AbstractValidator<IncluirQuestaoGradeCurricularCommand>
     {
+        public IncluirQuestaoGradeCurricularCommandValidator()
+        {
+            RuleFor(c => c.QuestaoGradeCurricular.DataCriacao)
+           .NotNull()
+           .WithMessage("A DataCriacao deve ser informada.");
+
+            RuleFor(c => c.QuestaoGradeCurricular.DataAtualizacao)
+           .NotNull()
+           .WithMessage("A DataAtualizacao deve ser informada.");
+
+            RuleFor(c => c.QuestaoGradeCurricular.Situacao)
+           .NotNull()
+           .WithMessage("A Situacao deve ser informada.");
+        }
     }
 }

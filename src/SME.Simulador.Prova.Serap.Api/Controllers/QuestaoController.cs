@@ -43,11 +43,11 @@ public class QuestaoController : ControllerBase
     [HttpPost("Salvar-Alteracao", Name = nameof(SalvarAlteracao))]
     [Authorize("Bearer")]
     public async Task<IActionResult> SalvarAlteracao([Required] ParametrosQuestaoSalvar parametos,
-[   FromServices] IGerarNovaVersaoQuestaoUseCase useCase)
+        [FromServices] IGerarNovaVersaoQuestaoUseCase useCase)
     {
         return Ok(await useCase.ExecutarAsync(parametos));
     }
- 
+
 }
 
 

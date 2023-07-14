@@ -20,109 +20,130 @@ namespace SME.Simulador.Prova.Serap.Aplicacao.UseCases
 
         public async Task<bool> ExecutarAsync(ParametrosQuestaoSalvar request)
         {
-            try
-            {
-                var questaoAtual = await mediator.Send(new ObterQuestaoPorIdQuery(request.Questao.Id));
+            var questaoAtual = await mediator.Send(new ObterQuestaoPorIdQuery(request.Questao.Id));
                 var textoBaseQuestao = await mediator.Send(new ObterTextoBasePorIdQuery(questaoAtual.TextoBaseId));
+              
                 if (questaoAtual.Enunciado != request.Questao.Enunciado || textoBaseQuestao?.Descricao != request.Questao.TextoBase)
                 {
-                    long textoBaseId = questaoAtual.TextoBaseId;
+                    long textoBaseId = await TrataTextoBase(request, questaoAtual, textoBaseQuestao);
 
-                    if (textoBaseQuestao?.Descricao != request.Questao.TextoBase)
-                    {
-                         textoBaseId = await IncluiNovoTextoBase(request, textoBaseQuestao);
-                    }
+                    if (!questaoAtual.UltimaVersao)
+                        await mediator.Send(new DesabilitarUltimaVersaoQuestaoPorCodigoCommand(questaoAtual.CodigoItem));
 
-                    Questao questaoNovaVersao = NovaVersaoQuestaoMap(request, questaoAtual, textoBaseId);
-                    var novaVersaoQuestaoId = await mediator.Send(new GerarNovaVersaoQuestaoCommand(questaoNovaVersao));
+                    long novaVersaoQuestaoId = await TrataQuestaoNovaVersao(request, questaoAtual, textoBaseId);
 
-                    if (!questaoAtual.UltimaVersao) ;
-                    //Atualizar Para ultima versao
-
-                    foreach (var alternativaDto in request.Alternativas)
-                        await CriaAlternativasNovaVersao(novaVersaoQuestaoId, alternativaDto);
-
-
-                    //Habilidade
-                    var listaQuestaoHabilidades = await mediator.Send(new ObterListaQuestaoHabilidadesPorQuestaoIdQuery(request.Questao.Id));
-                    foreach (var questaoHabilidade in listaQuestaoHabilidades)
-                    {
-                        var questaoHabilidadeNovaVersao = new QuestaoHabilidade()
-                        {
-                            QuestaoId = novaVersaoQuestaoId,
-                            HabilidadeId = questaoHabilidade.HabilidadeId,
-                            HabilidadeOriginal = questaoHabilidade.HabilidadeOriginal,
-                            DataCriacao = DateTime.Now,
-                            DataAtualizacao = DateTime.Now,
-                            Situacao = (int)LegadoState.Ativo
-                        };
-
-                        await mediator.Send(new IncluirQuestaoHabilidadeCommand(questaoHabilidadeNovaVersao));
-                    }
-
-                    //Grade
-                    var listaQuestaoGradesCurriculares = await mediator.Send(new ObterListaQuestaoGradesCurricularesQuery(request.Questao.Id));
-                    foreach (var questaoGradeCurricular in listaQuestaoGradesCurriculares)
-                    {
-                        var questaoGradeCurricularNovaVersao = new QuestaoGradeCurricular()
-                        {
-                            QuestaoId = novaVersaoQuestaoId,
-                            TipoGradeCurricular = questaoGradeCurricular.TipoGradeCurricular,
-                            DataCriacao = DateTime.Now,
-                            DataAtualizacao = DateTime.Now,
-                            Situacao = (int)LegadoState.Ativo
-                        };
-
-                        await mediator.Send(new IncluirQuestaoGradeCurricularCommand(questaoGradeCurricularNovaVersao));
-                    }
-
-                    //Arquivo
-                    var listaQuestaoArquivo = await mediator.Send(new ObterListaQuestaoArquivoPorQuestaoIdQuery(request.Questao.Id));
-                    foreach (var questaoArquivo in listaQuestaoArquivo)
-                    {
-                        var questaoArquivoNovaVersao = new QuestaoArquivo()
-                        {
-                            QuestaoId = novaVersaoQuestaoId,
-                            ArquivoConvertidoId = questaoArquivo.ArquivoConvertidoId,
-                            ArquivoId = questaoArquivo.ArquivoId,
-                            ThumbnailId = questaoArquivo.ThumbnailId,
-                            DataCriacao = DateTime.Now,
-                            DataAtualizacao = DateTime.Now,
-                            Situacao = (int)LegadoState.Ativo,
-
-                        };
-
-                        await mediator.Send(new IncluirQuestaoArquivoCommand(questaoArquivoNovaVersao));
-                    }
-
-                    // audio
-
-                    var listaQuestaoAudio = await mediator.Send(new ObterListaQuestaoAudioPorQuestaoIdQuery(request.Questao.Id));
-                    foreach (var questaoArquivo in listaQuestaoAudio)
-                    {
-                        var questaoAudioNovaVersao = new QuestaoAudio()
-                        {
-                            QuestaoId = novaVersaoQuestaoId,
-                            ArquivoId = questaoArquivo.ArquivoId,
-                            DataCriacao = DateTime.Now,
-                            DataAtualizacao = DateTime.Now,
-                            Situacao = (int)LegadoState.Ativo,
-                        };
-
-                        await mediator.Send(new IncluirQuestaoAudioCommand(questaoAudioNovaVersao));
-                    }
+                    await TrataAlternativas(request, novaVersaoQuestaoId);
+                    await TrataQuestaoHabilidates(request, novaVersaoQuestaoId);
+                    await TrataQuestaoGradeCurricular(request, novaVersaoQuestaoId);
+                    await TrataQuestaoArquivo(request, novaVersaoQuestaoId);
+                    await TrataQuestaoAudio(request, novaVersaoQuestaoId);
+                   
                     foreach (var provaId in request.ProvasId)
                     {
                         await AtualizaBlocos(request, novaVersaoQuestaoId, provaId);
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-
+       
             return true;
+        }
+
+        private async Task TrataQuestaoAudio(ParametrosQuestaoSalvar request, long novaVersaoQuestaoId)
+        {
+            var listaQuestaoAudio = await mediator.Send(new ObterListaQuestaoAudioPorQuestaoIdQuery(request.Questao.Id));
+            foreach (var questaoArquivo in listaQuestaoAudio)
+            {
+                var questaoAudioNovaVersao = new QuestaoAudio()
+                {
+                    QuestaoId = novaVersaoQuestaoId,
+                    ArquivoId = questaoArquivo.ArquivoId,
+                    DataCriacao = DateTime.Now,
+                    DataAtualizacao = DateTime.Now,
+                    Situacao = (int)LegadoState.Ativo,
+                };
+
+                await mediator.Send(new IncluirQuestaoAudioCommand(questaoAudioNovaVersao));
+            }
+        }
+
+        private async Task TrataQuestaoArquivo(ParametrosQuestaoSalvar request, long novaVersaoQuestaoId)
+        {
+            var listaQuestaoArquivo = await mediator.Send(new ObterListaQuestaoArquivoPorQuestaoIdQuery(request.Questao.Id));
+            foreach (var questaoArquivo in listaQuestaoArquivo)
+            {
+                var questaoArquivoNovaVersao = new QuestaoArquivo()
+                {
+                    QuestaoId = novaVersaoQuestaoId,
+                    ArquivoConvertidoId = questaoArquivo.ArquivoConvertidoId,
+                    ArquivoId = questaoArquivo.ArquivoId,
+                    ThumbnailId = questaoArquivo.ThumbnailId,
+                    DataCriacao = DateTime.Now,
+                    DataAtualizacao = DateTime.Now,
+                    Situacao = (int)LegadoState.Ativo,
+
+                };
+
+                await mediator.Send(new IncluirQuestaoArquivoCommand(questaoArquivoNovaVersao));
+            }
+        }
+
+        private async Task TrataQuestaoGradeCurricular(ParametrosQuestaoSalvar request, long novaVersaoQuestaoId)
+        {
+            var listaQuestaoGradesCurriculares = await mediator.Send(new ObterListaQuestaoGradesCurricularesQuery(request.Questao.Id));
+            foreach (var questaoGradeCurricular in listaQuestaoGradesCurriculares)
+            {
+                var questaoGradeCurricularNovaVersao = new QuestaoGradeCurricular()
+                {
+                    QuestaoId = novaVersaoQuestaoId,
+                    TipoGradeCurricular = questaoGradeCurricular.TipoGradeCurricular,
+                    DataCriacao = DateTime.Now,
+                    DataAtualizacao = DateTime.Now,
+                    Situacao = (int)LegadoState.Ativo
+                };
+
+                await mediator.Send(new IncluirQuestaoGradeCurricularCommand(questaoGradeCurricularNovaVersao));
+            }
+        }
+
+        private async Task TrataQuestaoHabilidates(ParametrosQuestaoSalvar request, long novaVersaoQuestaoId)
+        {
+            var listaQuestaoHabilidades = await mediator.Send(new ObterListaQuestaoHabilidadesPorQuestaoIdQuery(request.Questao.Id));
+            foreach (var questaoHabilidade in listaQuestaoHabilidades)
+            {
+                var questaoHabilidadeNovaVersao = new QuestaoHabilidade()
+                {
+                    QuestaoId = novaVersaoQuestaoId,
+                    HabilidadeId = questaoHabilidade.HabilidadeId,
+                    HabilidadeOriginal = questaoHabilidade.HabilidadeOriginal,
+                    DataCriacao = DateTime.Now,
+                    DataAtualizacao = DateTime.Now,
+                    Situacao = (int)LegadoState.Ativo
+                };
+
+                await mediator.Send(new IncluirQuestaoHabilidadeCommand(questaoHabilidadeNovaVersao));
+            }
+        }
+
+        private async Task TrataAlternativas(ParametrosQuestaoSalvar request, long novaVersaoQuestaoId)
+        {
+            foreach (var alternativaDto in request.Alternativas)
+                await CriaAlternativasNovaVersao(novaVersaoQuestaoId, alternativaDto);
+        }
+
+        private async Task<long> TrataQuestaoNovaVersao(ParametrosQuestaoSalvar request, Questao questaoAtual, long textoBaseId)
+        {
+            var ultimaVersao = await mediator.Send(new ObterUltimaVersaoQuestaoPorCodigoQuery(questaoAtual.CodigoItem));
+            Questao questaoNovaVersao = NovaVersaoQuestaoMap(request, questaoAtual, textoBaseId, ultimaVersao);
+            var novaVersaoQuestaoId = await mediator.Send(new GerarNovaVersaoQuestaoCommand(questaoNovaVersao));
+            return novaVersaoQuestaoId;
+        }
+
+        private async Task<long> TrataTextoBase(ParametrosQuestaoSalvar request, Questao questaoAtual, TextoBase? textoBaseQuestao)
+        {
+            long textoBaseId = questaoAtual.TextoBaseId;
+
+            if (textoBaseQuestao?.Descricao != request.Questao.TextoBase)
+                textoBaseId = await IncluiNovoTextoBase(request, textoBaseQuestao);
+            return textoBaseId;
         }
 
         private async Task AtualizaBlocos(ParametrosQuestaoSalvar request, long novaVersaoQuestaoId, int provaId)
@@ -156,6 +177,7 @@ namespace SME.Simulador.Prova.Serap.Aplicacao.UseCases
                 QuestaoId = novaVersaoQuestaoId,
                 Correta = alternativaQuestao.Correta,
                 DataCriacao = DateTime.Now,
+                DataAtualizacao = DateTime.Now,
                 Descricao = alternativaDto.Descricao,
                 DiscriminaçãoTCT = alternativaQuestao.DiscriminaçãoTCT,
                 Justificativa = alternativaQuestao.Justificativa,
@@ -170,9 +192,8 @@ namespace SME.Simulador.Prova.Serap.Aplicacao.UseCases
 
         private async Task CriaCadeiaBlocoQuestaoNovaVersao(long novaVersaoQuestaoId, CadeiaBlocoQuestaoDto cadeiaBlocoQuestaoProva, CadeiaBlocoQuestao cadeiaBlocoQuestao)
         {
-            var c = new CadeiaBlocoQuestao()
+            var cadeiaBlocoQuestaoNovo = new CadeiaBlocoQuestao()
             {
-                Id = cadeiaBlocoQuestaoProva.Id,
                 CadeiaBlocoId = cadeiaBlocoQuestaoProva.CadeiaBlocoId,
                 QuestaoId = novaVersaoQuestaoId,
                 DataCricao = cadeiaBlocoQuestaoProva.DataCriacao,
@@ -180,7 +201,7 @@ namespace SME.Simulador.Prova.Serap.Aplicacao.UseCases
                 DataAtualizacao = DateTime.Now,
                 Situacao = (int)LegadoState.Ativo
             };
-            await mediator.Send(new CadeiaBlocoQuestaoCommand(cadeiaBlocoQuestao));
+            await mediator.Send(new CadeiaBlocoQuestaoCommand(cadeiaBlocoQuestaoNovo));
         }
 
         private static CadeiaBlocoQuestao MapeaCadeiaBlocoQuestaoProvaParaNovaEntidade(CadeiaBlocoQuestaoDto cadeiaBlocoQuestaoProva)
@@ -224,7 +245,7 @@ namespace SME.Simulador.Prova.Serap.Aplicacao.UseCases
             {
                 Ordem = ordem,
                 BlocoId = blocoId,
-                ItemId = novaVersaoItemId,
+                QuestaoId = novaVersaoItemId,
                 Situacao = (int)LegadoState.Ativo,
                 DataCricao = DateTime.Now,
                 DataAtualizacao = DateTime.Now,
@@ -246,7 +267,7 @@ namespace SME.Simulador.Prova.Serap.Aplicacao.UseCases
             {
                 Id = blocoQuestao.Id,
                 BlocoId = blocoQuestao.BlocoId,
-                ItemId = blocoQuestao.ItemId,
+                QuestaoId = blocoQuestao.ItemId,
                 DataCricao = blocoQuestao.DataCriacao,
                 Ordem = blocoQuestao.Ordem,
                 DataAtualizacao = DateTime.Now,
@@ -254,14 +275,14 @@ namespace SME.Simulador.Prova.Serap.Aplicacao.UseCases
             };
         }
 
-        private static Questao NovaVersaoQuestaoMap(ParametrosQuestaoSalvar request, Questao questaoAtual, long textoBaseId)
+        private static Questao NovaVersaoQuestaoMap(ParametrosQuestaoSalvar request, Questao questaoAtual, long textoBaseId, int ultimaVersaoQuestao)
         {
             var questaoNovaVersao = new Questao
             {
                 AreaConhecimentoId = questaoAtual.AreaConhecimentoId,
                 CodigoItem = questaoAtual.CodigoItem,
-                VersaoItem = questaoAtual.VersaoItem + 1,
-                TextoBaseId = textoBaseId, // novoIdTextoBase
+                VersaoItem = ultimaVersaoQuestao + 1,
+                TextoBaseId = textoBaseId,
                 Enunciado = request.Questao.Enunciado,
                 LevelItemId = questaoAtual.LevelItemId,
                 DataAtualizacao = DateTime.Now,
@@ -285,7 +306,7 @@ namespace SME.Simulador.Prova.Serap.Aplicacao.UseCases
                 TRIDifficulty = questaoAtual.TRIDifficulty,
                 TRIDiscrimination = questaoAtual.TRIDiscrimination,
                 UltimaVersao = true,
-                VersaoCodigoItem = questaoAtual.VersaoCodigoItem,
+                VersaoCodigoQuestao = questaoAtual.VersaoCodigoQuestao,
             };
             return questaoNovaVersao;
         }

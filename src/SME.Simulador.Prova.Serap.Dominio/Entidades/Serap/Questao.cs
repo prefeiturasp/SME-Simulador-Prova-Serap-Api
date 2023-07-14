@@ -33,7 +33,7 @@ namespace SME.Simulador.Prova.Serap.Dominio
         public bool NarracaoDeclaracaoAluno { get; set; } // [NarrationStudentStatement]
         public bool NarracaoAlternativas { get; set; }  // [NarrationAlternatives]
         public bool Revogado { get; set; } //Revoked
-        public int VersaoCodigoItem { get; set; } //,[ItemCodeVersion]
+        public int VersaoCodigoQuestao { get; set; } //,[ItemCodeVersion]
         public int AreaConhecimentoId { get; set; } //,[KnowledgeArea_Id]
         public int SubAssunto { get; set; } // [SubSubject_Id]
     }
