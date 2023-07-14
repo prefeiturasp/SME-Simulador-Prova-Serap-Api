@@ -5,6 +5,6 @@ namespace SME.Simulador.Prova.Serap.Dados.Interfaces
 {
     public interface IRepositorioCadeiaBlocos : IRepositorioBase<CadeiaBlocoQuestao>
     {
-        Task<CadeiaBlocoQuestaoDto> ObterBlocoIdPorItemEhProvaId(long provaId, long itemId);
+        Task<CadeiaBlocoQuestaoDto?> ObterBlocoIdPorItemEhProvaId(long provaId, long itemId);
     }
 }
