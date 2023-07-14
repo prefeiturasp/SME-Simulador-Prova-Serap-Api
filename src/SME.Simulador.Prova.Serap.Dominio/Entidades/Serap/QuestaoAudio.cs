@@ -11,7 +11,7 @@ namespace SME.Simulador.Prova.Serap.Dominio
         public DateTime DataCriacao { get; set; }
         public DateTime DataAtualizacao { get; set; }
         public int Situacao { get; set; }
-        public long QuestaoId { get; set; }
-        public long ArquivoId { get; set; }
+        public long? QuestaoId { get; set; }
+        public long? ArquivoId { get; set; }
     }
 }

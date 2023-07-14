@@ -14,7 +14,7 @@ namespace SME.Simulador.Prova.Serap.Aplicacao
 
         public async Task<long> Handle(QuestaoBlocoCommand request, CancellationToken cancellationToken)
         {
-            return await repositorioBlocoItems.SalvarAsync(request.ItemBloco);
+            return await repositorioBlocoItems.SalvarAsync(request.QuestaoBloco);
         }
     }
 }

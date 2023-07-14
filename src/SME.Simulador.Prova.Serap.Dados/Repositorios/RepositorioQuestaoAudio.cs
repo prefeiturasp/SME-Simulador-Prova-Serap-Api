@@ -14,13 +14,13 @@ namespace SME.Simulador.Prova.Serap.Dados.Repositorios
 
         public async Task<IEnumerable<QuestaoAudio>> ObterListaQuestaoAudio(long questaoId)
         {
-            const string query = @"SELECT [Id]
-                                          ,[CreateDate] as  DataCriacao
-                                          ,[UpdateDate] as DataAtualizacao
-                                          ,[State]      as Situacao
-                                          ,[File_Id]    as QuestaoId
-                                          ,[Item_Id]    as ArquivoId
-                                      FROM [GestaoAvaliacao].[dbo].[ItemAudio]
+            const string query = @"  SELECT [Id]
+                                           ,[CreateDate] as  DataCriacao
+                                           ,[UpdateDate] as DataAtualizacao
+                                           ,[State]      as Situacao
+                                           ,[File_Id]    as ArquivoId
+                                           ,[Item_Id]    as  QuestaoId
+                                       FROM [GestaoAvaliacao].[dbo].[ItemAudio]
                                      WHERE Item_id = @questaoId
                                        AND State = @state";
 

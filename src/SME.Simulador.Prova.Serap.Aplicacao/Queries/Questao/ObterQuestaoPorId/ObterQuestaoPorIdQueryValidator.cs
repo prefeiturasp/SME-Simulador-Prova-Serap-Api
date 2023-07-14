@@ -1,11 +1,5 @@
 ﻿using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SME.Simulador.Prova.Serap.Aplicacao.Queries.Questao.ObterQuestaoPorId
+namespace SME.Simulador.Prova.Serap.Aplicacao
 {
     public class ObterQuestaoPorIdQueryValidator : AbstractValidator<ObterQuestaoPorIdQuery>
     {

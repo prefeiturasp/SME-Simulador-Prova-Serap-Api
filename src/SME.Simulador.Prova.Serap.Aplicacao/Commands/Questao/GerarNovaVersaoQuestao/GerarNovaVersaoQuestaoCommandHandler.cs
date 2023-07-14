@@ -1,13 +1,8 @@
 ﻿using MediatR;
 using SME.Simulador.Prova.Serap.Dados;
-using SME.Simulador.Prova.Serap.Infra;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace SME.Simulador.Prova.Serap.Aplicacao.Commands.Questao.GerarNovaVersaoQuestao
+
+namespace SME.Simulador.Prova.Serap.Aplicacao
 {
     public class GerarNovaVersaoQuestaoCommandHandler : IRequestHandler<GerarNovaVersaoQuestaoCommand, long>
     {

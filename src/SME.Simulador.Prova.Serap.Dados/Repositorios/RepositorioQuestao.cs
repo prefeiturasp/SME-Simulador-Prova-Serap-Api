@@ -1,20 +1,21 @@
-﻿using SME.Simulador.Prova.Serap.Dominio;
+﻿using Dapper;
+using SME.Simulador.Prova.Serap.Dominio;
 using SME.Simulador.Prova.Serap.Infra;
 
 namespace SME.Simulador.Prova.Serap.Dados;
 
 public class RepositorioQuestao : RepositorioGestaoAvaliacaoBase<Questao>, IRepositorioQuestao
 {
-	private readonly GestaoAvaliacaoContexto gestaoAvaliacaoContexto;
+    private readonly GestaoAvaliacaoContexto gestaoAvaliacaoContexto;
 
-	public RepositorioQuestao(GestaoAvaliacaoContexto gestaoAvaliacaoContexto) : base(gestaoAvaliacaoContexto)
+    public RepositorioQuestao(GestaoAvaliacaoContexto gestaoAvaliacaoContexto) : base(gestaoAvaliacaoContexto)
     {
-		this.gestaoAvaliacaoContexto = gestaoAvaliacaoContexto ?? throw new ArgumentNullException(nameof(gestaoAvaliacaoContexto));
-	}
+        this.gestaoAvaliacaoContexto = gestaoAvaliacaoContexto ?? throw new ArgumentNullException(nameof(gestaoAvaliacaoContexto));
+    }
 
-	public async Task<QuestaoSerapDto> ObterQuestaoCadernoProvaAsync(long questaoId, long cadernoId)
-	{
-		const string query = @" with questoes as (
+    public async Task<QuestaoSerapDto> ObterQuestaoCadernoProvaAsync(long questaoId, long cadernoId)
+    {
+        const string query = @" with questoes as (
 			                            SELECT distinct I.id, B.Description as Caderno,
 			                                    (DENSE_RANK() OVER(ORDER BY CASE WHEN (t.KnowledgeAreaBlock = 1) THEN ISNULL(Bka.[Order], 0) END, bi.[Order]) - 1) AS Ordem,
 			                                    I.[Statement] as Enunciado ,bt.Description  as TextoBase, T.Id as ProvaId,
@@ -41,13 +42,13 @@ public class RepositorioQuestao : RepositorioGestaoAvaliacaoBase<Questao>, IRepo
 												where q.Id = @questaoId
 												order by q.Ordem;";
 
-		return await gestaoAvaliacaoContexto.Conexao.QueryFirstOrDefaultAsync<QuestaoSerapDto>(query,
-			new { questaoId, cadernoId }, transaction: gestaoAvaliacaoContexto.Transacao);
-	}
+        return await gestaoAvaliacaoContexto.Conexao.QueryFirstOrDefaultAsync<QuestaoSerapDto>(query,
+            new { questaoId, cadernoId }, transaction: gestaoAvaliacaoContexto.Transacao);
+    }
 
-	public async Task<IEnumerable<QuestaoResumoDto>> ObterQuestoesResumoPorCadernoIdAsync(long cadernoId)
-	{
-		const string query = @"with questoes as (
+    public async Task<IEnumerable<QuestaoResumoDto>> ObterQuestoesResumoPorCadernoIdAsync(long cadernoId)
+    {
+        const string query = @"with questoes as (
 		                            SELECT distinct I.id, 
                             			bt.Description as TextoBase, 
                             			I.[Statement] as Enunciado, 
@@ -78,7 +79,26 @@ public class RepositorioQuestao : RepositorioGestaoAvaliacaoBase<Questao>, IRepo
 										left join (select distinct Id, Ordem from questoes) proxima on proxima.Ordem = q.Ordem + 1
 									order by q.Ordem;";
 
-		return await gestaoAvaliacaoContexto.Conexao.QueryAsync<QuestaoResumoDto>(query, new { cadernoId },
-			transaction: gestaoAvaliacaoContexto.Transacao);
-	}
+        return await gestaoAvaliacaoContexto.Conexao.QueryAsync<QuestaoResumoDto>(query, new { cadernoId },
+            transaction: gestaoAvaliacaoContexto.Transacao);
+    }
+
+    public async Task<int> ObterUltimaVersaoDaQuestaoPorCodigo(string codigoQuestao)
+    {
+        const string query = @"SELECT Max(itemVersion)  as Versao
+                                 FROM Item
+                                WHERE ItemCode = @codigoQuestao;";
+
+        return await gestaoAvaliacaoContexto.Conexao.QueryFirstOrDefaultAsync<int>(query, new { codigoQuestao },
+            transaction: gestaoAvaliacaoContexto.Transacao);
+    }
+
+    public async Task<int> DesabilitaUltimaVersaoQuestao(string codigoQuestao)
+    {
+        const string query = @"UPDATE Item set LastVersion = 0 
+                                WHERE ItemCode = @codigoQuestao  and lastVersion = 1;";
+
+           return await gestaoAvaliacaoContexto.Conexao.ExecuteAsync(query, new { codigoQuestao },
+            transaction: gestaoAvaliacaoContexto.Transacao);
+    }
 }
