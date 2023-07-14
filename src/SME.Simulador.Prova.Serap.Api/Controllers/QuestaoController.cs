@@ -41,13 +41,13 @@ public class QuestaoController : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
     [HttpPost("Salvar-Alteracao", Name = nameof(SalvarAlteracao))]
-  //  [Authorize("Bearer")]
+    [Authorize("Bearer")]
     public async Task<IActionResult> SalvarAlteracao([Required] ParametrosQuestaoSalvar parametos,
-[   FromServices] IGerarNovaVersaoQuestaoUseCase useCase)
+        [FromServices] IGerarNovaVersaoQuestaoUseCase useCase)
     {
         return Ok(await useCase.ExecutarAsync(parametos));
     }
- 
+
 }
 
 
