@@ -20,9 +20,7 @@ namespace SME.Simulador.Prova.Serap.Aplicacao.UseCases
 
         public async Task<bool> ExecutarAsync(ParametrosQuestaoSalvar request)
         {
-            try
-            {
-                var questaoAtual = await mediator.Send(new ObterQuestaoPorIdQuery(request.Questao.Id));
+            var questaoAtual = await mediator.Send(new ObterQuestaoPorIdQuery(request.Questao.Id));
                 var textoBaseQuestao = await mediator.Send(new ObterTextoBasePorIdQuery(questaoAtual.TextoBaseId));
               
                 if (questaoAtual.Enunciado != request.Questao.Enunciado || textoBaseQuestao?.Descricao != request.Questao.TextoBase)
@@ -45,13 +43,7 @@ namespace SME.Simulador.Prova.Serap.Aplicacao.UseCases
                         await AtualizaBlocos(request, novaVersaoQuestaoId, provaId);
                     }
                 }
-            }
-         
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-
+       
             return true;
         }
 
