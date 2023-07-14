@@ -14,15 +14,22 @@ namespace SME.Simulador.Prova.Serap.Aplicacao.UseCases
 {
     public class GerarNovaVersaoQuestaoUseCase : AbstractUseCase, IGerarNovaVersaoQuestaoUseCase
     {
-        public GerarNovaVersaoQuestaoUseCase(IMediator mediator) : base(mediator)
+        private readonly IUnitOfWorkBaseGestaoAvaliacao unitOfWorkBaseGestaoAvaliacao;
+        public GerarNovaVersaoQuestaoUseCase(IMediator mediator, IUnitOfWorkBaseGestaoAvaliacao unitOfWorkBaseGestaoAvaliacao) : base(mediator)
         {
+            this.unitOfWorkBaseGestaoAvaliacao = unitOfWorkBaseGestaoAvaliacao ?? throw new ArgumentNullException(nameof(unitOfWorkBaseGestaoAvaliacao));
         }
 
         public async Task<bool> ExecutarAsync(ParametrosQuestaoSalvar request)
         {
-            var questaoAtual = await mediator.Send(new ObterQuestaoPorIdQuery(request.Questao.Id));
+
+            unitOfWorkBaseGestaoAvaliacao.BeginTransaction();
+
+            try
+            {
+                var questaoAtual = await mediator.Send(new ObterQuestaoPorIdQuery(request.Questao.Id));
                 var textoBaseQuestao = await mediator.Send(new ObterTextoBasePorIdQuery(questaoAtual.TextoBaseId));
-              
+
                 if (questaoAtual.Enunciado != request.Questao.Enunciado || textoBaseQuestao?.Descricao != request.Questao.TextoBase)
                 {
                     long textoBaseId = await TrataTextoBase(request, questaoAtual, textoBaseQuestao);
@@ -37,14 +44,21 @@ namespace SME.Simulador.Prova.Serap.Aplicacao.UseCases
                     await TrataQuestaoGradeCurricular(request, novaVersaoQuestaoId);
                     await TrataQuestaoArquivo(request, novaVersaoQuestaoId);
                     await TrataQuestaoAudio(request, novaVersaoQuestaoId);
-                   
+
                     foreach (var provaId in request.ProvasId)
                     {
                         await AtualizaBlocos(request, novaVersaoQuestaoId, provaId);
                     }
                 }
-       
-            return true;
+
+                unitOfWorkBaseGestaoAvaliacao.Commit();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                unitOfWorkBaseGestaoAvaliacao.Rollback();
+                throw ex;
+            }
         }
 
         private async Task TrataQuestaoAudio(ParametrosQuestaoSalvar request, long novaVersaoQuestaoId)
@@ -153,19 +167,35 @@ namespace SME.Simulador.Prova.Serap.Aplicacao.UseCases
             if (provaBib)
             {
                 var cadeiaBlocoQuestaoProva = await mediator.Send(new ObterCadeiaBlocoQuestaoPorItemEProvaIdQuery(provaId, request.Questao.Id));
+
                 var cadeiaBlocoQuestao = MapeaCadeiaBlocoQuestaoProvaParaNovaEntidade(cadeiaBlocoQuestaoProva);
-                cadeiaBlocoQuestao.Situacao = (int)LegadoState.Excluido;
-                await mediator.Send(new CadeiaBlocoQuestaoCommand(cadeiaBlocoQuestao));
-                await CriaCadeiaBlocoQuestaoNovaVersao(novaVersaoQuestaoId, cadeiaBlocoQuestaoProva, cadeiaBlocoQuestao);
+                await InativaCadeiaBlocoQuestaoVersaoAntiga(cadeiaBlocoQuestao);
+                var cadeiaBlocoQuestaoNovaVersaoId = await CriaCadeiaBlocoQuestaoNovaVersao(novaVersaoQuestaoId, cadeiaBlocoQuestaoProva, cadeiaBlocoQuestao);
+                var blocoQuestaoNovaVersaoId = await TrataBlocoQuestao(request, novaVersaoQuestaoId, provaId);
             }
 
             else
             {
-                var blocoQuestaoProva = await mediator.Send(new ObterQuestaoBlocoPorItemEProvaIdQuery(provaId, request.Questao.Id));
-                QuestaoBloco QuestaoBloco = MapeaItemBlocoProvaIdParaNovaEntidade(blocoQuestaoProva);
-                await InativaItemVersaoAntigaDoBloco(QuestaoBloco);
-                await CriaBlocoQuestaoNovaVersao(novaVersaoQuestaoId, QuestaoBloco.BlocoId, QuestaoBloco.Ordem);
+                await TrataBlocoQuestao(request, novaVersaoQuestaoId, provaId);
             }
+
+            async Task InativaCadeiaBlocoQuestaoVersaoAntiga(CadeiaBlocoQuestao cadeiaBlocoQuestao)
+            {
+                cadeiaBlocoQuestao.Situacao = (int)LegadoState.Excluido;
+                await mediator.Send(new CadeiaBlocoQuestaoCommand(cadeiaBlocoQuestao));
+            }
+        }
+
+    
+
+      
+
+        private async Task<long> TrataBlocoQuestao(ParametrosQuestaoSalvar request, long novaVersaoQuestaoId, int provaId)
+        {
+            var blocoQuestaoProva = await mediator.Send(new ObterQuestaoBlocoPorItemEProvaIdQuery(provaId, request.Questao.Id));
+            QuestaoBloco QuestaoBloco = MapeaItemBlocoProvaIdParaNovaEntidade(blocoQuestaoProva);
+            await InativaItemVersaoAntigaDoBloco(QuestaoBloco);
+            return await CriaBlocoQuestaoNovaVersao(novaVersaoQuestaoId, QuestaoBloco.BlocoId, QuestaoBloco.Ordem);
         }
 
         private async Task CriaAlternativasNovaVersao(long novaVersaoQuestaoId, AlternativaAlteracaoDto alternativaDto)
@@ -190,7 +220,7 @@ namespace SME.Simulador.Prova.Serap.Aplicacao.UseCases
             await mediator.Send(new IncluirAlternativaCommand(entidadeAlternativa));
         }
 
-        private async Task CriaCadeiaBlocoQuestaoNovaVersao(long novaVersaoQuestaoId, CadeiaBlocoQuestaoDto cadeiaBlocoQuestaoProva, CadeiaBlocoQuestao cadeiaBlocoQuestao)
+        private async Task<long> CriaCadeiaBlocoQuestaoNovaVersao(long novaVersaoQuestaoId, CadeiaBlocoQuestaoDto cadeiaBlocoQuestaoProva, CadeiaBlocoQuestao cadeiaBlocoQuestao)
         {
             var cadeiaBlocoQuestaoNovo = new CadeiaBlocoQuestao()
             {
@@ -201,7 +231,7 @@ namespace SME.Simulador.Prova.Serap.Aplicacao.UseCases
                 DataAtualizacao = DateTime.Now,
                 Situacao = (int)LegadoState.Ativo
             };
-            await mediator.Send(new CadeiaBlocoQuestaoCommand(cadeiaBlocoQuestaoNovo));
+            return await mediator.Send(new CadeiaBlocoQuestaoCommand(cadeiaBlocoQuestaoNovo));
         }
 
         private static CadeiaBlocoQuestao MapeaCadeiaBlocoQuestaoProvaParaNovaEntidade(CadeiaBlocoQuestaoDto cadeiaBlocoQuestaoProva)
