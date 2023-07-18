@@ -1,6 +1,5 @@
 ﻿using System.Data;
 using Dommel;
-using Elastic.Apm.Api;
 using SME.Simulador.Prova.Serap.Dominio;
 
 namespace SME.Simulador.Prova.Serap.Dados;
@@ -28,7 +27,7 @@ public class RepositorioBase<TEntidadeBase, TContexto> : IRepositorioBase<TEntid
 
     public virtual async Task<TEntidadeBase> ObterPorIdAsync(long id)
     {
-        return await contexto.Conexao.GetAsync<TEntidadeBase>(id, contexto?.Transacao);
+        return await contexto.Conexao.GetAsync<TEntidadeBase>(id, contexto.Transacao);
     }
 
     public virtual async Task<IEnumerable<TEntidadeBase>> ObterTudoAsync()
@@ -42,8 +41,8 @@ public class RepositorioBase<TEntidadeBase, TContexto> : IRepositorioBase<TEntid
             await contexto.Conexao.UpdateAsync(entidade, contexto.Transacao);
         else
         {
-            object retorno = await contexto.Conexao.InsertAsync(entidade, contexto.Transacao);
-            entidade.Id = long.Parse(retorno.ToString());
+            var retorno = await contexto.Conexao.InsertAsync(entidade, contexto.Transacao);
+            entidade.Id = long.Parse(retorno.ToString() ?? string.Empty);
         }
         return entidade.Id;
     }

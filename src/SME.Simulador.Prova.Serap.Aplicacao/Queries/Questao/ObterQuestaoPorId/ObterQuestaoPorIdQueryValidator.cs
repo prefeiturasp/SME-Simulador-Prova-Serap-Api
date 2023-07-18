@@ -1,14 +1,14 @@
 ﻿using FluentValidation;
-namespace SME.Simulador.Prova.Serap.Aplicacao
+
+namespace SME.Simulador.Prova.Serap.Aplicacao;
+
+public class ObterQuestaoPorIdQueryValidator : AbstractValidator<ObterQuestaoPorIdQuery>
 {
-    public class ObterQuestaoPorIdQueryValidator : AbstractValidator<ObterQuestaoPorIdQuery>
+    public ObterQuestaoPorIdQueryValidator()
     {
-        public ObterQuestaoPorIdQueryValidator()
-        {
-            RuleFor(c => c.QuestaoId)
-                .NotNull()
-                .NotEmpty()
-                .WithMessage("O Id da questão deve ser informado.");
-        }
+        RuleFor(c => c.QuestaoId)
+            .NotNull()
+            .NotEmpty()
+            .WithMessage("O Id da questão deve ser informado.");
     }
 }

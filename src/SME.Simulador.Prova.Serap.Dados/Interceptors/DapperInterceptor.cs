@@ -349,7 +349,7 @@ public static class DapperInterceptor
         return result;
     }
 
-    public static async Task<TEntity> GetAsync<TEntity>(this IDbConnection connection, object id, IDbTransaction transacao = null)
+    public static async Task<TEntity> GetAsync<TEntity>(this IDbConnection connection, object id, IDbTransaction? transacao = null)
         where TEntity : class
     {
         if (servicoTelemetria == null)

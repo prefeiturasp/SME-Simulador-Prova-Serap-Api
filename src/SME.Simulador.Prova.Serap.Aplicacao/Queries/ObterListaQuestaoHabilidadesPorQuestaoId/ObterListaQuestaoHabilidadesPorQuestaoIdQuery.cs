@@ -1,14 +1,14 @@
 ﻿using MediatR;
 using SME.Simulador.Prova.Serap.Dominio;
 
-namespace SME.Simulador.Prova.Serap.Aplicacao
+namespace SME.Simulador.Prova.Serap.Aplicacao;
+
+public class ObterListaQuestaoHabilidadesPorQuestaoIdQuery : IRequest<IEnumerable<QuestaoHabilidade>>
 {
-    public class ObterListaQuestaoHabilidadesPorQuestaoIdQuery : IRequest<IEnumerable<QuestaoHabilidade>>
+    public ObterListaQuestaoHabilidadesPorQuestaoIdQuery(long questaoId)
     {
-        public ObterListaQuestaoHabilidadesPorQuestaoIdQuery(long questaoId)
-        {
-            QuestaoId = questaoId;
-        }
-        public long QuestaoId { get; }
+        QuestaoId = questaoId;
     }
+
+    public long QuestaoId { get; }
 }
