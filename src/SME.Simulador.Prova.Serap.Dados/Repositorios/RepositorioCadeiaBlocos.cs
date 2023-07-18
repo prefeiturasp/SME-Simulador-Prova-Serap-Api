@@ -1,21 +1,20 @@
-﻿using SME.Simulador.Prova.Serap.Dados.Interfaces;
-using SME.Simulador.Prova.Serap.Dominio;
-using SME.Simulador.Prova.Serap.Infra.Dtos;
+﻿using SME.Simulador.Prova.Serap.Dominio;
+using SME.Simulador.Prova.Serap.Infra;
 
-namespace SME.Simulador.Prova.Serap.Dados.Repositorios
+namespace SME.Simulador.Prova.Serap.Dados;
+
+public class RepositorioCadeiaBlocos : RepositorioGestaoAvaliacaoBase<CadeiaBlocoQuestao>, IRepositorioCadeiaBlocos
 {
-    public class RepositorioCadeiaBlocos : RepositorioGestaoAvaliacaoBase<CadeiaBlocoQuestao>, IRepositorioCadeiaBlocos
+    private readonly GestaoAvaliacaoContexto gestaoAvaliacaoContexto;
+
+    public RepositorioCadeiaBlocos(GestaoAvaliacaoContexto gestaoAvaliacaoContexto) : base(gestaoAvaliacaoContexto)
     {
-        private readonly GestaoAvaliacaoContexto gestaoAvaliacaoContexto;
+        this.gestaoAvaliacaoContexto = gestaoAvaliacaoContexto ?? throw new ArgumentNullException(nameof(gestaoAvaliacaoContexto));
+    }
 
-        public RepositorioCadeiaBlocos(GestaoAvaliacaoContexto gestaoAvaliacaoContexto) : base(gestaoAvaliacaoContexto)
-        {
-            this.gestaoAvaliacaoContexto = gestaoAvaliacaoContexto ?? throw new ArgumentNullException(nameof(gestaoAvaliacaoContexto));
-        }
-
-        public async Task<CadeiaBlocoQuestaoDto?> ObterBlocoIdPorItemEhProvaId(long provaId, long itemId)
-        {
-            const string query = @"SELECT BCI.Id,
+    public async Task<CadeiaBlocoQuestaoDto?> ObterBlocoIdPorItemEProvaId(long provaId, long itemId)
+    {
+        const string query = @"SELECT BCI.Id,
                                           BCI.BlockChain_Id as CadeiaBlocoId,
                                           BCI.Item_Id  as QuestaoId,
                                           BCI.[Order] as Ordem,
@@ -28,13 +27,12 @@ namespace SME.Simulador.Prova.Serap.Dados.Repositorios
 						             AND BCI.State = @state
 						             AND BC.State = @state";
 
-            return await gestaoAvaliacaoContexto.Conexao.QueryFirstOrDefaultAsync<CadeiaBlocoQuestaoDto?>(query,
-                new
-                {
-                    provaId,
-                    itemId,
-                    state = (int)LegadoState.Ativo
-                }, transaction: gestaoAvaliacaoContexto.Transacao);
-        }
+        return await gestaoAvaliacaoContexto.Conexao.QueryFirstOrDefaultAsync<CadeiaBlocoQuestaoDto?>(query,
+            new
+            {
+                provaId,
+                itemId,
+                state = (int)LegadoState.Ativo
+            }, transaction: gestaoAvaliacaoContexto.Transacao);
     }
 }

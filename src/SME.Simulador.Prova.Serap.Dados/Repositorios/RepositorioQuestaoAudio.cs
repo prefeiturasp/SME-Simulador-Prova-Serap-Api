@@ -1,20 +1,19 @@
-﻿using SME.Simulador.Prova.Serap.Dados.Interfaces;
-using SME.Simulador.Prova.Serap.Dominio;
+﻿using SME.Simulador.Prova.Serap.Dominio;
 
-namespace SME.Simulador.Prova.Serap.Dados.Repositorios
+namespace SME.Simulador.Prova.Serap.Dados.Repositorios;
+
+public class RepositorioQuestaoAudio : RepositorioGestaoAvaliacaoBase<QuestaoAudio>, IRepositorioQuestaoAudio
 {
-    public class RepositorioQuestaoAudio : RepositorioGestaoAvaliacaoBase<QuestaoAudio>, IRepositorioQuestaoAudio
+    private readonly GestaoAvaliacaoContexto gestaoAvaliacaoContexto;
+
+    public RepositorioQuestaoAudio(GestaoAvaliacaoContexto gestaoAvaliacaoContexto) : base(gestaoAvaliacaoContexto)
     {
-        private readonly GestaoAvaliacaoContexto gestaoAvaliacaoContexto;
+        this.gestaoAvaliacaoContexto = gestaoAvaliacaoContexto ?? throw new ArgumentNullException(nameof(gestaoAvaliacaoContexto));
+    }
 
-        public RepositorioQuestaoAudio(GestaoAvaliacaoContexto gestaoAvaliacaoContexto) : base(gestaoAvaliacaoContexto)
-        {
-            this.gestaoAvaliacaoContexto = gestaoAvaliacaoContexto ?? throw new ArgumentNullException(nameof(gestaoAvaliacaoContexto));
-        }
-
-        public async Task<IEnumerable<QuestaoAudio>> ObterListaQuestaoAudio(long questaoId)
-        {
-            const string query = @"  SELECT [Id]
+    public async Task<IEnumerable<QuestaoAudio>> ObterListaQuestaoAudio(long questaoId)
+    {
+        const string query = @"  SELECT [Id]
                                            ,[CreateDate] as  DataCriacao
                                            ,[UpdateDate] as DataAtualizacao
                                            ,[State]      as Situacao
@@ -24,12 +23,11 @@ namespace SME.Simulador.Prova.Serap.Dados.Repositorios
                                      WHERE Item_id = @questaoId
                                        AND State = @state";
 
-            return await gestaoAvaliacaoContexto.Conexao.QueryAsync<QuestaoAudio>(query,
-                new
-                {
-                    questaoId,
-                    state = (int)LegadoState.Ativo
-                }, transaction: gestaoAvaliacaoContexto.Transacao);
-        }
+        return await gestaoAvaliacaoContexto.Conexao.QueryAsync<QuestaoAudio>(query,
+            new
+            {
+                questaoId,
+                state = (int)LegadoState.Ativo
+            }, transaction: gestaoAvaliacaoContexto.Transacao);
     }
 }

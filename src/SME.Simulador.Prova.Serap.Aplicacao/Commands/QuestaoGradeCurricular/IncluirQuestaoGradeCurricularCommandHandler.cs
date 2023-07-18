@@ -1,20 +1,19 @@
 ﻿using MediatR;
-using SME.Simulador.Prova.Serap.Dados.Interfaces;
+using SME.Simulador.Prova.Serap.Dados;
 
-namespace SME.Simulador.Prova.Serap.Aplicacao.Commands.QuestaoGradeCurricular
+namespace SME.Simulador.Prova.Serap.Aplicacao;
+
+public class IncluirQuestaoGradeCurricularCommandHandler : IRequestHandler<IncluirQuestaoGradeCurricularCommand, long>
 {
-    public class IncluirQuestaoGradeCurricularCommandHandler : IRequestHandler<IncluirQuestaoGradeCurricularCommand, long>
+    private readonly IRepositorioQuestaoGradeCurricular repositorioQuestaoGradeCurricular;
+
+    public IncluirQuestaoGradeCurricularCommandHandler(IRepositorioQuestaoGradeCurricular repositorioQuestaoGradeCurricular)
     {
-        private readonly IRepositorioQuestaoGradeCurricular repositorioQuestaoGradeCurricular;
+        this.repositorioQuestaoGradeCurricular = repositorioQuestaoGradeCurricular;
+    }
 
-        public IncluirQuestaoGradeCurricularCommandHandler(IRepositorioQuestaoGradeCurricular repositorioQuestaoGradeCurricular)
-        {
-            this.repositorioQuestaoGradeCurricular = repositorioQuestaoGradeCurricular;
-        }
-
-        public async Task<long> Handle(IncluirQuestaoGradeCurricularCommand request, CancellationToken cancellationToken)
-        {
-            return await repositorioQuestaoGradeCurricular.SalvarAsync(request.QuestaoGradeCurricular);
-        }
+    public async Task<long> Handle(IncluirQuestaoGradeCurricularCommand request, CancellationToken cancellationToken)
+    {
+        return await repositorioQuestaoGradeCurricular.SalvarAsync(request.QuestaoGradeCurricular);
     }
 }

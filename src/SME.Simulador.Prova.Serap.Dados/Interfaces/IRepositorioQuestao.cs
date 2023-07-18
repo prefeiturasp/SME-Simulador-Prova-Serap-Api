@@ -9,5 +9,4 @@ public interface IRepositorioQuestao : IRepositorioBase<Questao>
     Task<IEnumerable<QuestaoResumoDto>> ObterQuestoesResumoPorCadernoIdAsync(long cadernoId);
     Task<int> ObterUltimaVersaoDaQuestaoPorCodigo(string codigoQuestao);
     Task<int> DesabilitaUltimaVersaoQuestao(string codigoQuestao);
-
 }

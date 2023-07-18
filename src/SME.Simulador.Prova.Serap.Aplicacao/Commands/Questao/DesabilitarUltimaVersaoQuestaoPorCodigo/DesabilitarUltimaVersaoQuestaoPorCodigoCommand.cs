@@ -1,13 +1,13 @@
 ﻿using MediatR;
 
-namespace SME.Simulador.Prova.Serap.Aplicacao
+namespace SME.Simulador.Prova.Serap.Aplicacao;
+
+public class DesabilitarUltimaVersaoQuestaoPorCodigoCommand : IRequest<int>
 {
-    public class DesabilitarUltimaVersaoQuestaoPorCodigoCommand : IRequest<int>
+    public DesabilitarUltimaVersaoQuestaoPorCodigoCommand(string codigoQuestao)
     {
-        public DesabilitarUltimaVersaoQuestaoPorCodigoCommand(string codigoQuestao)
-        {
-            CodigoQuestao = codigoQuestao;
-        }
-        public string CodigoQuestao { get; set; }
+        CodigoQuestao = codigoQuestao;
     }
+    
+    public string CodigoQuestao { get; }
 }

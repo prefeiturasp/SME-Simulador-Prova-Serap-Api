@@ -1,9 +1,8 @@
 ﻿using SME.Simulador.Prova.Serap.Dominio;
 
-namespace SME.Simulador.Prova.Serap.Dados.Interfaces
+namespace SME.Simulador.Prova.Serap.Dados;
+
+public interface IRepositorioQuestaoHabilidade : IRepositorioBase<QuestaoHabilidade>
 {
-    public interface IRepositorioQuestaoHabilidade : IRepositorioBase<QuestaoHabilidade>
-    {
-        Task<IEnumerable<QuestaoHabilidade>> ObterListaQuestoesHabilidades(long questaoId);
-    }
+    Task<IEnumerable<QuestaoHabilidade>> ObterListaQuestoesHabilidades(long questaoId);
 }

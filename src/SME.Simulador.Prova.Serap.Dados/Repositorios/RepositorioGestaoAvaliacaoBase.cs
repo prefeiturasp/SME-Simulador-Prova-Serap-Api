@@ -5,7 +5,7 @@ namespace SME.Simulador.Prova.Serap.Dados;
 public class RepositorioGestaoAvaliacaoBase<TEntidadeBase> : RepositorioBase<TEntidadeBase, GestaoAvaliacaoContexto> 
     where TEntidadeBase : EntidadeBase
 {
-    public RepositorioGestaoAvaliacaoBase(GestaoAvaliacaoContexto contexto) : base(contexto)
+    protected RepositorioGestaoAvaliacaoBase(GestaoAvaliacaoContexto contexto) : base(contexto)
     {
     }
 }

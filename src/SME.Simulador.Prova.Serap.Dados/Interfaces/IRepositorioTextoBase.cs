@@ -1,10 +1,8 @@
-﻿
-using SME.Simulador.Prova.Serap.Dominio;
+﻿using SME.Simulador.Prova.Serap.Dominio;
 
-namespace SME.Simulador.Prova.Serap.Dados.Interfaces
+namespace SME.Simulador.Prova.Serap.Dados;
+
+public interface IRepositorioTextoBase : IRepositorioBase<TextoBase>
 {
-    public interface IRepositorioTextoBase : IRepositorioBase<TextoBase>
-    {
-        public Task<long> InserirTextoBase(TextoBase entidade);
-    }
+    public Task<long> InserirTextoBase(TextoBase entidade);
 }
