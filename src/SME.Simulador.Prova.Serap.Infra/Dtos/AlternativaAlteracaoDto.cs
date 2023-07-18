@@ -1,6 +1,6 @@
-﻿namespace SME.Simulador.Prova.Serap.Infra.Dtos;
+﻿namespace SME.Simulador.Prova.Serap.Infra;
 
-public class AlternativaAlteracaoDto
+public class AlternativaAlteracaoDto : DtoBase
 {
     public int Id { get; set; }
     public string Descricao { get; set; } = string.Empty;

@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using SME.Simulador.Prova.Serap.Infra.Dtos;
+using SME.Simulador.Prova.Serap.Infra;
 
 namespace SME.Simulador.Prova.Serap.Aplicacao;
 

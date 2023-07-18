@@ -4,8 +4,6 @@ using SME.Simulador.Prova.Serap.Aplicacao.Queries.ObterListaQuestaoAudioPorQuest
 using SME.Simulador.Prova.Serap.Aplicacao.Queries.VerificaSeEhProvaBibPorProvaId;
 using SME.Simulador.Prova.Serap.Dominio;
 using SME.Simulador.Prova.Serap.Infra;
-using SME.Simulador.Prova.Serap.Infra.Dtos;
-using SME.Simulador.Prova.Serap.Infra.Dtos.Parametros;
 
 namespace SME.Simulador.Prova.Serap.Aplicacao.UseCases;
 
@@ -167,7 +165,7 @@ public class GerarNovaVersaoQuestaoUseCase : AbstractUseCase, IGerarNovaVersaoQu
             var cadeiaBlocoQuestaoProva = await mediator.Send(new ObterCadeiaBlocoQuestaoPorItemEProvaIdQuery(provaId, request.Questao.Id));
             
             if (cadeiaBlocoQuestaoProva == null)
-                return; ;
+                return;
 
             var cadeiaBlocoQuestao = MapeaCadeiaBlocoQuestaoProvaParaNovaEntidade(cadeiaBlocoQuestaoProva);
             await InativaCadeiaBlocoQuestaoVersaoAntiga(cadeiaBlocoQuestao);

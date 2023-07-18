@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SME.Simulador.Prova.Serap.Infra.Dtos.Parametros;
+namespace SME.Simulador.Prova.Serap.Infra;
 
 public class ParametrosQuestaoSalvarDto : DtoBase
 {
