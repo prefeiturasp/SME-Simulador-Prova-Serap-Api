@@ -7,5 +7,5 @@ public class ValidarAutenticacaoUsuarioDto : DtoBase
         Codigo = codigo;
     }
 
-    public string Codigo { get; }
+    public string Codigo { get; set; }
 }

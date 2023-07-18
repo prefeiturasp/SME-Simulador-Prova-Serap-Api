@@ -18,13 +18,16 @@ public class GerarNovaVersaoQuestaoUseCase : AbstractUseCase, IGerarNovaVersaoQu
 
     public async Task<bool> ExecutarAsync(ParametrosQuestaoSalvarDto request)
     {
+        if (request.Questao == null)
+            return false;        
+        
         unitOfWorkBaseGestaoAvaliacao.BeginTransaction();
         try
         {
             var questaoAtual = await mediator.Send(new ObterQuestaoPorIdQuery(request.Questao.Id));
             var textoBaseQuestao = await mediator.Send(new ObterTextoBasePorIdQuery(questaoAtual.TextoBaseId));
 
-            if (questaoAtual.Enunciado != request.Questao.Enunciado || textoBaseQuestao?.Descricao != request.Questao.TextoBase)
+            if (questaoAtual.Enunciado != request.Questao.Enunciado || textoBaseQuestao.Descricao != request.Questao.TextoBase)
             {
                 var textoBaseId = await TrataTextoBase(request, questaoAtual, textoBaseQuestao);
 
@@ -55,6 +58,9 @@ public class GerarNovaVersaoQuestaoUseCase : AbstractUseCase, IGerarNovaVersaoQu
 
     private async Task TrataQuestaoAudio(ParametrosQuestaoSalvarDto request, long novaVersaoQuestaoId)
     {
+        if (request.Questao == null)
+            return;
+        
         var listaQuestaoAudio = await mediator.Send(new ObterListaQuestaoAudioPorQuestaoIdQuery(request.Questao.Id));
         
         foreach (var questaoArquivo in listaQuestaoAudio)
@@ -74,6 +80,9 @@ public class GerarNovaVersaoQuestaoUseCase : AbstractUseCase, IGerarNovaVersaoQu
 
     private async Task TrataQuestaoArquivo(ParametrosQuestaoSalvarDto request, long novaVersaoQuestaoId)
     {
+        if (request.Questao == null)
+            return;
+        
         var listaQuestaoArquivo = await mediator.Send(new ObterListaQuestaoArquivoPorQuestaoIdQuery(request.Questao.Id));
         
         foreach (var questaoArquivo in listaQuestaoArquivo)
@@ -95,6 +104,9 @@ public class GerarNovaVersaoQuestaoUseCase : AbstractUseCase, IGerarNovaVersaoQu
 
     private async Task TrataQuestaoGradeCurricular(ParametrosQuestaoSalvarDto request, long novaVersaoQuestaoId)
     {
+        if (request.Questao == null)
+            return;
+        
         var listaQuestaoGradesCurriculares = await mediator.Send(new ObterListaQuestaoGradesCurricularesQuery(request.Questao.Id));
         
         foreach (var questaoGradeCurricular in listaQuestaoGradesCurriculares)
@@ -114,6 +126,9 @@ public class GerarNovaVersaoQuestaoUseCase : AbstractUseCase, IGerarNovaVersaoQu
 
     private async Task TrataQuestaoHabilidates(ParametrosQuestaoSalvarDto request, long novaVersaoQuestaoId)
     {
+        if (request.Questao == null)
+            return;
+        
         var listaQuestaoHabilidades = await mediator.Send(new ObterListaQuestaoHabilidadesPorQuestaoIdQuery(request.Questao.Id));
         
         foreach (var questaoHabilidade in listaQuestaoHabilidades)
@@ -134,6 +149,9 @@ public class GerarNovaVersaoQuestaoUseCase : AbstractUseCase, IGerarNovaVersaoQu
 
     private async Task TrataAlternativas(ParametrosQuestaoSalvarDto request, long novaVersaoQuestaoId)
     {
+        if (request.Alternativas == null)
+            return;
+        
         foreach (var alternativaDto in request.Alternativas)
             await CriaAlternativasNovaVersao(novaVersaoQuestaoId, alternativaDto);
     }
@@ -150,7 +168,7 @@ public class GerarNovaVersaoQuestaoUseCase : AbstractUseCase, IGerarNovaVersaoQu
     {
         var textoBaseId = questaoAtual.TextoBaseId;
 
-        if (textoBaseQuestao?.Descricao != request.Questao.TextoBase)
+        if (textoBaseQuestao?.Descricao != request.Questao?.TextoBase)
             textoBaseId = await IncluiNovoTextoBase(request, textoBaseQuestao);
         
         return textoBaseId;
@@ -162,6 +180,9 @@ public class GerarNovaVersaoQuestaoUseCase : AbstractUseCase, IGerarNovaVersaoQu
 
         if (provaBib)
         {
+            if (request.Questao == null)
+                return;
+            
             var cadeiaBlocoQuestaoProva = await mediator.Send(new ObterCadeiaBlocoQuestaoPorItemEProvaIdQuery(provaId, request.Questao.Id));
             
             if (cadeiaBlocoQuestaoProva == null)
@@ -184,6 +205,9 @@ public class GerarNovaVersaoQuestaoUseCase : AbstractUseCase, IGerarNovaVersaoQu
 
     private async Task TrataBlocoQuestao(ParametrosQuestaoSalvarDto request, long novaVersaoQuestaoId, int provaId)
     {
+        if (request.Questao == null)
+            return;
+        
         var blocoQuestaoProva = await mediator.Send(new ObterQuestaoBlocoPorItemEProvaIdQuery(provaId, request.Questao.Id));
         var questaoBloco = MapeaItemBlocoProvaIdParaNovaEntidade(blocoQuestaoProva);
         await InativaItemVersaoAntigaDoBloco(questaoBloco);
@@ -246,7 +270,7 @@ public class GerarNovaVersaoQuestaoUseCase : AbstractUseCase, IGerarNovaVersaoQu
     {
         var novoTextoBase = new TextoBase
         {
-            Descricao = request.Questao.TextoBase,
+            Descricao = request.Questao?.TextoBase,
             DataCriacao = UtilDataHora.ObterDataHoraAtualBrasiliaUtc(),
             DataAtualizacao = UtilDataHora.ObterDataHoraAtualBrasiliaUtc(),
             DeclaracaoInicial = textoBaseItem?.DeclaracaoInicial,
@@ -305,7 +329,7 @@ public class GerarNovaVersaoQuestaoUseCase : AbstractUseCase, IGerarNovaVersaoQu
             CodigoItem = questaoAtual.CodigoItem,
             VersaoItem = ultimaVersaoQuestao + 1,
             TextoBaseId = textoBaseId,
-            Enunciado = request.Questao.Enunciado,
+            Enunciado = request.Questao?.Enunciado,
             LevelItemId = questaoAtual.LevelItemId,
             DataAtualizacao = UtilDataHora.ObterDataHoraAtualBrasiliaUtc(),
             DataCriacao = UtilDataHora.ObterDataHoraAtualBrasiliaUtc(),

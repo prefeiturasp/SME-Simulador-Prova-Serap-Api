@@ -6,7 +6,7 @@ public class ParametrosQuestaoSalvarDto : DtoBase
 {
     [Required] public int[] ProvasId { get; set; } = Array.Empty<int>();
 
-    public QuestaoAlteracaoDto Questao { get; set; } = new();
+    public QuestaoAlteracaoDto? Questao { get; set; }
 
-    public IEnumerable<AlternativaAlteracaoDto> Alternativas { get; set; } = new List<AlternativaAlteracaoDto>();
+    public IEnumerable<AlternativaAlteracaoDto>? Alternativas { get; set; }
 }
