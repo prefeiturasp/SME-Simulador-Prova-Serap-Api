@@ -65,8 +65,8 @@ public class GerarNovaVersaoQuestaoUseCase : AbstractUseCase, IGerarNovaVersaoQu
             {
                 QuestaoId = novaVersaoQuestaoId,
                 ArquivoId = questaoArquivo.ArquivoId,
-                DataCriacao = DateTime.Now,
-                DataAtualizacao = DateTime.Now,
+                DataCriacao = UtilDataHora.ObterDataHoraAtualBrasiliaUtc(),
+                DataAtualizacao = UtilDataHora.ObterDataHoraAtualBrasiliaUtc(),
                 Situacao = (int)LegadoState.Ativo,
             };
 
@@ -86,10 +86,9 @@ public class GerarNovaVersaoQuestaoUseCase : AbstractUseCase, IGerarNovaVersaoQu
                 ArquivoConvertidoId = questaoArquivo.ArquivoConvertidoId,
                 ArquivoId = questaoArquivo.ArquivoId,
                 ThumbnailId = questaoArquivo.ThumbnailId,
-                DataCriacao = DateTime.Now,
-                DataAtualizacao = DateTime.Now,
-                Situacao = (int)LegadoState.Ativo,
-
+                DataCriacao = UtilDataHora.ObterDataHoraAtualBrasiliaUtc(),
+                DataAtualizacao = UtilDataHora.ObterDataHoraAtualBrasiliaUtc(),
+                Situacao = (int)LegadoState.Ativo
             };
 
             await mediator.Send(new IncluirQuestaoArquivoCommand(questaoArquivoNovaVersao));
@@ -106,8 +105,8 @@ public class GerarNovaVersaoQuestaoUseCase : AbstractUseCase, IGerarNovaVersaoQu
             {
                 QuestaoId = novaVersaoQuestaoId,
                 TipoGradeCurricular = questaoGradeCurricular.TipoGradeCurricular,
-                DataCriacao = DateTime.Now,
-                DataAtualizacao = DateTime.Now,
+                DataCriacao = UtilDataHora.ObterDataHoraAtualBrasiliaUtc(),
+                DataAtualizacao = UtilDataHora.ObterDataHoraAtualBrasiliaUtc(),
                 Situacao = (int)LegadoState.Ativo
             };
 
@@ -126,8 +125,8 @@ public class GerarNovaVersaoQuestaoUseCase : AbstractUseCase, IGerarNovaVersaoQu
                 QuestaoId = novaVersaoQuestaoId,
                 HabilidadeId = questaoHabilidade.HabilidadeId,
                 HabilidadeOriginal = questaoHabilidade.HabilidadeOriginal,
-                DataCriacao = DateTime.Now,
-                DataAtualizacao = DateTime.Now,
+                DataCriacao = UtilDataHora.ObterDataHoraAtualBrasiliaUtc(),
+                DataAtualizacao = UtilDataHora.ObterDataHoraAtualBrasiliaUtc(),
                 Situacao = (int)LegadoState.Ativo
             };
 
@@ -201,8 +200,8 @@ public class GerarNovaVersaoQuestaoUseCase : AbstractUseCase, IGerarNovaVersaoQu
         {
             QuestaoId = novaVersaoQuestaoId,
             Correta = alternativaQuestao.Correta,
-            DataCriacao = DateTime.Now,
-            DataAtualizacao = DateTime.Now,
+            DataCriacao = UtilDataHora.ObterDataHoraAtualBrasiliaUtc(),
+            DataAtualizacao = UtilDataHora.ObterDataHoraAtualBrasiliaUtc(),
             Descricao = alternativaDto.Descricao,
             DiscriminaçãoTCT = alternativaQuestao.DiscriminaçãoTCT,
             Justificativa = alternativaQuestao.Justificativa,
@@ -210,7 +209,7 @@ public class GerarNovaVersaoQuestaoUseCase : AbstractUseCase, IGerarNovaVersaoQu
             Ordem = alternativaQuestao.Ordem,
             Situacao = alternativaQuestao.Situacao,
             TCTCoeficienteBisserial = alternativaQuestao.TCTCoeficienteBisserial,
-            TCTDificuldade = alternativaQuestao.TCTDificuldade,
+            TCTDificuldade = alternativaQuestao.TCTDificuldade
         };
 
         await mediator.Send(new IncluirAlternativaCommand(entidadeAlternativa));
@@ -225,7 +224,7 @@ public class GerarNovaVersaoQuestaoUseCase : AbstractUseCase, IGerarNovaVersaoQu
             QuestaoId = novaVersaoQuestaoId,
             DataCricao = cadeiaBlocoQuestaoProva.DataCriacao,
             Ordem = cadeiaBlocoQuestaoProva.Ordem,
-            DataAtualizacao = DateTime.Now,
+            DataAtualizacao = UtilDataHora.ObterDataHoraAtualBrasiliaUtc(),
             Situacao = (int)LegadoState.Ativo
         };
 
@@ -241,7 +240,7 @@ public class GerarNovaVersaoQuestaoUseCase : AbstractUseCase, IGerarNovaVersaoQu
             QuestaoId = cadeiaBlocoQuestaoProva.QuestaoId,
             DataCricao = cadeiaBlocoQuestaoProva.DataCriacao,
             Ordem = cadeiaBlocoQuestaoProva.Ordem,
-            DataAtualizacao = DateTime.Now
+            DataAtualizacao = UtilDataHora.ObterDataHoraAtualBrasiliaUtc()
         };
     }
 
@@ -250,8 +249,8 @@ public class GerarNovaVersaoQuestaoUseCase : AbstractUseCase, IGerarNovaVersaoQu
         var novoTextoBase = new TextoBase
         {
             Descricao = request.Questao.TextoBase,
-            DataCriacao = DateTime.Now,
-            DataAtualizacao = DateTime.Now,
+            DataCriacao = UtilDataHora.ObterDataHoraAtualBrasiliaUtc(),
+            DataAtualizacao = UtilDataHora.ObterDataHoraAtualBrasiliaUtc(),
             DeclaracaoInicial = textoBaseItem?.DeclaracaoInicial,
             DeclaracaoInicialNarracao = textoBaseItem?.DeclaracaoInicialNarracao,
             Fonte = textoBaseItem?.Fonte,
@@ -273,8 +272,8 @@ public class GerarNovaVersaoQuestaoUseCase : AbstractUseCase, IGerarNovaVersaoQu
             BlocoId = blocoId,
             QuestaoId = novaVersaoItemId,
             Situacao = (int)LegadoState.Ativo,
-            DataCricao = DateTime.Now,
-            DataAtualizacao = DateTime.Now
+            DataCricao = UtilDataHora.ObterDataHoraAtualBrasiliaUtc(),
+            DataAtualizacao = UtilDataHora.ObterDataHoraAtualBrasiliaUtc()
         };
 
         await mediator.Send(new QuestaoBlocoCommand(novoItemBloco));
@@ -295,7 +294,7 @@ public class GerarNovaVersaoQuestaoUseCase : AbstractUseCase, IGerarNovaVersaoQu
             QuestaoId = blocoQuestao.ItemId,
             DataCricao = blocoQuestao.DataCriacao,
             Ordem = blocoQuestao.Ordem,
-            DataAtualizacao = DateTime.Now
+            DataAtualizacao = UtilDataHora.ObterDataHoraAtualBrasiliaUtc()
         };
     }
 
@@ -310,8 +309,8 @@ public class GerarNovaVersaoQuestaoUseCase : AbstractUseCase, IGerarNovaVersaoQu
             TextoBaseId = textoBaseId,
             Enunciado = request.Questao.Enunciado,
             LevelItemId = questaoAtual.LevelItemId,
-            DataAtualizacao = DateTime.Now,
-            DataCriacao = DateTime.Now,
+            DataAtualizacao = UtilDataHora.ObterDataHoraAtualBrasiliaUtc(),
+            DataCriacao = UtilDataHora.ObterDataHoraAtualBrasiliaUtc(),
             DeclaracaoAluno = questaoAtual.DeclaracaoAluno,
             DescriptorSentence = questaoAtual.DescriptorSentence,
             EhRestrito = questaoAtual.EhRestrito,
