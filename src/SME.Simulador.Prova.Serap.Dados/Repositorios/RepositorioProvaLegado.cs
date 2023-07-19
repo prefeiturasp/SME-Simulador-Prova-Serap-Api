@@ -15,10 +15,14 @@ public class RepositorioProvaLegado : IRepositorioProvaLegado
 
     public async Task<IEnumerable<ProvaLegadoDto>> ObterProvasPorQuestaoIdAsync(long questaoId)
     {
-        const string query = @"select distinct t.id,
+          const string query = @"select distinct t.id,
                                     t.Description as descricao,
-                                    t.ApplicationStartDate as datainicioaplicacao
+                                    t.ApplicationStartDate as datainicioaplicacao,
+                             	   i.ItemVersion as versao,
+                             	   d.Description as componenteCurricular   
                                 from test t with (NOLOCK)
+                                inner join discipline d on t.Discipline_id = d.Id
+                                inner join Item i on i.Id = @questaoId
                                 where t.State = @state
                                 and (EXISTS (select bi.Id
                                                 from BlockItem bi with (NOLOCK)
