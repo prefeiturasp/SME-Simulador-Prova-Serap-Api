@@ -3,31 +3,31 @@
 public class Questao : EntidadeBase
 {
     public string CodigoItem { get; set; } = string.Empty;
-    public int VersaoItem { get; set; } // ,[ItemVersion]
-    public string? Enunciado { get; set; } //,[Statement]
-    public string? PalavrasChaves { get; set; } //,[Keywords]
+    public int VersaoItem { get; set; }
+    public string? Enunciado { get; set; } 
+    public string? PalavrasChaves { get; set; }
     public string? Tips { get; set; }
-    public decimal? TRIDiscrimination { get; set; } //TRIDiscrimination
-    public decimal? TRIDifficulty { get; set; } //TRIDifficulty
-    public decimal? TRICasualSetting { get; set; } //TRICasualSetting
-    public DateTime DataCriacao { get; set; } //[CreateDate
-    public DateTime DataAtualizacao { get; set; } //[UpdateDate]
-    public int Situacao { get; set; } // state
-    public long TextoBaseId { get; set; } //BaseText_Id
-    public int MatrizId { get; set; } // [EvaluationMatrix_Id]
-    public int LevelItemId { get; set; } // ,[ItemLevel_Id]
-    public int SituacaoItemId { get; set; } // [ItemSituation_Id]
-    public int TipoItem { get; set; } // [ItemType_Id]
-    public int Proeficiencia { get; set; }//proficiency]
-    public string? DescriptorSentence { get; set; } //,[descriptorSentence]
-    public bool UltimaVersao { get; set; } //,[LastVersion]
-    public bool EhRestrito { get; set; } // [IsRestrict]
-    public bool ItemNarrado { get; set; } //,[ItemNarrated]
-    public bool DeclaracaoAluno { get; set; } //[StudentStatement]
-    public bool NarracaoDeclaracaoAluno { get; set; } // [NarrationStudentStatement]
-    public bool NarracaoAlternativas { get; set; }  // [NarrationAlternatives]
-    public bool Revogado { get; set; } //Revoked
-    public int VersaoCodigoQuestao { get; set; } //,[ItemCodeVersion]
-    public int AreaConhecimentoId { get; set; } //,[KnowledgeArea_Id]
-    public int SubAssunto { get; set; } // [SubSubject_Id]
+    public decimal? TRIDiscrimination { get; set; } 
+    public decimal? TRIDifficulty { get; set; } 
+    public decimal? TRICasualSetting { get; set; } 
+    public DateTime DataCriacao { get; set; } 
+    public DateTime DataAtualizacao { get; set; } 
+    public int Situacao { get; set; } 
+    public long TextoBaseId { get; set; }
+    public int MatrizId { get; set; } 
+    public int? LevelItemId { get; set; } 
+    public int SituacaoItemId { get; set; } 
+    public int TipoItem { get; set; }
+    public int? Proeficiencia { get; set; }
+    public string? DescriptorSentence { get; set; } 
+    public bool? UltimaVersao { get; set; } 
+    public bool? EhRestrito { get; set; } 
+    public bool? ItemNarrado { get; set; } 
+    public bool? DeclaracaoAluno { get; set; }
+    public bool? NarracaoDeclaracaoAluno { get; set; } 
+    public bool? NarracaoAlternativas { get; set; }  
+    public bool? Revogado { get; set; } 
+    public int VersaoCodigoQuestao { get; set; }
+    public int? AreaConhecimentoId { get; set; } 
+    public int? SubAssunto { get; set; }
 }
