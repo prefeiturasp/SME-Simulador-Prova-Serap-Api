@@ -31,9 +31,7 @@ public class GerarNovaVersaoQuestaoUseCase : AbstractUseCase, IGerarNovaVersaoQu
             {
                 var textoBaseId = await TrataTextoBase(request, questaoAtual, textoBaseQuestao);
 
-                bool ehUltimaVersao = questaoAtual.UltimaVersao != null ? (bool)questaoAtual.UltimaVersao : true;
-                if (!ehUltimaVersao)
-                    await mediator.Send(new DesabilitarUltimaVersaoQuestaoPorCodigoCommand(questaoAtual.CodigoItem));
+                await mediator.Send(new DesabilitarUltimaVersaoQuestaoPorCodigoCommand(questaoAtual.CodigoItem));
 
                 var novaVersaoQuestaoId = await TrataQuestaoNovaVersao(request, questaoAtual, textoBaseId);
 
