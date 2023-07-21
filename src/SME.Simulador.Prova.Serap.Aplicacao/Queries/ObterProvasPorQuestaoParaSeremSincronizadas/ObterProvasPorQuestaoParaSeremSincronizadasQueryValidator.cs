@@ -2,7 +2,7 @@
 
 namespace SME.Simulador.Prova.Serap.Aplicacao;
 
-public class ObterProvasPorQuestaoParaSeremSincronizadasQueryValidator : AbstractValidator<ObterProvasPorQuestaoParaSeremSincronizadasQuery>
+public class ObterProvasPorQuestaoParaSeremSincronizadasQueryValidator : AbstractValidator<ObterProvasPorQuestaoParaSeremSincronizadasENaoForamIniciadasQuery>
 {
     public ObterProvasPorQuestaoParaSeremSincronizadasQueryValidator()
     {

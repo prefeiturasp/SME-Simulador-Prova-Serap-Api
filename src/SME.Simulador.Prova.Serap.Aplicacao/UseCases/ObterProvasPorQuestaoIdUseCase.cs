@@ -13,7 +13,7 @@ public class ObterProvasPorQuestaoIdUseCase : AbstractUseCase, IObterProvasPorQu
     public async Task<IEnumerable<ProvaLegadoDto>> ExecutarAsync(long request)
     {
         var provasNaoIniciadas = await mediator.Send(new ObterProvasNaoIniciadasPorQuestaoIdQuery(request));
-        var provasParaSeremSincronizadas = await ObterProvasParaSeramSincronizadas(request);
+        var provasParaSeremSincronizadas = await ObterProvasParaSeramSincronizadasENaoForamIniciadas(request);
 
         var idsProvasParaAtualizar = new HashSet<long>();
 
@@ -28,10 +28,10 @@ public class ObterProvasPorQuestaoIdUseCase : AbstractUseCase, IObterProvasPorQu
         return provasPorQuestao.Where(c => idsProvasParaAtualizar.Contains(c.Id));
     }
 
-    private async Task<IEnumerable<ProvaLegadoDto>> ObterProvasParaSeramSincronizadas(long questaoId)
+    private async Task<IEnumerable<ProvaLegadoDto>> ObterProvasParaSeramSincronizadasENaoForamIniciadas(long questaoId)
     {
         var execucaoControle = await mediator.Send(new ObterUltimaExecucaoPorTipoQuery(ExecucaoControleTipo.ProvaLegadoSincronizacao));
         var filtroProvasParaSeremSincronizadas = new FiltroProvasParaSeremSincronizadasDto(questaoId, execucaoControle.UltimaExecucao);
-        return await mediator.Send(new ObterProvasPorQuestaoParaSeremSincronizadasQuery(filtroProvasParaSeremSincronizadas));        
+        return await mediator.Send(new ObterProvasPorQuestaoParaSeremSincronizadasENaoForamIniciadasQuery(filtroProvasParaSeremSincronizadas));        
     }
 }

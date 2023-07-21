@@ -4,7 +4,7 @@ using SME.Simulador.Prova.Serap.Infra;
 
 namespace SME.Simulador.Prova.Serap.Aplicacao;
 
-public class ObterProvasPorQuestaoParaSeremSincronizadasQueryHandler : IRequestHandler<ObterProvasPorQuestaoParaSeremSincronizadasQuery, IEnumerable<ProvaLegadoDto>>
+public class ObterProvasPorQuestaoParaSeremSincronizadasQueryHandler : IRequestHandler<ObterProvasPorQuestaoParaSeremSincronizadasENaoForamIniciadasQuery, IEnumerable<ProvaLegadoDto>>
 {
     private readonly IRepositorioProvaLegado repositorioProvaLegado;
 
@@ -13,7 +13,7 @@ public class ObterProvasPorQuestaoParaSeremSincronizadasQueryHandler : IRequestH
         this.repositorioProvaLegado = repositorioProvaLegado ?? throw new ArgumentNullException(nameof(repositorioProvaLegado));
     }
 
-    public async Task<IEnumerable<ProvaLegadoDto>> Handle(ObterProvasPorQuestaoParaSeremSincronizadasQuery request, CancellationToken cancellationToken)
+    public async Task<IEnumerable<ProvaLegadoDto>> Handle(ObterProvasPorQuestaoParaSeremSincronizadasENaoForamIniciadasQuery request, CancellationToken cancellationToken)
     {
         return await repositorioProvaLegado.ObterProvasPorQuestaoParaSeremSincronizadasAsync(request.Filtro);
     }
