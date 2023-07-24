@@ -15,6 +15,6 @@ public class ObterProvasNaoIniciadasPorQuestaoIdQueryHandler : IRequestHandler<O
 
     public async Task<IEnumerable<ProvaLegadoDto>> Handle(ObterProvasNaoIniciadasPorQuestaoIdQuery request, CancellationToken cancellationToken)
     {
-        return await repositorioProvaLegado.ObterProvasNaoIniciadasPorQuestaoIdAsync(request.QuestaoId);
+        return await repositorioProvaLegado.ObterProvasNaoIniciadasPorQuestaoIdAsync(request.QuestaoCodigo);
     }
 }

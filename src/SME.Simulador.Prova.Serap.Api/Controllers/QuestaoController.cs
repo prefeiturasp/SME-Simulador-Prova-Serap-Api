@@ -27,7 +27,7 @@ public class QuestaoController : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
     [HttpGet("{questaoId:long}/provas", Name = nameof(ObterProvasPorQuestaoIdAsync))]
-    [Authorize("Bearer")]
+   // [Authorize("Bearer")]
     public async Task<IActionResult> ObterProvasPorQuestaoIdAsync([Required] long questaoId,
         [FromServices] IObterProvasPorQuestaoIdUseCase useCase)
     {

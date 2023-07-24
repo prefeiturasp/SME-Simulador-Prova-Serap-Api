@@ -5,10 +5,10 @@ namespace SME.Simulador.Prova.Serap.Aplicacao;
 
 public class ObterProvasNaoIniciadasPorQuestaoIdQuery : IRequest<IEnumerable<ProvaLegadoDto>>
 {
-    public ObterProvasNaoIniciadasPorQuestaoIdQuery(long questaoId)
+    public ObterProvasNaoIniciadasPorQuestaoIdQuery(string questaoCodigo)
     {
-        QuestaoId = questaoId;
+        QuestaoCodigo = questaoCodigo;
     }
 
-    public long QuestaoId { get; }
+    public string QuestaoCodigo { get; }
 }

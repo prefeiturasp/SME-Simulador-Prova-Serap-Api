@@ -4,11 +4,11 @@ using SME.Simulador.Prova.Serap.Infra;
 
 namespace SME.Simulador.Prova.Serap.Aplicacao;
 
-public class ObterProvasPorQuestaoParaSeremSincronizadasQueryHandler : IRequestHandler<ObterProvasPorQuestaoParaSeremSincronizadasENaoForamIniciadasQuery, IEnumerable<ProvaLegadoDto>>
+public class ObterProvasPorQuestaoParaSeremSincronizadasENaoForamIniciadasQueryHandler : IRequestHandler<ObterProvasPorQuestaoParaSeremSincronizadasENaoForamIniciadasQuery, IEnumerable<ProvaLegadoDto>>
 {
     private readonly IRepositorioProvaLegado repositorioProvaLegado;
 
-    public ObterProvasPorQuestaoParaSeremSincronizadasQueryHandler(IRepositorioProvaLegado repositorioProvaLegado)
+    public ObterProvasPorQuestaoParaSeremSincronizadasENaoForamIniciadasQueryHandler(IRepositorioProvaLegado repositorioProvaLegado)
     {
         this.repositorioProvaLegado = repositorioProvaLegado ?? throw new ArgumentNullException(nameof(repositorioProvaLegado));
     }

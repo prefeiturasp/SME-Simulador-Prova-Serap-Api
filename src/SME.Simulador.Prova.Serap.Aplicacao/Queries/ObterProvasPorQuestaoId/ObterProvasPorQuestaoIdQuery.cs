@@ -5,10 +5,13 @@ namespace SME.Simulador.Prova.Serap.Aplicacao;
 
 public class ObterProvasPorQuestaoIdQuery : IRequest<IEnumerable<ProvaLegadoDto>>
 {
-    public ObterProvasPorQuestaoIdQuery(long questaoId)
+    public ObterProvasPorQuestaoIdQuery(string questaoCodigo, long[] provasId)
     {
-        QuestaoId = questaoId;
+        QuestaoCodigo = questaoCodigo;
+        ProvasId = provasId;
     }
 
-    public long QuestaoId { get; }
+    public string QuestaoCodigo { get; }
+
+    public long[] ProvasId { get; }
 }
