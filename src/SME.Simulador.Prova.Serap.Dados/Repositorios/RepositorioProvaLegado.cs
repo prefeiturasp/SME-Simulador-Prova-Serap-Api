@@ -58,6 +58,7 @@ public class RepositorioProvaLegado : IRepositorioProvaLegado
                                 left join TestPermission tp with (NOLOCK) on tp.Test_Id = t.Id
                                     and tp.gru_id = 'BD6D9CE6-9456-E711-9541-782BCB3D218E'
                                 where (t.UpdateDate > @ultimaAtualizacao or tp.UpdateDate > @ultimaAtualizacao)
+                                and  t.ApplicationStartDate >= getDate()
                                 and t.State = @state
                                 and (EXISTS (select bi.Id
                                                 from BlockItem bi with (NOLOCK)
