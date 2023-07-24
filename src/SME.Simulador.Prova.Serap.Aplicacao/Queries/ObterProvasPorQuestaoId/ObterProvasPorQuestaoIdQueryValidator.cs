@@ -6,8 +6,9 @@ public class ObterProvasPorQuestaoIdQueryValidator : AbstractValidator<ObterProv
 {
     public ObterProvasPorQuestaoIdQueryValidator()
     {
-        RuleFor(c => c.QuestaoId)
-            .GreaterThan(0)
+        RuleFor(c => c.QuestaoCodigo)
+             .NotNull()
+            .NotEmpty()
             .WithMessage("O Id da questão deve ser informado.");
     }
 }

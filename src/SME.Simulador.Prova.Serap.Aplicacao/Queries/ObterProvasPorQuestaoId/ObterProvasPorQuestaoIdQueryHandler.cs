@@ -15,6 +15,6 @@ public class ObterProvasPorQuestaoIdQueryHandler : IRequestHandler<ObterProvasPo
 
     public async Task<IEnumerable<ProvaLegadoDto>> Handle(ObterProvasPorQuestaoIdQuery request, CancellationToken cancellationToken)
     {
-        return await repositorioProvaLegado.ObterProvasPorQuestaoIdAsync(request.QuestaoId);
+        return await repositorioProvaLegado.ObterProvasEVersaoItemPorQuestaoCodigoEProvasIdAsync(request.QuestaoCodigo, request.ProvasId);
     }
 }
