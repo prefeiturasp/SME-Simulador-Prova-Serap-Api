@@ -15,7 +15,7 @@ public class QuestaoController : ControllerBase
     [ProducesResponseType(typeof(QuestaoCompletaDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(QuestaoCompletaDto), StatusCodes.Status422UnprocessableEntity)]
     [HttpGet("completa", Name = nameof(ObterCompletaPorId))]
-  //  [Authorize("Bearer")]
+    [Authorize("Bearer")]
     public async Task<IActionResult> ObterCompletaPorId([FromQuery] ParametrosQuestaoCompletaDto parametros,
         [FromServices] IObterQuestaoCompletaPorIdUseCase useCase)
     {
@@ -27,7 +27,7 @@ public class QuestaoController : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
     [HttpGet("{questaoId:long}/provas", Name = nameof(ObterProvasPorQuestaoIdAsync))]
-    //[Authorize("Bearer")]
+    [Authorize("Bearer")]
     public async Task<IActionResult> ObterProvasPorQuestaoIdAsync([Required] long questaoId,
         [FromServices] IObterProvasPorQuestaoIdUseCase useCase)
     {
@@ -39,7 +39,7 @@ public class QuestaoController : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
     [HttpPost("Salvar-Alteracao", Name = nameof(SalvarAlteracaoAsync))]
-   // [Authorize("Bearer")]
+    [Authorize("Bearer")]
     public async Task<IActionResult> SalvarAlteracaoAsync([Required] ParametrosQuestaoSalvarDto parametos,
         [FromServices] IGerarNovaVersaoQuestaoUseCase useCase)
     {

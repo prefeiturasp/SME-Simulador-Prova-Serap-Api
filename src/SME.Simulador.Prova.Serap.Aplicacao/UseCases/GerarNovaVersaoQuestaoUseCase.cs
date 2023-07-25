@@ -18,7 +18,7 @@ public class GerarNovaVersaoQuestaoUseCase : AbstractUseCase, IGerarNovaVersaoQu
 
     public async Task<bool> ExecutarAsync(ParametrosQuestaoSalvarDto request)
     {
-        if (request.Questao == null)
+        if (request.Questao == null || request.ProvasQuestoes == null)
             return false;
 
         unitOfWorkBaseGestaoAvaliacao.BeginTransaction();
@@ -41,6 +41,7 @@ public class GerarNovaVersaoQuestaoUseCase : AbstractUseCase, IGerarNovaVersaoQu
                 await TrataQuestaoArquivo(request, novaVersaoQuestaoId);
                 await TrataQuestaoAudio(request, novaVersaoQuestaoId);
 
+              
                 foreach (var provaId in request.ProvasQuestoes)
                     await AtualizaBlocos(request, novaVersaoQuestaoId, provaId);
             }
