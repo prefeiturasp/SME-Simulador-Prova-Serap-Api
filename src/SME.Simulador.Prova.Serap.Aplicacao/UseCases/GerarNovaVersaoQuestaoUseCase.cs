@@ -41,7 +41,7 @@ public class GerarNovaVersaoQuestaoUseCase : AbstractUseCase, IGerarNovaVersaoQu
                 await TrataQuestaoArquivo(request, novaVersaoQuestaoId);
                 await TrataQuestaoAudio(request, novaVersaoQuestaoId);
 
-                foreach (var provaId in request.ProvasId)
+                foreach (var provaId in request.ProvasQuestoes)
                     await AtualizaBlocos(request, novaVersaoQuestaoId, provaId);
             }
 
@@ -198,41 +198,55 @@ public class GerarNovaVersaoQuestaoUseCase : AbstractUseCase, IGerarNovaVersaoQu
         return textoBaseId;
     }
 
-    private async Task AtualizaBlocos(ParametrosQuestaoSalvarDto request, long novaVersaoQuestaoId, int provaId)
+    private async Task AtualizaBlocos(ParametrosQuestaoSalvarDto request, long novaVersaoQuestaoId, ProvasQuestoesDto provaQuestao)
     {
-        var provaBib = await mediator.Send(new VerificaSeEhProvaBibQuery(provaId));
-
-        if (provaBib)
+        try
         {
-            if (request.Questao == null)
-                return;
 
-            var cadeiaBlocoQuestaoProva = await mediator.Send(new ObterCadeiaBlocoQuestaoPorItemEProvaIdQuery(provaId, request.Questao.Id));
 
-            if (cadeiaBlocoQuestaoProva == null)
-                return;
+            var provaBib = await mediator.Send(new VerificaSeEhProvaBibQuery(provaQuestao.ProvaId));
 
-            var cadeiaBlocoQuestao = MapeaCadeiaBlocoQuestaoProvaParaNovaEntidade(cadeiaBlocoQuestaoProva);
-            await InativaCadeiaBlocoQuestaoVersaoAntiga(cadeiaBlocoQuestao);
-            await CriaCadeiaBlocoQuestaoNovaVersao(novaVersaoQuestaoId, cadeiaBlocoQuestaoProva);
-            await TrataBlocoQuestao(request, novaVersaoQuestaoId, provaId);
+            if (provaBib)
+            {
+                if (request.Questao == null)
+                    return;
+
+                var cadeiaBlocoQuestaoProva = await mediator.Send(new ObterCadeiaBlocoQuestaoPorItemEProvaIdQuery(provaQuestao.ProvaId, provaQuestao.QuestaoId));
+
+                if (cadeiaBlocoQuestaoProva == null)
+                    return;
+
+                var cadeiaBlocoQuestao = MapeaCadeiaBlocoQuestaoProvaParaNovaEntidade(cadeiaBlocoQuestaoProva);
+                await InativaCadeiaBlocoQuestaoVersaoAntiga(cadeiaBlocoQuestao);
+                await CriaCadeiaBlocoQuestaoNovaVersao(novaVersaoQuestaoId, cadeiaBlocoQuestaoProva);
+                await TrataBlocoQuestao(novaVersaoQuestaoId, provaQuestao.ProvaId, provaQuestao.QuestaoId);
+            }
+            else
+                await TrataBlocoQuestao(novaVersaoQuestaoId, provaQuestao.ProvaId, provaQuestao.QuestaoId);
+
+            async Task InativaCadeiaBlocoQuestaoVersaoAntiga(CadeiaBlocoQuestao cadeiaBlocoQuestao)
+            {
+                cadeiaBlocoQuestao.Situacao = (int)LegadoState.Excluido;
+                await mediator.Send(new CadeiaBlocoQuestaoCommand(cadeiaBlocoQuestao));
+            }
+
         }
-        else
-            await TrataBlocoQuestao(request, novaVersaoQuestaoId, provaId);
-
-        async Task InativaCadeiaBlocoQuestaoVersaoAntiga(CadeiaBlocoQuestao cadeiaBlocoQuestao)
+        catch (Exception ex)
         {
-            cadeiaBlocoQuestao.Situacao = (int)LegadoState.Excluido;
-            await mediator.Send(new CadeiaBlocoQuestaoCommand(cadeiaBlocoQuestao));
+
+            throw ex;
         }
     }
 
-    private async Task TrataBlocoQuestao(ParametrosQuestaoSalvarDto request, long novaVersaoQuestaoId, int provaId)
+    private async Task TrataBlocoQuestao(long novaVersaoQuestaoId, long provaId, long questaoId)
     {
-        if (request.Questao == null)
+        if (questaoId == 0)
             return;
 
-        var blocoQuestaoProva = await mediator.Send(new ObterQuestaoBlocoPorItemEProvaIdQuery(provaId, request.Questao.Id));
+        var blocoQuestaoProva = await mediator.Send(new ObterQuestaoBlocoPorItemEProvaIdQuery(provaId, questaoId));
+        if (blocoQuestaoProva == null)
+            return;
+
         var questaoBloco = MapeaItemBlocoProvaIdParaNovaEntidade(blocoQuestaoProva);
         await InativaItemVersaoAntigaDoBloco(questaoBloco);
         await CriaBlocoQuestaoNovaVersao(novaVersaoQuestaoId, questaoBloco.BlocoId, questaoBloco.Ordem);
