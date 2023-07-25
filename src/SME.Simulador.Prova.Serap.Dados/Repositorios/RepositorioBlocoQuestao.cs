@@ -12,7 +12,7 @@ public class RepositorioBlocoQuestao : RepositorioGestaoAvaliacaoBase<QuestaoBlo
         this.gestaoAvaliacaoContexto = gestaoAvaliacaoContexto ?? throw new ArgumentNullException(nameof(gestaoAvaliacaoContexto));
     }
 
-    public async Task<BlocoItemDto> ObterBlocoIdPorItemEProvaId(long provaId, long itemId)
+    public async Task<BlocoItemDto?> ObterBlocoIdPorItemEProvaId(long provaId, long itemId)
     {
         const string query = @"SELECT  [Block_Id] as BlocoId
                                                      ,BI.[Item_Id] as ItemId
@@ -25,7 +25,7 @@ public class RepositorioBlocoQuestao : RepositorioGestaoAvaliacaoBase<QuestaoBlo
                                                      AND BI.Item_Id = @itemId
                                                      AND  BI.State = @state";
 
-        return await gestaoAvaliacaoContexto.Conexao.QueryFirstOrDefaultAsync<BlocoItemDto>(query,
+        return await gestaoAvaliacaoContexto.Conexao.QueryFirstOrDefaultAsync<BlocoItemDto?>(query,
             new
             {
                 provaId,
