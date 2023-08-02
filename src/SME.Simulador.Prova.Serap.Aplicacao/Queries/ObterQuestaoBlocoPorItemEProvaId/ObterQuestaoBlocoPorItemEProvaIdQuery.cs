@@ -3,7 +3,7 @@ using SME.Simulador.Prova.Serap.Infra;
 
 namespace SME.Simulador.Prova.Serap.Aplicacao;
 
-public class ObterQuestaoBlocoPorItemEProvaIdQuery : IRequest<BlocoItemDto>
+public class ObterQuestaoBlocoPorItemEProvaIdQuery : IRequest<BlocoItemDto?>
 {
     public ObterQuestaoBlocoPorItemEProvaIdQuery(long provaId, long itemId)
     {

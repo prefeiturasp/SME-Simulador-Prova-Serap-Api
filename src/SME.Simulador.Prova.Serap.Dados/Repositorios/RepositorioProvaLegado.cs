@@ -141,9 +141,7 @@ public class RepositorioProvaLegado : IRepositorioProvaLegado
         const string query = @"select top 1 t.Bib
                                 from Test t
                                 where t.Id = @provaId
-                                and t.State = @state
-                              
-";
+                                and t.State = @state";
 
         var bib = await gestaoAvaliacaoContexto.Conexao.QuerySingleOrDefaultAsync<long>(query,
             new { provaId, state = (int)LegadoState.Ativo },

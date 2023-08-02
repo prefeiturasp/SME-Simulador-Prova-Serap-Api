@@ -4,7 +4,7 @@ using SME.Simulador.Prova.Serap.Infra;
 
 namespace SME.Simulador.Prova.Serap.Aplicacao;
 
-public class ObterQuestaoBlocoPorItemEProvaIdQueryHandler : IRequestHandler<ObterQuestaoBlocoPorItemEProvaIdQuery, BlocoItemDto>
+public class ObterQuestaoBlocoPorItemEProvaIdQueryHandler : IRequestHandler<ObterQuestaoBlocoPorItemEProvaIdQuery, BlocoItemDto?>
 {
     private readonly IRepositorioBlocoQuestao repositorioBlocos;
     
@@ -13,7 +13,7 @@ public class ObterQuestaoBlocoPorItemEProvaIdQueryHandler : IRequestHandler<Obte
         this.repositorioBlocos = repositorioBlocos ?? throw new ArgumentNullException(nameof(repositorioBlocos));
     }
     
-    public async Task<BlocoItemDto> Handle(ObterQuestaoBlocoPorItemEProvaIdQuery request, CancellationToken cancellationToken)
+    public async Task<BlocoItemDto?> Handle(ObterQuestaoBlocoPorItemEProvaIdQuery request, CancellationToken cancellationToken)
     {
         return await repositorioBlocos.ObterBlocoIdPorItemEProvaId(request.ProvaId, request.ItemId);
     }

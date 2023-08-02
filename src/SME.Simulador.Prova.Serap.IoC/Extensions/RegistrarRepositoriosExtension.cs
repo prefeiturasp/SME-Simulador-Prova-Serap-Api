@@ -1,7 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using SME.Simulador.Prova.Serap.Dados;
-using SME.Simulador.Prova.Serap.Dados.Repositorios;
 
 namespace SME.Simulador.Prova.Serap.IoC;
 

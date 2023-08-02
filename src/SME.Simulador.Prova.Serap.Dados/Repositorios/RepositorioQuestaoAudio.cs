@@ -1,6 +1,6 @@
 ﻿using SME.Simulador.Prova.Serap.Dominio;
 
-namespace SME.Simulador.Prova.Serap.Dados.Repositorios;
+namespace SME.Simulador.Prova.Serap.Dados;
 
 public class RepositorioQuestaoAudio : RepositorioGestaoAvaliacaoBase<QuestaoAudio>, IRepositorioQuestaoAudio
 {

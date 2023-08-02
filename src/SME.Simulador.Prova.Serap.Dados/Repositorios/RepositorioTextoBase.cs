@@ -1,7 +1,7 @@
 ﻿using Dapper;
 using SME.Simulador.Prova.Serap.Dominio;
 
-namespace SME.Simulador.Prova.Serap.Dados.Repositorios;
+namespace SME.Simulador.Prova.Serap.Dados;
 
 public class RepositorioTextoBase : RepositorioGestaoAvaliacaoBase<TextoBase>, IRepositorioTextoBase
 {
@@ -14,30 +14,30 @@ public class RepositorioTextoBase : RepositorioGestaoAvaliacaoBase<TextoBase>, I
 
     public async Task<long> InserirTextoBase(TextoBase entidade)
     {
-        var query = @"INSERT INTO [dbo].[BaseText]
-           ([Description]
-           ,[CreateDate]
-           ,[UpdateDate]
-           ,[State]
-           ,[Source]
-           ,[InitialOrientation]
-           ,[InitialStatement]
-           ,[NarrationInitialStatement]
-           ,[StudentBaseText]
-           ,[NarrationStudentBaseText]
-           ,[BaseTextOrientation])
-     VALUES
-           (@Descricao
-           ,@DataCriacao
-           ,@DataAtualizacao
-           ,@Situacao
-           ,@Fonte
-           ,@OrientacaoInicial
-           ,@DeclaracaoInicial
-           ,@DeclaracaoInicialNarracao
-           ,@TextoBaseAluno
-           ,@TextoBaseAlunoNarracao
-           ,@OrientacaTextoBase)";
+        const string query = @"INSERT INTO [dbo].[BaseText]
+                                       ([Description]
+                                       ,[CreateDate]
+                                       ,[UpdateDate]
+                                       ,[State]
+                                       ,[Source]
+                                       ,[InitialOrientation]
+                                       ,[InitialStatement]
+                                       ,[NarrationInitialStatement]
+                                       ,[StudentBaseText]
+                                       ,[NarrationStudentBaseText]
+                                       ,[BaseTextOrientation])
+                                 VALUES
+                                       (@Descricao
+                                       ,@DataCriacao
+                                       ,@DataAtualizacao
+                                       ,@Situacao
+                                       ,@Fonte
+                                       ,@OrientacaoInicial
+                                       ,@DeclaracaoInicial
+                                       ,@DeclaracaoInicialNarracao
+                                       ,@TextoBaseAluno
+                                       ,@TextoBaseAlunoNarracao
+                                       ,@OrientacaTextoBase)";
 
         var ret = await gestaoAvaliacaoContexto.Conexao.ExecuteAsync(query, new
         {
