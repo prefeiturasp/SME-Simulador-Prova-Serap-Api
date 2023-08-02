@@ -5,7 +5,7 @@ using SME.Simulador.Prova.Serap.Aplicacao.Queries.VerificaSeEhProvaBibPorProvaId
 using SME.Simulador.Prova.Serap.Dominio;
 using SME.Simulador.Prova.Serap.Infra;
 
-namespace SME.Simulador.Prova.Serap.Aplicacao.UseCases;
+namespace SME.Simulador.Prova.Serap.Aplicacao;
 
 public class GerarNovaVersaoQuestaoUseCase : AbstractUseCase, IGerarNovaVersaoQuestaoUseCase
 {
@@ -41,7 +41,6 @@ public class GerarNovaVersaoQuestaoUseCase : AbstractUseCase, IGerarNovaVersaoQu
                 await TrataQuestaoArquivo(request, novaVersaoQuestaoId);
                 await TrataQuestaoAudio(request, novaVersaoQuestaoId);
 
-              
                 foreach (var provaId in request.ProvasQuestoes)
                     await AtualizaBlocos(request, novaVersaoQuestaoId, provaId);
             }
@@ -58,24 +57,31 @@ public class GerarNovaVersaoQuestaoUseCase : AbstractUseCase, IGerarNovaVersaoQu
 
     private async Task<bool> ExisteAlteracaoNaQuestao(ParametrosQuestaoSalvarDto request, Questao questaoAtual, TextoBase textoBaseQuestao)
     {
-        return await PossuiAlteracaoNasAlternativas(request) ||
-                questaoAtual.Enunciado != request.Questao.Enunciado ||
-                textoBaseQuestao.Descricao != request.Questao.TextoBase;
+        var questao = request.Questao;
+
+        if (questao == null)
+            return false;
+
+        return await PossuiAlteracaoNasAlternativas(request) || questaoAtual.Enunciado != questao.Enunciado ||
+               textoBaseQuestao.Descricao != questao.TextoBase;
     }
 
     private async Task<bool> PossuiAlteracaoNasAlternativas(ParametrosQuestaoSalvarDto request)
     {
-        bool possuiAlteracao = false;
+        if (request.Alternativas == null)
+            return false;
+        
+        var possuiAlteracao = false;
+        
         foreach (var alternativaDto in request.Alternativas)
         {
-
             var alternativa = await mediator.Send(new ObterAlternativasPorIdQuery(alternativaDto.Id));
 
-            if (alternativaDto.Descricao != alternativa.Descricao)
-            {
-                possuiAlteracao = true;
-                break;
-            }
+            if (alternativaDto.Descricao == alternativa.Descricao) 
+                continue;
+            
+            possuiAlteracao = true;
+            break;
         }
 
         return possuiAlteracao;
@@ -201,12 +207,10 @@ public class GerarNovaVersaoQuestaoUseCase : AbstractUseCase, IGerarNovaVersaoQu
 
     private async Task AtualizaBlocos(ParametrosQuestaoSalvarDto request, long novaVersaoQuestaoId, ProvasQuestoesDto provaQuestao)
     {
+        var provaBib = await mediator.Send(new VerificaSeEhProvaBibQuery(provaQuestao.ProvaId));
+
         try
         {
-
-
-            var provaBib = await mediator.Send(new VerificaSeEhProvaBibQuery(provaQuestao.ProvaId));
-
             if (provaBib)
             {
                 if (request.Questao == null)
@@ -218,6 +222,7 @@ public class GerarNovaVersaoQuestaoUseCase : AbstractUseCase, IGerarNovaVersaoQu
                     return;
 
                 var cadeiaBlocoQuestao = MapeaCadeiaBlocoQuestaoProvaParaNovaEntidade(cadeiaBlocoQuestaoProva);
+
                 await InativaCadeiaBlocoQuestaoVersaoAntiga(cadeiaBlocoQuestao);
                 await CriaCadeiaBlocoQuestaoNovaVersao(novaVersaoQuestaoId, cadeiaBlocoQuestaoProva);
                 await TrataBlocoQuestao(novaVersaoQuestaoId, provaQuestao.ProvaId, provaQuestao.QuestaoId);
@@ -230,12 +235,13 @@ public class GerarNovaVersaoQuestaoUseCase : AbstractUseCase, IGerarNovaVersaoQu
                 cadeiaBlocoQuestao.Situacao = (int)LegadoState.Excluido;
                 await mediator.Send(new CadeiaBlocoQuestaoCommand(cadeiaBlocoQuestao));
             }
-
         }
         catch (Exception ex)
         {
+            if (provaBib)
+                throw new ErroException($"Erro ao atualizar blocos: {ex.Message}");
 
-            throw ex;
+            throw new ErroException($"Erro ao atualizar cadernos: {ex.Message}");
         }
     }
 
@@ -245,10 +251,12 @@ public class GerarNovaVersaoQuestaoUseCase : AbstractUseCase, IGerarNovaVersaoQu
             return;
 
         var blocoQuestaoProva = await mediator.Send(new ObterQuestaoBlocoPorItemEProvaIdQuery(provaId, questaoId));
+
         if (blocoQuestaoProva == null)
             return;
 
         var questaoBloco = MapeaItemBlocoProvaIdParaNovaEntidade(blocoQuestaoProva);
+
         await InativaItemVersaoAntigaDoBloco(questaoBloco);
         await CriaBlocoQuestaoNovaVersao(novaVersaoQuestaoId, questaoBloco.BlocoId, questaoBloco.Ordem);
     }

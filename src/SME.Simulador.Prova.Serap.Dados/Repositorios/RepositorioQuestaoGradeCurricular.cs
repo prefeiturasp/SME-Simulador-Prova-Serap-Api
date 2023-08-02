@@ -1,6 +1,6 @@
 ﻿using SME.Simulador.Prova.Serap.Dominio;
 
-namespace SME.Simulador.Prova.Serap.Dados.Repositorios;
+namespace SME.Simulador.Prova.Serap.Dados;
 
 public class RepositorioQuestaoGradeCurricular : RepositorioGestaoAvaliacaoBase<QuestaoGradeCurricular>, IRepositorioQuestaoGradeCurricular
 {
@@ -13,15 +13,15 @@ public class RepositorioQuestaoGradeCurricular : RepositorioGestaoAvaliacaoBase<
 
     public async Task<IEnumerable<QuestaoGradeCurricular>> ObterListaQuestaoGradesCurriculares(long questaoId)
     {
-        const string query = @"SELECT  [Id] 
-                                          ,[CreateDate] as DataCriacao
-                                          ,[UpdateDate] as DataAtualizacao
-                                          ,[State] as Situacao
-                                          ,[Item_Id] as QuestaoId
-                                          ,[TypeCurriculumGradeId] as  TipoGradeCurricular
-                                          FROM [GestaoAvaliacao].[dbo].[ItemCurriculumGrade]
-                                     WHERE Item_id = @questaoId
-                                       AND State = @state";
+        const string query = @"SELECT [Id] 
+                                    ,[CreateDate] as DataCriacao
+                                    ,[UpdateDate] as DataAtualizacao
+                                    ,[State] as Situacao
+                                    ,[Item_Id] as QuestaoId
+                                    ,[TypeCurriculumGradeId] as TipoGradeCurricular
+                                FROM [GestaoAvaliacao].[dbo].[ItemCurriculumGrade]
+                                WHERE Item_id = @questaoId
+                                AND State = @state";
 
         return await gestaoAvaliacaoContexto.Conexao.QueryAsync<QuestaoGradeCurricular>(query,
             new
