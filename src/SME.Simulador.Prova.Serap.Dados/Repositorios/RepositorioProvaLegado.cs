@@ -20,9 +20,12 @@ public class RepositorioProvaLegado : IRepositorioProvaLegado
                                         t.Description as descricao,
                                         t.ApplicationStartDate as datainicioaplicacao,
                              	        i.ItemVersion as versao,
-                             	        d.Description as componenteCurricular   
+                             	        CASE
+                                          WHEN t.Multidiscipline = 1 THEN 'Multidisciplinar'
+	                                      ELSE  d.Description
+								         END componenteCurricular 
                                     from test t with (NOLOCK)
-                                    inner join discipline d on t.Discipline_id = d.Id
+                                    left join discipline d on t.Discipline_id = d.Id
                                     inner join Item i on i.ItemCode = @questaoCodigo
                                     inner join BlockChainItem bci on bci.Item_id = i.id
                                     inner join BlockChain bc with (NOLOCK) on bc.Id = bci.BlockChain_Id and bc.test_id = t.id
@@ -37,7 +40,10 @@ public class RepositorioProvaLegado : IRepositorioProvaLegado
                                     t.Description as descricao,
                                     t.ApplicationStartDate as datainicioaplicacao,
                              	    i.ItemVersion as versao,
-                             	    d.Description as componenteCurricular   
+                             	  CASE
+                                     WHEN t.Multidiscipline = 1 THEN 'Multidisciplinar'
+	                                 ELSE  d.Description
+						           END componenteCurricular  
                                 from test t with (NOLOCK)
                                 inner join discipline d on t.Discipline_id = d.Id
                                 inner join Item i on i.ItemCode = @questaoCodigo
