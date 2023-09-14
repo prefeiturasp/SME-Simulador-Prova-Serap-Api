@@ -27,8 +27,8 @@ public class RepositorioProvaLegado : IRepositorioProvaLegado
                                     from test t with (NOLOCK)
                                     left join discipline d on t.Discipline_id = d.Id
                                     inner join Item i on i.ItemCode = @questaoCodigo
-                                    inner join BlockChainItem bci on bci.Item_id = i.id
-                                    inner join BlockChain bc with (NOLOCK) on bc.Id = bci.BlockChain_Id and bc.test_id = t.id
+                                    left join BlockChainItem bci on bci.Item_id = i.id
+                                    left join BlockChain bc with (NOLOCK) on bc.Id = bci.BlockChain_Id and bc.test_id = t.id
                                     where t.State = @state
 								      and i.State = @state
 								      and t.id in @provasId
@@ -45,7 +45,7 @@ public class RepositorioProvaLegado : IRepositorioProvaLegado
 	                                 ELSE  d.Description
 						           END componenteCurricular  
                                 from test t with (NOLOCK)
-                                inner join discipline d on t.Discipline_id = d.Id
+                                left join discipline d on t.Discipline_id = d.Id
                                 inner join Item i on i.ItemCode = @questaoCodigo
                                 where t.State = @state
 								  and i.State = @state
