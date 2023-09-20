@@ -10,7 +10,7 @@ public class RepositorioBase<TEntidadeBase, TContexto> : IRepositorioBase<TEntid
 {
     private readonly TContexto contexto;
 
-    public RepositorioBase(TContexto contexto)
+    protected RepositorioBase(TContexto contexto)
     {
         this.contexto = contexto ?? throw new ArgumentNullException(nameof(contexto));
     }
@@ -20,9 +20,14 @@ public class RepositorioBase<TEntidadeBase, TContexto> : IRepositorioBase<TEntid
         return contexto.Conexao;
     }
 
+    protected IDbTransaction? ObterTransacao()
+    {
+        return contexto.Transacao;
+    }
+
     public virtual async Task<TEntidadeBase> ObterPorIdAsync(long id)
     {
-        return await contexto.Conexao.GetAsync<TEntidadeBase>(id);
+        return await contexto.Conexao.GetAsync<TEntidadeBase>(id, contexto.Transacao);
     }
 
     public virtual async Task<IEnumerable<TEntidadeBase>> ObterTudoAsync()
@@ -33,10 +38,12 @@ public class RepositorioBase<TEntidadeBase, TContexto> : IRepositorioBase<TEntid
     public virtual async Task<long> SalvarAsync(TEntidadeBase entidade)
     {
         if (entidade.Id > 0)
-            await contexto.Conexao.UpdateAsync(entidade);
+            await contexto.Conexao.UpdateAsync(entidade, contexto.Transacao);
         else
-            entidade.Id = (long)await contexto.Conexao.InsertAsync(entidade);
-
+        {
+            var retorno = await contexto.Conexao.InsertAsync(entidade, contexto.Transacao);
+            entidade.Id = long.Parse(retorno.ToString() ?? string.Empty);
+        }
         return entidade.Id;
     }
 

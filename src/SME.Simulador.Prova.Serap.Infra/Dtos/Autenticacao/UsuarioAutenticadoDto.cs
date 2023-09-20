@@ -10,5 +10,6 @@ public class UsuarioAutenticadoDto : DtoBase
 
     public string Token { get; set; }
     public DateTime DataHoraExpiracao { get; set; }
-    public DateTime? UltimoLogin { get; set; }    
+    public DateTime? UltimoLogin { get; set; }
+    public bool PermiteEditarItem { get; set; }
 }

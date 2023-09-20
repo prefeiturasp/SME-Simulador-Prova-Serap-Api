@@ -1,6 +1,6 @@
 ﻿namespace SME.Simulador.Prova.Serap.Infra;
 
-public class RetornoBaseDto
+public class RetornoBaseDto : DtoBase
 {
     public RetornoBaseDto()
     {

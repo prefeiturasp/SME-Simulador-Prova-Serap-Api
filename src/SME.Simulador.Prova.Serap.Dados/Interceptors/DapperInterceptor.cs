@@ -349,14 +349,14 @@ public static class DapperInterceptor
         return result;
     }
 
-    public static async Task<TEntity> GetAsync<TEntity>(this IDbConnection connection, object id)
+    public static async Task<TEntity> GetAsync<TEntity>(this IDbConnection connection, object id, IDbTransaction? transacao = null)
         where TEntity : class
     {
         if (servicoTelemetria == null)
             throw new ArgumentNullException(nameof(servicoTelemetria), ServicoTelemetriaNaoDeveSerNulo);
 
         var result = await servicoTelemetria.RegistrarComRetornoAsync<TEntity>(
-            async () => await Dommel.DommelMapper.GetAsync<TEntity>(connection, id), "MSSql",
+            async () => await Dommel.DommelMapper.GetAsync<TEntity>(connection, id, transaction: transacao), "MSSql",
             $"GetAsync Entidade {typeof(TEntity).Name}", "GetAsync");
 
         return result;
@@ -371,7 +371,7 @@ public static class DapperInterceptor
         var entidade = entity?.GetType().Name;
 
         var result = await servicoTelemetria.RegistrarComRetornoAsync<TEntity>(
-            async () => await Dommel.DommelMapper.UpdateAsync(connection, entity, transaction), "MSSql",
+            async () => await Dommel.DommelMapper.UpdateAsync(connection, entity, transaction: transaction), "MSSql",
             $"UpdateAsync Entidade {entidade}", "UpdateAsync");
 
         return result;
@@ -386,7 +386,7 @@ public static class DapperInterceptor
         var entidade = entity.GetType().Name;
 
         var result = await servicoTelemetria.RegistrarComRetornoAsync<TEntity>(
-            async () => await Dommel.DommelMapper.InsertAsync(connection, entity, transaction), "MSSql",
+            async () => await Dommel.DommelMapper.InsertAsync(connection, entity, transaction: transaction), "MSSql",
             $"UpdateAsync Entidade {entidade}", "UpdateAsync");
 
         return result;
@@ -394,3 +394,5 @@ public static class DapperInterceptor
 
     #endregion
 }
+
+  
