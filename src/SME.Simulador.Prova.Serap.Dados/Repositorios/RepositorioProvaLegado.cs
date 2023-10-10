@@ -15,40 +15,52 @@ public class RepositorioProvaLegado : IRepositorioProvaLegado
 
     public async Task<IEnumerable<ProvaLegadoDto>> ObterProvasEVersaoItemPorQuestaoCodigoEProvasIdAsync(string questaoCodigo, long[] provasId )
     {
-          const string query = @"select distinct  t.id,
-                                        i.id as questaoId,
-                                        t.Description as descricao,
-                                        t.ApplicationStartDate as datainicioaplicacao,
-                             	        i.ItemVersion as versao,
-                             	        CASE
-                                          WHEN t.Multidiscipline = 1 THEN 'Multidisciplinar'
-	                                      ELSE  d.Description
-								         END componenteCurricular 
-                                    from test t with (NOLOCK)
-                                    left join discipline d on t.Discipline_id = d.Id
-                                    inner join Item i on i.ItemCode = @questaoCodigo
-                                    left join BlockChainItem bci on bci.Item_id = i.id
-                                    left join BlockChain bc with (NOLOCK) on bc.Id = bci.BlockChain_Id and bc.test_id = t.id
-                                    where t.State = @state
-								      and i.State = @state
-								      and t.id in @provasId
-								      and bci.State = @state
-								      and bc.State = @state
-								  union 
-                                select distinct  t.id,
-                                    i.id as questaoId,
-                                    t.Description as descricao,
-                                    t.ApplicationStartDate as datainicioaplicacao,
-                             	    i.ItemVersion as versao,
-                             	  CASE
-                                     WHEN t.Multidiscipline = 1 THEN 'Multidisciplinar'
-	                                 ELSE  d.Description
-						           END componenteCurricular  
-                                from test t with (NOLOCK)
-                                left join discipline d on t.Discipline_id = d.Id
-                                inner join Item i on i.ItemCode = @questaoCodigo
-                                where t.State = @state
-								  and i.State = @state
+	    const string query = @"select distinct t.id,
+									i.id as questaoId,
+								    t.Description as descricao,
+								    t.ApplicationStartDate as datainicioaplicacao,
+								    i.ItemVersion as versao,
+								    CASE
+    									WHEN t.Multidiscipline = 1 THEN 'Multidisciplinar'
+									ELSE 
+										d.Description
+								    END componenteCurricular 
+								from test t with (NOLOCK)
+								left join discipline d with (NOLOCK) on t.Discipline_id = d.Id 
+									and d.State = @state
+								left join BlockChain bc with (NOLOCK) on bc.test_id = t.id
+									and bc.State = @state
+								left join BlockChainItem bci with (NOLOCK) on bci.BlockChain_Id = bc.Id 
+									and bci.State = @state
+								inner join Item i with (NOLOCK) on bci.Item_Id = i.Id 
+									and i.ItemCode = @questaoCodigo
+									and i.State = @state 
+								where t.State = @state
+								  and t.id in @provasId
+
+								union 
+
+								select distinct t.id,
+									i.id as questaoId,
+								    t.Description as descricao,
+								    t.ApplicationStartDate as datainicioaplicacao,
+								    i.ItemVersion as versao,
+								    CASE
+    									WHEN t.Multidiscipline = 1 THEN 'Multidisciplinar'
+									ELSE 
+										d.Description
+									END componenteCurricular
+								from test t with (NOLOCK)
+								left join discipline d with (NOLOCK) on t.Discipline_id = d.Id 
+									and d.State = @state
+								inner join Block b with (NOLOCK) on b.Test_Id = t.Id 
+									and b.State = @state
+								inner join BlockItem bi with (NOLOCK) on bi.Block_Id = b.Id 
+									and bi.State = @state
+								inner join Item i with (NOLOCK) on i.Id = bi.Item_Id 
+									and i.State = @state
+									and i.ItemCode = @questaoCodigo
+								where t.State = @state
 								  and t.id in @provasId";
 
         return await gestaoAvaliacaoContexto.Conexao.QueryAsync<ProvaLegadoDto>(query,
