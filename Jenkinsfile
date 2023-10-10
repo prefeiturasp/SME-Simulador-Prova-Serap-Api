@@ -40,6 +40,7 @@ pipeline {
         stage('Deploy'){
             when { anyOf {  branch 'master'; branch 'main'; branch 'development'; branch 'release'; branch 'release-r2'; } }        
             steps {
+                checkout scm
                 script{
                         if ( env.branchname == 'main' ||  env.branchname == 'master' ) {
                             withCredentials([string(credentialsId: 'aprovadores-prova-serap-itens', variable: 'aprovadores')]) {
