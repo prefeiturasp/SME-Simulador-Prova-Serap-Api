@@ -50,7 +50,7 @@ pipeline {
                         }
                         withCredentials([file(credentialsId: "${kubeconfig}", variable: 'config')]){
                                 sh('cp $config '+"$home"+'/.kube/config')
-                                sh "kubectl rollout restart deployment/${deployment}-prova-serap-api -n ${namespace}"
+                                sh "kubectl rollout restart deployment/${deployment} -n ${namespace}"
                                 sh('rm -f '+"$home"+'/.kube/config')
                         }
                 }
