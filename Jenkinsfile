@@ -7,11 +7,9 @@ pipeline {
       deployment = "${env.branchname == 'development' ? 'simulador-serap-api' : env.branchname == 'release' ? 'simulador-serap-api' : env.branchname == 'release-r2' ? 'simulador-serap-api' : 'sme-simulador-prova-serap-api' }"
     }
   
-    agent { kubernetes { 
-              label 'builder'
-              defaultContainer 'builder'
-            }
-          }
+    agent {
+      node { label 'AGENT-NODES' }
+    }
 
     options {
       buildDiscarder(logRotator(numToKeepStr: '20', artifactNumToKeepStr: '5'))
