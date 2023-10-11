@@ -25,7 +25,14 @@ public class GerarNovaVersaoQuestaoUseCase : AbstractUseCase, IGerarNovaVersaoQu
         try
         {
             var questaoAtual = await mediator.Send(new ObterQuestaoPorIdQuery(request.Questao.Id));
+
+            if (questaoAtual == null)
+                return false;
+            
             var textoBaseQuestao = await mediator.Send(new ObterTextoBasePorIdQuery(questaoAtual.TextoBaseId));
+
+            if (textoBaseQuestao == null)
+                return false;
 
             if (await ExisteAlteracaoNaQuestao(request, questaoAtual, textoBaseQuestao))
             {
