@@ -3,7 +3,7 @@ using SME.Simulador.Prova.Serap.Dominio;
 
 namespace SME.Simulador.Prova.Serap.Aplicacao;
 
-public class ObterTextoBasePorIdQuery : IRequest<TextoBase>
+public class ObterTextoBasePorIdQuery : IRequest<TextoBase?>
 {
     public ObterTextoBasePorIdQuery(long textoBaseId)
     {
