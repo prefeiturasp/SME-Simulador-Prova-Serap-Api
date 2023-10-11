@@ -257,15 +257,14 @@ public class GerarNovaVersaoQuestaoUseCase : AbstractUseCase, IGerarNovaVersaoQu
         if (questaoId == 0)
             return;
 
-        var blocoQuestaoProva = await mediator.Send(new ObterQuestaoBlocoPorItemEProvaIdQuery(provaId, questaoId));
+        var blocosQuestoesProva = await mediator.Send(new ObterQuestoesBlocosPorItemEProvaIdQuery(provaId, questaoId));
 
-        if (blocoQuestaoProva == null)
-            return;
-
-        var questaoBloco = MapeaItemBlocoProvaIdParaNovaEntidade(blocoQuestaoProva);
-
-        await InativaItemVersaoAntigaDoBloco(questaoBloco);
-        await CriaBlocoQuestaoNovaVersao(novaVersaoQuestaoId, questaoBloco.BlocoId, questaoBloco.Ordem);
+        foreach (var blocoQuestaoProva in blocosQuestoesProva)
+        {
+            var questaoBloco = MapeaItemBlocoProvaIdParaNovaEntidade(blocoQuestaoProva);
+            await InativaItemVersaoAntigaDoBloco(questaoBloco);
+            await CriaBlocoQuestaoNovaVersao(novaVersaoQuestaoId, questaoBloco.BlocoId, questaoBloco.Ordem);            
+        }
     }
 
     private async Task CriaAlternativasNovaVersao(long novaVersaoQuestaoId, AlternativaAlteracaoDto alternativaDto)

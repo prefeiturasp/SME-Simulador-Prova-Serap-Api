@@ -5,6 +5,6 @@ namespace SME.Simulador.Prova.Serap.Dados;
 
 public interface IRepositorioBlocoQuestao 
 {
-    Task<BlocoItemDto?> ObterBlocoIdPorItemEProvaId(long provaId, long itemId);
+    Task<IEnumerable<BlocoItemDto>> ObterQuestoesBlocosPorItemEProvaId(long provaId, long itemId);
     Task<long> SalvarAsync(QuestaoBloco entidade);
 }
