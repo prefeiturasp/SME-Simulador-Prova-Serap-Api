@@ -1,4 +1,5 @@
-﻿using SME.Simulador.Prova.Serap.Dominio;
+﻿using Dapper;
+using SME.Simulador.Prova.Serap.Dominio;
 using SME.Simulador.Prova.Serap.Infra;
 
 namespace SME.Simulador.Prova.Serap.Dados;
@@ -26,13 +27,16 @@ public class RepositorioCadeiaBlocos : RepositorioGestaoAvaliacaoBase<CadeiaBloc
 					                 AND BC.Test_id =  @provaId
 						             AND BCI.State = @state
 						             AND BC.State = @state";
+       
+        
+        var retorno = await SqlMapper.QueryFirstOrDefaultAsync<CadeiaBlocoQuestaoDto>(gestaoAvaliacaoContexto.Conexao, query, new
+        {
+            provaId,
+            itemId,
+            state = (int)LegadoState.Ativo
+        }, transaction: gestaoAvaliacaoContexto.Transacao,
+               null);
 
-        return await gestaoAvaliacaoContexto.Conexao.QueryFirstOrDefaultAsync<CadeiaBlocoQuestaoDto?>(query,
-            new
-            {
-                provaId,
-                itemId,
-                state = (int)LegadoState.Ativo
-            }, transaction: gestaoAvaliacaoContexto.Transacao);
+        return retorno;
     }
 }
