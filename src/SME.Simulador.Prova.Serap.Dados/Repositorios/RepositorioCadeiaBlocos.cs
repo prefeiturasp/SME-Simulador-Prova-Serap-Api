@@ -1,5 +1,4 @@
-﻿using Dapper;
-using SME.Simulador.Prova.Serap.Dominio;
+﻿using SME.Simulador.Prova.Serap.Dominio;
 using SME.Simulador.Prova.Serap.Infra;
 
 namespace SME.Simulador.Prova.Serap.Dados;
@@ -21,22 +20,19 @@ public class RepositorioCadeiaBlocos : RepositorioGestaoAvaliacaoBase<CadeiaBloc
                                           BCI.[Order] as Ordem,
                                           BCI.CreateDate as DataCriacao,
                                           BCI.UpdateDate as DataAtualizacao
-					                FROM BlockChainItem BCI
-					                INNER JOIN BlockChain BC ON BC.Id = BCI.BlockChain_Id
+					                FROM BlockChainItem BCI with (NOLOCK)
+					                INNER JOIN BlockChain BC with (NOLOCK) ON BC.Id = BCI.BlockChain_Id
+					                    AND BC.State = @state
 					                WHERE BCI.Item_Id = @itemId
 					                 AND BC.Test_id =  @provaId
-						             AND BCI.State = @state
-						             AND BC.State = @state";
-       
-        
-        var retorno = await SqlMapper.QueryFirstOrDefaultAsync<CadeiaBlocoQuestaoDto>(gestaoAvaliacaoContexto.Conexao, query, new
-        {
-            provaId,
-            itemId,
-            state = (int)LegadoState.Ativo
-        }, transaction: gestaoAvaliacaoContexto.Transacao,
-               null);
+						             AND BCI.State = @state";
 
-        return retorno;
+        return await gestaoAvaliacaoContexto.Conexao.QueryFirstOrDefaultAsync<CadeiaBlocoQuestaoDto>(query,
+            new
+            {
+                provaId,
+                itemId,
+                state = (int)LegadoState.Ativo
+            }, transaction: gestaoAvaliacaoContexto.Transacao);
     }
 }
