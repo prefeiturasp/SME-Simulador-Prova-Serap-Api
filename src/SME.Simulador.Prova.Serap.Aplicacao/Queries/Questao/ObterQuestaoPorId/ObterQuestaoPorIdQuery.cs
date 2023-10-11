@@ -2,7 +2,7 @@
 
 namespace SME.Simulador.Prova.Serap.Aplicacao;
 
-public class ObterQuestaoPorIdQuery : IRequest<Dominio.Questao>
+public class ObterQuestaoPorIdQuery : IRequest<Dominio.Questao?>
 {
     public ObterQuestaoPorIdQuery(long questaoId)
     {
