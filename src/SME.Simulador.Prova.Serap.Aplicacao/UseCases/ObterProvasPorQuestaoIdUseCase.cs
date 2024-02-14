@@ -28,7 +28,7 @@ public class ObterProvasPorQuestaoIdUseCase : AbstractUseCase, IObterProvasPorQu
         foreach (var id in provasParaSeremSincronizadas.Select(c => c.Id))
             idsProvasParaAtualizar.Add(id);
 
-        var provasPorQuestao = await mediator.Send(new ObterProvasPorQuestaoIdQuery(questaoCodigo, idsProvasParaAtualizar.ToArray()));
+        var provasPorQuestao = await mediator.Send(new ObterProvasEVersaoItemPorQuestaoCodigoEProvasIdQuery(questaoCodigo, idsProvasParaAtualizar.ToArray()));
         return provasPorQuestao;
     }
 
