@@ -17,11 +17,11 @@ public class ServicoTelemetria : IServicoTelemetria
         this.telemetriaOptions = telemetriaOptions.Value ?? throw new ArgumentNullException(nameof(telemetriaOptions));
     }
 
-    public async Task<dynamic> RegistrarComRetornoAsync<T>(Func<Task<object>> acao, string acaoNome, string telemetriaNome, string telemetriaValor)
+    public async Task<dynamic?> RegistrarComRetornoAsync<T>(Func<Task<object?>> acao, string acaoNome, string telemetriaNome, string telemetriaValor)
     {
         DateTime inicioOperacao = default;
         Stopwatch? temporizador = default;
-        dynamic result;
+        dynamic? result;
 
         if (telemetriaOptions.ApplicationInsights)
         {

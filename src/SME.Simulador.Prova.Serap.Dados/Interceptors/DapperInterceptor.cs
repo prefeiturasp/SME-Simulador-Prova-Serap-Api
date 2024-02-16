@@ -43,16 +43,16 @@ public static class DapperInterceptor
         return result;
     }
 
-    public static async Task<T> QueryFirstOrDefaultAsync<T>(this IDbConnection cnn, string sql, object? param = null,
+    public static async Task<T?> QueryFirstOrDefaultAsync<T>(this IDbConnection cnn, string sql, object? param = null,
         IDbTransaction? transaction = null, int? commandTimeout = null, CommandType? commandType = null,
         string queryName = "Query MSSql")
     {
         if (servicoTelemetria == null)
             throw new ArgumentNullException(nameof(servicoTelemetria), ServicoTelemetriaNaoDeveSerNulo);
-        
+
         var result = await servicoTelemetria.RegistrarComRetornoAsync<T>(
             async () => await SqlMapper.QueryFirstOrDefaultAsync<T>(cnn, sql, param, transaction, commandTimeout,
-                commandType) ?? throw new InvalidOperationException(), "MSSql", $"Query {queryName}", sql);
+                commandType), "MSSql", $"Query {queryName}", sql);
 
         return result;
     }
@@ -349,7 +349,7 @@ public static class DapperInterceptor
         return result;
     }
 
-    public static async Task<TEntity> GetAsync<TEntity>(this IDbConnection connection, object id, IDbTransaction transacao = null)
+    public static async Task<TEntity> GetAsync<TEntity>(this IDbConnection connection, object id, IDbTransaction? transacao = null)
         where TEntity : class
     {
         if (servicoTelemetria == null)

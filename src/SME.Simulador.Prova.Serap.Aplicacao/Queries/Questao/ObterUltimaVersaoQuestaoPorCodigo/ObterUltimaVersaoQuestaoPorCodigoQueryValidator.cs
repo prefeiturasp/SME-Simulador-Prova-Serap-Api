@@ -1,14 +1,14 @@
 ﻿using FluentValidation;
-namespace SME.Simulador.Prova.Serap.Aplicacao
+
+namespace SME.Simulador.Prova.Serap.Aplicacao;
+
+public class ObterUltimaVersaoQuestaoPorCodigoQueryValidator : AbstractValidator<ObterUltimaVersaoQuestaoPorCodigoQuery>
 {
-    public class ObterUltimaVersaoQuestaoPorCodigoQueryValidator : AbstractValidator<ObterUltimaVersaoQuestaoPorCodigoQuery>
+    public ObterUltimaVersaoQuestaoPorCodigoQueryValidator()
     {
-        public ObterUltimaVersaoQuestaoPorCodigoQueryValidator()
-        {
-            RuleFor(c => c.CodigoItem)
-               .NotNull()
-               .NotEmpty()
-               .WithMessage("O codigo do item deve ser informado.");
-        }
+        RuleFor(c => c.CodigoItem)
+            .NotNull()
+            .NotEmpty()
+            .WithMessage("O codigo do item deve ser informado.");
     }
 }

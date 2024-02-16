@@ -1,18 +1,13 @@
 ﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace SME.Simulador.Prova.Serap.Aplicacao
+namespace SME.Simulador.Prova.Serap.Aplicacao;
+
+public class QuestaoBlocoCommand : IRequest<long>
 {
-    public class QuestaoBlocoCommand : IRequest<long>
+    public QuestaoBlocoCommand(Dominio.QuestaoBloco itemBloco)
     {
-        public QuestaoBlocoCommand(Dominio.QuestaoBloco itemBloco)
-        {
-            QuestaoBloco = itemBloco;
-        }
-        public Dominio.QuestaoBloco QuestaoBloco { get; set; }
+        QuestaoBloco = itemBloco;
     }
+    
+    public Dominio.QuestaoBloco QuestaoBloco { get; }
 }

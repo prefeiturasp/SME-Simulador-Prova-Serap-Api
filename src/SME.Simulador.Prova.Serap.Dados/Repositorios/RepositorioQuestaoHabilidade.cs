@@ -1,23 +1,19 @@
-﻿using SME.Simulador.Prova.Serap.Dados.Interfaces;
-using SME.Simulador.Prova.Serap.Dominio;
-using SME.Simulador.Prova.Serap.Infra;
-using SME.Simulador.Prova.Serap.Infra.Dtos;
+﻿using SME.Simulador.Prova.Serap.Dominio;
 
-namespace SME.Simulador.Prova.Serap.Dados.Repositorios
+namespace SME.Simulador.Prova.Serap.Dados;
+
+public class RepositorioQuestaoHabilidade : RepositorioGestaoAvaliacaoBase<QuestaoHabilidade>, IRepositorioQuestaoHabilidade
 {
-    public class RepositorioQuestaoHabilidade : RepositorioGestaoAvaliacaoBase<QuestaoHabilidade>, IRepositorioQuestaoHabilidade
-    {
-        private readonly GestaoAvaliacaoContexto gestaoAvaliacaoContexto;
+    private readonly GestaoAvaliacaoContexto gestaoAvaliacaoContexto;
 
-        public RepositorioQuestaoHabilidade(GestaoAvaliacaoContexto gestaoAvaliacaoContexto) : base(gestaoAvaliacaoContexto)
-        {
-            this.gestaoAvaliacaoContexto = gestaoAvaliacaoContexto ?? throw new ArgumentNullException(nameof(gestaoAvaliacaoContexto));
-        }
-       
+    public RepositorioQuestaoHabilidade(GestaoAvaliacaoContexto gestaoAvaliacaoContexto) : base(gestaoAvaliacaoContexto)
+    {
+        this.gestaoAvaliacaoContexto = gestaoAvaliacaoContexto ?? throw new ArgumentNullException(nameof(gestaoAvaliacaoContexto));
+    }  
      
-        public async Task<IEnumerable<QuestaoHabilidade>> ObterListaQuestoesHabilidades(long questaoId)
-        {
-            const string query = @"SELECT [Id]
+    public async Task<IEnumerable<QuestaoHabilidade>> ObterListaQuestoesHabilidades(long questaoId)
+    {
+        const string query = @"SELECT [Id]
                                          ,[OriginalSkill] as HabilidadeOriginal
                                          ,[CreateDate] as DataCriacao
                                          ,[UpdateDate] as DataAtualizacao
@@ -28,12 +24,11 @@ namespace SME.Simulador.Prova.Serap.Dados.Repositorios
                                      WHERE Item_id = @questaoId
                                        AND State = @state";
 
-            return await gestaoAvaliacaoContexto.Conexao.QueryAsync<QuestaoHabilidade>(query,
-                new
-                {
-                    questaoId,
-                    state = (int)LegadoState.Ativo
-                }, transaction: gestaoAvaliacaoContexto.Transacao);
-        }
+        return await gestaoAvaliacaoContexto.Conexao.QueryAsync<QuestaoHabilidade>(query,
+            new
+            {
+                questaoId,
+                state = (int)LegadoState.Ativo
+            }, transaction: gestaoAvaliacaoContexto.Transacao);
     }
 }

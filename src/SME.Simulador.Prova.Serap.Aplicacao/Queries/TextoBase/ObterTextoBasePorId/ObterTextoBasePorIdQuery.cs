@@ -1,15 +1,14 @@
 ﻿using MediatR;
 using SME.Simulador.Prova.Serap.Dominio;
 
+namespace SME.Simulador.Prova.Serap.Aplicacao;
 
-namespace SME.Simulador.Prova.Serap.Aplicacao
+public class ObterTextoBasePorIdQuery : IRequest<TextoBase?>
 {
-    public class ObterTextoBasePorIdQuery : IRequest<TextoBase>
+    public ObterTextoBasePorIdQuery(long textoBaseId)
     {
-        public ObterTextoBasePorIdQuery(long textoBaseId)
-        {
-            TextoBaseId = textoBaseId;
-        }
-        public long TextoBaseId { get; }
+        TextoBaseId = textoBaseId;
     }
+
+    public long TextoBaseId { get; }
 }

@@ -1,14 +1,14 @@
 ﻿using MediatR;
 using SME.Simulador.Prova.Serap.Dominio;
 
-namespace SME.Simulador.Prova.Serap.Aplicacao
+namespace SME.Simulador.Prova.Serap.Aplicacao;
+
+public class ObterAlternativasPorIdQuery : IRequest<Alternativa>
 {
-    public class ObterAlternativasPorIdQuery : IRequest<Alternativa>
+    public ObterAlternativasPorIdQuery(long id)
     {
-        public ObterAlternativasPorIdQuery(long id)
-        {
-            Id = id;
-        }
-        public long Id { get; }
+        Id = id;
     }
+    
+    public long Id { get; }
 }

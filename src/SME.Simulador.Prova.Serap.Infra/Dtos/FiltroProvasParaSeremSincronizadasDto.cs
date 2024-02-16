@@ -2,12 +2,12 @@
 
 public class FiltroProvasParaSeremSincronizadasDto : DtoBase
 {
-    public FiltroProvasParaSeremSincronizadasDto(long questaoId, DateTime ultimaAtualizacao)
+    public FiltroProvasParaSeremSincronizadasDto(string questaoCodigo, DateTime ultimaAtualizacao)
     {
-        QuestaoId = questaoId;
+        QuestaoCodigo = questaoCodigo;
         UltimaAtualizacao = ultimaAtualizacao;
     }
 
-    public long QuestaoId { get; }
+    public string QuestaoCodigo { get; }
     public DateTime UltimaAtualizacao { get; }
 }

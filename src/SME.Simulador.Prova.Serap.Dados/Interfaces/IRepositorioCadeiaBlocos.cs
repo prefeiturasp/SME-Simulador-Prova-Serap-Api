@@ -1,10 +1,9 @@
 ﻿using SME.Simulador.Prova.Serap.Dominio;
-using SME.Simulador.Prova.Serap.Infra.Dtos;
+using SME.Simulador.Prova.Serap.Infra;
 
-namespace SME.Simulador.Prova.Serap.Dados.Interfaces
+namespace SME.Simulador.Prova.Serap.Dados;
+
+public interface IRepositorioCadeiaBlocos : IRepositorioBase<CadeiaBlocoQuestao>
 {
-    public interface IRepositorioCadeiaBlocos : IRepositorioBase<CadeiaBlocoQuestao>
-    {
-        Task<CadeiaBlocoQuestaoDto?> ObterBlocoIdPorItemEhProvaId(long provaId, long itemId);
-    }
+    Task<CadeiaBlocoQuestaoDto?> ObterBlocoIdPorItemEProvaId(long provaId, long itemId);
 }

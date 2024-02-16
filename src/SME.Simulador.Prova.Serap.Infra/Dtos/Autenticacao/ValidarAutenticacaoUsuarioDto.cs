@@ -1,11 +1,9 @@
-﻿namespace SME.Simulador.Prova.Serap.Infra;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace SME.Simulador.Prova.Serap.Infra;
 
 public class ValidarAutenticacaoUsuarioDto : DtoBase
 {
-    public ValidarAutenticacaoUsuarioDto(string codigo)
-    {
-        Codigo = codigo;
-    }
-
-    public string Codigo { get; }
+    [Required(ErrorMessage = "O código deve ser informado.")]
+    public string Codigo { get; set; } = string.Empty;
 }

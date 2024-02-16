@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using SME.Simulador.Prova.Serap.Aplicacao;
 using SME.Simulador.Prova.Serap.Aplicacao.Interfaces;
 using SME.Simulador.Prova.Serap.Infra;
-using SME.Simulador.Prova.Serap.Infra.Dtos.Parametros;
 
 namespace SME.Simulador.Prova.Serap.Api.Controllers;
 
@@ -35,19 +34,17 @@ public class QuestaoController : ControllerBase
         return Ok(await useCase.ExecutarAsync(questaoId));
     }
 
-
     [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(List<string>), StatusCodes.Status422UnprocessableEntity)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
-    [HttpPost("Salvar-Alteracao", Name = nameof(SalvarAlteracao))]
+    [HttpPost("Salvar-Alteracao", Name = nameof(SalvarAlteracaoAsync))]
     [Authorize("Bearer")]
-    public async Task<IActionResult> SalvarAlteracao([Required] ParametrosQuestaoSalvar parametos,
+    public async Task<IActionResult> SalvarAlteracaoAsync([Required] ParametrosQuestaoSalvarDto parametos,
         [FromServices] IGerarNovaVersaoQuestaoUseCase useCase)
     {
         return Ok(await useCase.ExecutarAsync(parametos));
     }
-
 }
 
 
