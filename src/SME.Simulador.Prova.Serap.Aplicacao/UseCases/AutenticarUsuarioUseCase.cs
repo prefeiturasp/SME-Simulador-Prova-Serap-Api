@@ -54,8 +54,7 @@ public class AutenticarUsuarioUseCase : AbstractUseCase, IAutenticarUsuarioUseCa
             Perfis.PERFIL_COORDENADOR_PEDAGOGICO,
             Perfis.PERFIL_DIRETOR_ESCOLAR,
             Perfis.PERFIL_PROFESSOR,
-            Perfis.PERFIL_PROFESSOR_OLD,
-            Perfis.PERFIL_ADM_COPED_LEITURA
+            Perfis.PERFIL_PROFESSOR_OLD
         };
 
         var ehGuid = Guid.TryParse(perfil, out var guidPerfil);
