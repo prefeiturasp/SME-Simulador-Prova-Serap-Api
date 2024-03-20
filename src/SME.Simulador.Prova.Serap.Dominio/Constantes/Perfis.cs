@@ -11,6 +11,7 @@ public static class Perfis
     public static readonly Guid PERFIL_DIRETOR_ESCOLAR = Guid.Parse("75DCAB30-2C1E-E811-B259-782BCB3D2D76");
     public static readonly Guid PERFIL_PROFESSOR = Guid.Parse("E77E81B1-191E-E811-B259-782BCB3D2D76");
     public static readonly Guid PERFIL_PROFESSOR_OLD = Guid.Parse("067D9B21-A1FF-E611-9541-782BCB3D218E");
+    public static readonly Guid PERFIL_ADM_COPED_LEITURA = Guid.Parse("A8CB8D7B-F333-E711-9541-782BCB3D218E");
 
     public static bool PermiteEditarItem(Guid perfilUsuario)
     {
